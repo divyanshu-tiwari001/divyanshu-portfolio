@@ -18,42 +18,7 @@ export default function PremiumStudentPortfolio() {
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cormorant+Garamond:wght@400;600&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=swap');
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        .animate-float-delay-2 {
-          animation: float 6s ease-in-out infinite;
-          animation-delay: 2s;
-        }
-        .animate-float-delay-4 {
-          animation: float 6s ease-in-out infinite;
-          animation-delay: 4s;
-        }
-        .font-playfair {
-          font-family: 'Playfair Display', serif;
-        }
-        .font-cormorant {
-          font-family: 'Cormorant Garamond', serif;
-        }
-        .font-inter {
-          font-family: 'Inter', sans-serif;
-        }
-        .font-montserrat {
-          font-family: 'Montserrat', sans-serif;
-        }
-        .bg-clip-text {
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-      `}</style>
+
 
       <div className={`min-h-screen transition-colors duration-500 ${isDark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-900'}`}>
         
