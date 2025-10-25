@@ -4,6 +4,14 @@ import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, 
 export default function PremiumStudentPortfolio() {
   const [isDark, setIsDark] = useState(true);
   const [showPopup, setShowPopup] = useState(true);
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const [reviewForm, setReviewForm] = useState({
+    name: '',
+    rating: '',
+    comment: '',
+    socialLink: ''
+  });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -12,13 +20,159 @@ export default function PremiumStudentPortfolio() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    loadReviews();
+  }, []);
+
+  const loadReviews = async () => {
+    try {
+      const result = await window.storage.list('review:');
+      if (result && result.keys) {
+        const reviewPromises = result.keys.map(async (key) => {
+          const data = await window.storage.get(key);
+          return data ? JSON.parse(data.value) : null;
+        });
+        const loadedReviews = (await Promise.all(reviewPromises)).filter(r => r !== null);
+        setReviews(loadedReviews.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)));
+      }
+    } catch (error) {
+      console.log('No reviews yet');
+    }
+  };
+
+  const handleReviewSubmit = async () => {
+    if (!reviewForm.name || !reviewForm.rating) {
+      alert('Please fill in all required fields (Name and Rating)');
+      return;
+    }
+
+    const rating = parseInt(reviewForm.rating);
+    if (rating < 1 || rating > 10) {
+      alert('Rating must be between 1 and 10');
+      return;
+    }
+
+    const newReview = {
+      id: Date.now().toString(),
+      name: reviewForm.name,
+      rating: rating,
+      comment: reviewForm.comment,
+      socialLink: reviewForm.socialLink,
+      timestamp: new Date().toISOString(),
+      hidden: false,
+      replies: []
+    };
+
+    try {
+      await window.storage.set(`review:${newReview.id}`, JSON.stringify(newReview));
+      setReviews([newReview, ...reviews]);
+      setReviewForm({ name: '', rating: '', comment: '', socialLink: '' });
+      setShowReviewPopup(false);
+      alert('Thank you for your review!');
+    } catch (error) {
+      alert('Failed to submit review. Please try again.');
+    }
+  };
+
+  const deleteReview = async (reviewId) => {
+    if (window.confirm('Are you sure you want to delete this review?')) {
+      try {
+        await window.storage.delete(`review:${reviewId}`);
+        setReviews(reviews.filter(r => r.id !== reviewId));
+      } catch (error) {
+        alert('Failed to delete review');
+      }
+    }
+  };
+
+  const toggleHideReview = async (reviewId) => {
+    const review = reviews.find(r => r.id === reviewId);
+    if (review) {
+      const updatedReview = { ...review, hidden: !review.hidden };
+      try {
+        await window.storage.set(`review:${reviewId}`, JSON.stringify(updatedReview));
+        setReviews(reviews.map(r => r.id === reviewId ? updatedReview : r));
+      } catch (error) {
+        alert('Failed to update review');
+      }
+    }
+  };
+
+  const addReply = async (reviewId) => {
+    const replyText = prompt('Enter your reply:');
+    if (replyText) {
+      const review = reviews.find(r => r.id === reviewId);
+      if (review) {
+        const updatedReview = {
+          ...review,
+          replies: [...review.replies, {
+            text: replyText,
+            timestamp: new Date().toISOString()
+          }]
+        };
+        try {
+          await window.storage.set(`review:${reviewId}`, JSON.stringify(updatedReview));
+          setReviews(reviews.map(r => r.id === reviewId ? updatedReview : r));
+        } catch (error) {
+          alert('Failed to add reply');
+        }
+      }
+    }
+  };
+
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <>
-
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cormorant+Garamond:wght@400;600&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=swap');
+        
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+        .animate-float-delay-2 {
+          animation: float 6s ease-in-out infinite;
+          animation-delay: 2s;
+        }
+        .animate-float-delay-4 {
+          animation: float 6s ease-in-out infinite;
+          animation-delay: 4s;
+        }
+        .font-playfair {
+          font-family: 'Playfair Display', serif;
+        }
+        .font-cormorant {
+          font-family: 'Cormorant Garamond', serif;
+        }
+        .font-inter {
+          font-family: 'Inter', sans-serif;
+        }
+        .font-montserrat {
+          font-family: 'Montserrat', sans-serif;
+        }
+        .bg-clip-text {
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      `}</style>
 
       <div className={`min-h-screen transition-colors duration-500 ${isDark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-900'}`}>
         
@@ -41,6 +195,84 @@ export default function PremiumStudentPortfolio() {
               <button onClick={() => setShowPopup(false)} className="w-full px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-full hover:scale-105 transition-transform duration-300 shadow-lg">
                 Explore my creation 
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* Review Popup */}
+        {showReviewPopup && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur p-4">
+            <div className={`max-w-lg w-full mx-4 p-8 rounded-3xl shadow-2xl relative ${isDark ? 'bg-slate-900' : 'bg-white'}`}>
+              <button onClick={() => setShowReviewPopup(false)} className={`absolute top-4 right-4 p-2 rounded-full transition-colors ${isDark ? 'hover:bg-slate-800' : 'hover:bg-slate-100'}`}>
+                <X className="w-5 h-5" />
+              </button>
+              <h3 className="text-2xl font-bold mb-6 text-center">Leave a Review</h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className={`block text-sm font-semibold mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Name (Please use real name) <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={reviewForm.name}
+                    onChange={(e) => setReviewForm({...reviewForm, name: e.target.value})}
+                    className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:border-orange-500 transition-colors ${isDark ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-slate-300 text-slate-900'}`}
+                    placeholder="Your full name"
+                  />
+                </div>
+
+                <div>
+                  <label className={`block text-sm font-semibold mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Rate the site overall (1-10) <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="10"
+                    value={reviewForm.rating}
+                    onChange={(e) => setReviewForm({...reviewForm, rating: e.target.value})}
+                    className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:border-orange-500 transition-colors ${isDark ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-slate-300 text-slate-900'}`}
+                    placeholder="Rate from 1 to 10"
+                  />
+                  <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Consider design, usability, and overall experience
+                  </p>
+                </div>
+
+                <div>
+                  <label className={`block text-sm font-semibold mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Any comments or thoughts (optional)
+                  </label>
+                  <textarea
+                    value={reviewForm.comment}
+                    onChange={(e) => setReviewForm({...reviewForm, comment: e.target.value})}
+                    className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:border-orange-500 transition-colors resize-none ${isDark ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-slate-300 text-slate-900'}`}
+                    rows="4"
+                    placeholder="Share your thoughts about the website..."
+                  />
+                </div>
+
+                <div>
+                  <label className={`block text-sm font-semibold mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Social Media Link (LinkedIn, X, etc.) (optional)
+                  </label>
+                  <input
+                    type="url"
+                    value={reviewForm.socialLink}
+                    onChange={(e) => setReviewForm({...reviewForm, socialLink: e.target.value})}
+                    className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:border-orange-500 transition-colors ${isDark ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-slate-300 text-slate-900'}`}
+                    placeholder="https://linkedin.com/in/yourprofile"
+                  />
+                </div>
+
+                <button
+                  onClick={handleReviewSubmit}
+                  className="w-full px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-full hover:scale-105 transition-transform duration-300 shadow-lg"
+                >
+                  Submit Review
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -408,6 +640,104 @@ export default function PremiumStudentPortfolio() {
             </p>
           </div>
         </footer>
+
+        {/* Reviews Section */}
+        <section id="reviews" className="py-24 px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-block px-6 py-2 mb-4 rounded-full bg-gradient-to-r from-amber-600/20 to-orange-600/20 border border-amber-500/30">
+                <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text font-montserrat">
+                  Visitor Feedback
+                </span>
+              </div>
+              <h2 className="text-5xl font-bold mb-6 font-playfair">What People Say</h2>
+              <p className={`text-xl max-w-2xl mx-auto mb-8 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                Your feedback helps me improve and grow. Share your experience!
+              </p>
+              <button
+                onClick={() => setShowReviewPopup(true)}
+                className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-lg font-bold rounded-full hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-orange-500/50"
+              >
+                Leave a Review
+              </button>
+            </div>
+
+            {reviews.length === 0 ? (
+              <div className={`text-center py-12 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                <p className="text-xl">No reviews yet. Be the first to leave a review!</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {reviews.filter(review => !review.hidden).map((review) => (
+                  <div key={review.id} className={`p-8 rounded-3xl backdrop-blur-xl border transition-all duration-300 hover:shadow-xl ${isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-white/50 border-slate-200'}`}>
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h4 className="text-xl font-bold mb-1">
+                          {review.socialLink ? (
+                            <a href={review.socialLink} target="_blank" rel="noopener noreferrer" className="hover:text-orange-500 transition-colors">
+                              {review.name}
+                            </a>
+                          ) : (
+                            review.name
+                          )}
+                        </h4>
+                        <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                          {formatDate(review.timestamp)}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold">
+                        <Star className="w-4 h-4 fill-white" />
+                        {review.rating}/10
+                      </div>
+                    </div>
+
+                    {review.comment && (
+                      <p className={`mb-4 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                        {review.comment}
+                      </p>
+                    )}
+
+                    {review.replies && review.replies.length > 0 && (
+                      <div className={`mt-4 pt-4 border-t space-y-3 ${isDark ? 'border-slate-700' : 'border-slate-300'}`}>
+                        {review.replies.map((reply, idx) => (
+                          <div key={idx} className={`pl-4 border-l-2 border-orange-500 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                            <p className="font-semibold text-orange-500 text-sm mb-1">Divyanshu replied:</p>
+                            <p>{reply.text}</p>
+                            <p className={`text-xs mt-1 ${isDark ? 'text-slate-500' : 'text-slate-600'}`}>
+                              {formatDate(reply.timestamp)}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Admin Controls - These buttons are visible to everyone but only you should use them */}
+                    <div className="mt-4 pt-4 border-t border-slate-700/50 flex gap-2">
+                      <button
+                        onClick={() => addReply(review.id)}
+                        className={`text-xs px-3 py-1 rounded-full transition-colors ${isDark ? 'bg-slate-800 hover:bg-slate-700' : 'bg-slate-200 hover:bg-slate-300'}`}
+                      >
+                        Reply
+                      </button>
+                      <button
+                        onClick={() => toggleHideReview(review.id)}
+                        className={`text-xs px-3 py-1 rounded-full transition-colors ${isDark ? 'bg-slate-800 hover:bg-slate-700' : 'bg-slate-200 hover:bg-slate-300'}`}
+                      >
+                        {review.hidden ? 'Unhide' : 'Hide'}
+                      </button>
+                      <button
+                        onClick={() => deleteReview(review.id)}
+                        className="text-xs px-3 py-1 rounded-full bg-red-500/20 text-red-500 hover:bg-red-500/30 transition-colors"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
       </div>
     </>
   );
