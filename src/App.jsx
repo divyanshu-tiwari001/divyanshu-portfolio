@@ -298,7 +298,6 @@ export default function PremiumStudentPortfolio() {
 
         {/* Hero Section */}
         <section id="home" className="relative pt-32 pb-20 px-6 overflow-hidden">
-          {/* Floating Background Orbs */}
           <div className="absolute top-20 left-10 w-96 h-96 bg-amber-500 rounded-full blur-3xl opacity-20 animate-float"></div>
           <div className="absolute top-40 right-20 w-80 h-80 bg-orange-500 rounded-full blur-3xl opacity-20 animate-float-delay-2"></div>
           <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-yellow-500 rounded-full blur-3xl opacity-20 animate-float-delay-4"></div>
@@ -386,7 +385,7 @@ export default function PremiumStudentPortfolio() {
                   icon: Users,
                   title: 'Leadership & Management',
                   gradient: 'from-amber-500 to-orange-500',
-                  skills: ['Team Leadership', 'Project Coordination', 'Creative Problem Solving', 'Strategic Planning', 'Finance Management', 'Team Management' ]
+                  skills: ['Team Leadership', 'Project Coordination', 'Creative Problem Solving', 'Strategic Planning', 'Finance Management', 'Team Management']
                 },
                 {
                   icon: BookOpen,
@@ -421,7 +420,6 @@ export default function PremiumStudentPortfolio() {
               ))}
             </div>
 
-            {/* Learning Progress */}
             <div className={`p-10 rounded-3xl backdrop-blur-xl border ${isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-white/50 border-slate-200'}`}>
               <h3 className="text-3xl font-bold mb-8 text-center">Current Learning Journey</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -626,21 +624,6 @@ export default function PremiumStudentPortfolio() {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className={`py-12 px-6 border-t ${isDark ? 'border-slate-800 bg-slate-900/50' : 'border-slate-200 bg-white/50'}`}>
-          <div className="max-w-7xl mx-auto text-center">
-            <div className="text-2xl font-bold mb-4 bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text">
-              Divyanshu Tiwari
-            </div>
-            <p className={`mb-6 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Emerging Developer | Creative Leader | Lifelong Learner
-            </p>
-            <p className={`text-sm ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
-              © 2025 Designed & Built by <span className="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text font-bold">Divyanshu Tiwari</span>
-            </p>
-          </div>
-        </footer>
-
         {/* Reviews Section */}
         <section id="reviews" className="py-24 px-6">
           <div className="max-w-7xl mx-auto">
@@ -711,7 +694,6 @@ export default function PremiumStudentPortfolio() {
                       </div>
                     )}
 
-                    {/* Admin Controls - These buttons are visible to everyone but only you should use them */}
                     <div className="mt-4 pt-4 border-t border-slate-700/50 flex gap-2">
                       <button
                         onClick={() => addReply(review.id)}
@@ -738,6 +720,21 @@ export default function PremiumStudentPortfolio() {
             )}
           </div>
         </section>
+
+        {/* Footer */}
+        <footer className={`py-12 px-6 border-t ${isDark ? 'border-slate-800 bg-slate-900/50' : 'border-slate-200 bg-white/50'}`}>
+          <div className="max-w-7xl mx-auto text-center">
+            <div className="text-2xl font-bold mb-4 bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text">
+              Divyanshu Tiwari
+            </div>
+            <p className={`mb-6 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              Emerging Developer | Creative Leader | Lifelong Learner
+            </p>
+            <p className={`text-sm ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
+              © 2025 Designed & Built by <span className="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text font-bold">Divyanshu Tiwari</span>
+            </p>
+          </div>
+        </footer>
       </div>
     </>
   );
