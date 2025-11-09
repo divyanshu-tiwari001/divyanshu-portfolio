@@ -252,7 +252,7 @@ export default function PremiumStudentPortfolio() {
             </h1>
             
             <p className={`text-xl md:text-2xl mb-12 max-w-3xl mx-auto font-poppins animate-slide-bottom ${isDark ? 'text-slate-300' : 'text-slate-600'}`} style={{ animationDelay: '0.2s' }}>
-              A passionate developer from Bihar, India, focused on building user-friendly websites and apps. I use my creative skills to turn complex code into simple, effective solutions.
+              A passionate 16-year-old developer from Bihar, India, focused on building user-friendly websites and apps. I use my creative skills to turn complex code into simple, effective solutions.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-slide-bottom" style={{ animationDelay: '0.4s' }}>
