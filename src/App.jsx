@@ -390,7 +390,7 @@ export default function PremiumStudentPortfolio() {
                       <span className="font-semibold font-poppins">Focus Areas</span>
                     </div>
                     <p className={`text-sm font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                      Technology, Creative Writing & Innovation
+                      Mathematics, Physics, Chemistry & CS
                     </p>
                   </div>
                 </div>
