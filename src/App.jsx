@@ -522,8 +522,8 @@ export default function PremiumStudentPortfolio() {
                   { name: 'HTML & CSS', icon: Code, percent: 5 },
                   { name: 'JavaScript', icon: Zap, percent: 0 },
                   { name: 'Python', icon: Target, percent: 10 },
-                  { name: 'Vibe Coding', icon: Lightbulb, percent: 80 }
-                   { name: 'AI Prompting/Prompt Engineering', icon: Lightbulb, percent: 75 }
+                  { name: 'Vibe Coding', icon: Lightbulb, percent: 80 },
+                   { name: 'AI Prompting/Prompt Engineering', icon: Sparkles, percent: 75 }
                 ].map((skill, index) => (
                   <div key={index} className="space-y-3 group hover:scale-105 transition-transform duration-300">
                     <div className="flex justify-between items-center">
@@ -562,7 +562,7 @@ export default function PremiumStudentPortfolio() {
                 { name: 'HTML5', icon: '🌐' }, { name: 'CSS3', icon: '🎨' }, { name: 'JavaScript', icon: '⚡' },
                 { name: 'Python', icon: '🐍' }, { name: 'Node.js', icon: '🟢' }, { name: 'React', icon: '⚛️' },
                 { name: 'Tailwind', icon: '💨' }, { name: 'Git', icon: '📦' }, { name: 'AI Tools', icon: '🤖' },
-                { name: 'Netlify', icon: '🚀' }, { name: 'VS Code', icon: '💻' }, { name: 'Claude,Gemini,ChatGPT', icon: '🧠' }
+                { name: 'Netlify', icon: '🚀' }, { name: 'VS Code', icon: '💻' }, { name: 'Claude', icon: '🧠' },{ name: 'Gemini', icon: '✨' }, { name: 'ChatGPT', icon: '💬' }
               ].map((tech, index) => (
                 <div key={index} className={`group p-6 rounded-2xl backdrop-blur-xl border hover:-translate-y-2 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                   <div className="text-4xl mb-3 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300">
