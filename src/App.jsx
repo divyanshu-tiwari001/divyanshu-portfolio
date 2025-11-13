@@ -523,7 +523,7 @@ export default function PremiumStudentPortfolio() {
                   { name: 'JavaScript', icon: Zap, percent: 0 },
                   { name: 'Python', icon: Target, percent: 10 },
                   { name: 'Vibe Coding', icon: Lightbulb, percent: 70.5 },
-                   { name: 'AI Prompting/Prompt Engineering', icon: Sparkles, percent: 75 }
+                   { name: 'AI Prompting/Prompt Engineering', icon: Sparkles, percent: 89.5 }
                 ].map((skill, index) => (
                   <div key={index} className="space-y-3 group hover:scale-105 transition-transform duration-300">
                     <div className="flex justify-between items-center">
