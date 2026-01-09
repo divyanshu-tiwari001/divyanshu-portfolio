@@ -601,7 +601,7 @@ export default function PremiumStudentPortfolio() {
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Users className="w-10 h-10 text-white" />
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white animate-pulse"></div>
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white dark:border-slate-900 animate-pulse"></div>
                   </div>
                   
                   <div className="flex-1">
@@ -648,7 +648,7 @@ export default function PremiumStudentPortfolio() {
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Lightbulb className="w-10 h-10 text-white" />
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white animate-pulse"></div>
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white dark:border-slate-900 animate-pulse"></div>
                   </div>
                   
                   <div className="flex-1">
@@ -693,18 +693,19 @@ export default function PremiumStudentPortfolio() {
               <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 
                 <div className="flex flex-col md:flex-row items-start gap-6">
-                  <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
+                  <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <GraduationCap className="w-10 h-10 text-white" />
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full border-4 border-white dark:border-slate-900"></div>
                   </div>
                   
                   <div className="flex-1">
                     <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-500/20 text-blue-600'}`}>
                       Completed
                     </div>
-                    <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text">
+                    <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-yellow-500 to-orange-600 bg-clip-text">
                       Student Intern
                     </h3>
-                    <div className={`text-lg font-semibold mb-2 ${isDark ? 'text-cyan-400' : 'text-cyan-600'}`}>
+                    <div className={`text-lg font-semibold mb-2 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
                       Scaler School Of Technology
                     </div>
                     <div className={`text-sm font-roboto mb-4 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
@@ -712,12 +713,12 @@ export default function PremiumStudentPortfolio() {
                     </div>
                     <div className={`flex items-center gap-2 mb-6 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       <Calendar className="w-4 h-4" />
-                      <span className="text-sm font-roboto">October 2025 - December 2025</span>
+                      <span className="text-sm font-roboto">Completed Program</span>
                     </div>
 
                     <div className={`p-6 rounded-2xl ${isDark ? 'bg-slate-800/50' : 'bg-slate-100/50'}`}>
                       <h4 className="font-bold font-poppins mb-4 flex items-center gap-2">
-                        <Sparkles className="w-5 h-5 text-cyan-500" />
+                        <Sparkles className="w-5 h-5 text-orange-500" />
                         Program Focus
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -728,7 +729,7 @@ export default function PremiumStudentPortfolio() {
                           'Skill development workshops'
                         ].map((focus, index) => (
                           <div key={index} className="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
-                            <div className="w-2 h-2 rounded-full bg-cyan-500"></div>
+                            <div className="w-2 h-2 rounded-full bg-orange-500"></div>
                             <span className={`text-sm font-roboto ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{focus}</span>
                           </div>
                         ))}
