@@ -14,16 +14,24 @@ export default function PremiumStudentPortfolio() {
 
   // Prevent copying and text selection
   useEffect(() => {
-    // Helper function to check if element is a form input
+    // Helper function to check if element is a form input or editable element
     const isFormInput = (element) => {
-      return element && (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA');
+      if (!element) return false;
+      
+      const tagName = element.tagName;
+      const isEditable = element.contentEditable === 'true';
+      
+      return tagName === 'INPUT' || 
+             tagName === 'TEXTAREA' || 
+             tagName === 'SELECT' || 
+             isEditable ||
+             element.getAttribute('role') === 'textbox';
     };
 
     // Prevent right-click context menu
     const handleContextMenu = (e) => {
       if (!isFormInput(e.target)) {
         e.preventDefault();
-        return false;
       }
     };
 
@@ -31,7 +39,6 @@ export default function PremiumStudentPortfolio() {
     const handleCopy = (e) => {
       if (!isFormInput(e.target)) {
         e.preventDefault();
-        return false;
       }
     };
 
@@ -39,16 +46,14 @@ export default function PremiumStudentPortfolio() {
     const handleCut = (e) => {
       if (!isFormInput(e.target)) {
         e.preventDefault();
-        return false;
       }
     };
 
     // Prevent select all
     const handleSelectAll = (e) => {
-      if ((e.ctrlKey || e.metaKey) && (e.key === 'a' || e.key === 'A')) {
+      if (e.code === 'KeyA' && (e.ctrlKey || e.metaKey)) {
         if (!isFormInput(e.target)) {
           e.preventDefault();
-          return false;
         }
       }
     };
