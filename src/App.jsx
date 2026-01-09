@@ -675,7 +675,7 @@ export default function PremiumStudentPortfolio() {
               <div className="space-y-6">
                 {[
                   { icon: Mail, label: 'Email', value: 'divyanshutiwari@duck.com', link: 'mailto:divyanshutiwari@duck.com' },
-                  { icon: MapPin, label: 'Location', value: 'Motihari, Bihar, India', link: 'https://maps.app.goo.gl/8bzZNnBBrqB2itWL7' }
+                  { icon: MapPin, label: 'Location', value: 'Motihari, Bihar, India', link: 'https://maps.app.goo.gl/vFeCLKMcwDbopCi79' }
                 ].map((contact, index) => (
                   <div key={index} className="p-6 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 hover:-translate-y-2 hover:scale-105 transition-all duration-300 group">
                     <div className="flex items-center gap-4">
