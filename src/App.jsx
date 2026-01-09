@@ -14,29 +14,42 @@ export default function PremiumStudentPortfolio() {
 
   // Prevent copying and text selection
   useEffect(() => {
+    // Helper function to check if element is a form input
+    const isFormInput = (element) => {
+      return element && (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA');
+    };
+
     // Prevent right-click context menu
     const handleContextMenu = (e) => {
-      e.preventDefault();
-      return false;
+      if (!isFormInput(e.target)) {
+        e.preventDefault();
+        return false;
+      }
     };
 
     // Prevent copy
     const handleCopy = (e) => {
-      e.preventDefault();
-      return false;
+      if (!isFormInput(e.target)) {
+        e.preventDefault();
+        return false;
+      }
     };
 
     // Prevent cut
     const handleCut = (e) => {
-      e.preventDefault();
-      return false;
+      if (!isFormInput(e.target)) {
+        e.preventDefault();
+        return false;
+      }
     };
 
     // Prevent select all
     const handleSelectAll = (e) => {
       if ((e.ctrlKey || e.metaKey) && (e.key === 'a' || e.key === 'A')) {
-        e.preventDefault();
-        return false;
+        if (!isFormInput(e.target)) {
+          e.preventDefault();
+          return false;
+        }
       }
     };
 
