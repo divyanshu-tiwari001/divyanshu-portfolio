@@ -496,7 +496,7 @@ export default function PremiumStudentPortfolio() {
               {[
                 { icon: Users, title: 'Leadership', gradient: 'from-amber-500 to-orange-500', skills: ['Team Leadership', 'Project Coordination', 'Problem Solving', 'Strategic Planning'] },
                 { icon: BookOpen, title: 'Creative', gradient: 'from-orange-500 to-red-500', skills: ['Creative Writing', 'AI Prompting'] },
-                { icon: Code, title: 'Technical', gradient: 'from-yellow-500 to-amber-600', skills: ['HTML & CSS', 'JavaScript', 'Python', 'AI Development'] }
+                { icon: Code, title: 'Technical', gradient: 'from-yellow-500 to-amber-600', skills: ['HTML & CSS', 'Prompt Engineering', 'Python', 'AI Development'] }
               ].map((category, index) => (
                 <div key={index} className={`group p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                   <div className={`w-16 h-16 mb-6 rounded-2xl bg-gradient-to-r ${category.gradient} flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
@@ -520,7 +520,7 @@ export default function PremiumStudentPortfolio() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {[
                   { name: 'HTML & CSS', icon: Code, percent: 5 },
-                  { name: 'JavaScript', icon: Zap, percent: 0 },
+                  { name: 'Frontend Development using AI', icon: Zap, percent: 60 },
                   { name: 'Python', icon: Target, percent: 10 },
                   { name: 'Vibe Coding', icon: Lightbulb, percent: 70.5 },
                    { name: 'AI Prompting/Prompt Engineering', icon: Sparkles, percent: 89.5 }
@@ -559,9 +559,9 @@ export default function PremiumStudentPortfolio() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
               {[
-                { name: 'HTML5', icon: '🌐' }, { name: 'CSS3', icon: '🎨' }, { name: 'JavaScript', icon: '⚡' },
+                { name: 'HTML', icon: '🌐' }, { name: 'CSS', icon: '🎨' }, { name: 'Frontend Development', icon: '⚡' },
                 { name: 'Python', icon: '🐍' }, { name: 'Node.js', icon: '🟢' }, { name: 'React', icon: '⚛️' },
-                { name: 'Tailwind', icon: '💨' }, { name: 'Git', icon: '📦' }, { name: 'AI Tools', icon: '🤖' },
+                { name: 'Tailwind', icon: '💨' }, { name: 'GitHub', icon: '📦' }, { name: 'AI Tools', icon: '🤖' },
                 { name: 'Netlify', icon: '🚀' }, { name: 'VS Code', icon: '💻' }, { name: 'Claude', icon: '🧠' },{ name: 'Gemini', icon: '✨' }, { name: 'ChatGPT', icon: '💬' }
               ].map((tech, index) => (
                 <div key={index} className={`group p-6 rounded-2xl backdrop-blur-xl border hover:-translate-y-2 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
@@ -675,8 +675,7 @@ export default function PremiumStudentPortfolio() {
               <div className="space-y-6">
                 {[
                   { icon: Mail, label: 'Email', value: 'divyanshutiwari@duck.com', link: 'mailto:divyanshutiwari@duck.com' },
-                  { icon: Phone, label: 'Phone', value: '+91 9955888527', link: 'tel:+919955888527' },
-                  { icon: MapPin, label: 'Location', value: 'Motihari, Bihar, India', link: null }
+                  { icon: MapPin, label: 'Location', value: 'Motihari, Bihar, India', link: 'https://maps.app.goo.gl/8bzZNnBBrqB2itWL7' }
                 ].map((contact, index) => (
                   <div key={index} className="p-6 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 hover:-translate-y-2 hover:scale-105 transition-all duration-300 group">
                     <div className="flex items-center gap-4">
@@ -697,7 +696,8 @@ export default function PremiumStudentPortfolio() {
                   {[
                     { icon: Github, link: 'https://github.com/divyanshu-tiwari001' },
                     { icon: Linkedin, link: 'https://www.linkedin.com/in/its-tiwari/' },
-                    { icon: Twitter, link: 'https://x.com/Divyanshut011' }
+                    { icon: Twitter, link: 'https://x.com/Divyanshut011' },
+                    { icon: Instagram, link: 'https://www.instagram.com/divyanshu.tiiwari' }
                   ].map((social, index) => (
                     <a key={index} href={social.link} target="_blank" rel="noopener noreferrer" className="group p-4 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white hover:text-orange-600 transition-all duration-300 hover:scale-125 hover:rotate-12">
                       <social.icon className="w-6 h-6 text-white group-hover:text-orange-600" />
