@@ -19,7 +19,7 @@ export default function PremiumStudentPortfolio() {
       if (!element) return false;
       
       const tagName = element.tagName;
-      const isEditable = element.contentEditable === 'true';
+      const isEditable = element.isContentEditable; // This properly checks if element is editable (including inherited)
       
       return tagName === 'INPUT' || 
              tagName === 'TEXTAREA' || 
