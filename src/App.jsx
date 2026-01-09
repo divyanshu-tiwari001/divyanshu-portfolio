@@ -590,27 +590,34 @@ export default function PremiumStudentPortfolio() {
               </div>
               <h2 className="text-5xl font-bold mb-6 font-playfair">Work Experience</h2>
               <p className={`text-xl max-w-2xl mx-auto font-poppins ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                Currently focused on building skills and preparing for future opportunities
+                Building real-world experience through diverse roles and responsibilities
               </p>
             </div>
 
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-4xl mx-auto space-y-8">
+              {/* Social Media Manager at EM AUR */}
               <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
-                
-                <div className="flex items-start gap-6">
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
-                    <Briefcase className="w-10 h-10 text-white" />
+                <div className="flex flex-col md:flex-row items-start gap-6">
+                  <div className="relative">
+                    <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
+                      <Users className="w-10 h-10 text-white" />
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white dark:border-slate-900 animate-pulse"></div>
                   </div>
                   
                   <div className="flex-1">
-                    <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-500/20 text-blue-600'}`}>
-                      Student & Aspiring Developer
+                    <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'}`}>
+                      Currently Working
                     </div>
                     <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text">
-                      Building Foundation
+                      Social Media Manager
                     </h3>
-                    <div className={`text-lg font-semibold mb-4 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
-                      Currently Focusing on Skill Development
+                    <div className={`text-xl font-semibold mb-4 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
+                      EM AUR
+                    </div>
+                    <div className={`flex items-center gap-2 text-sm font-roboto mb-4 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                      <Calendar className="w-4 h-4" />
+                      December 2025 - Present
                     </div>
                   </div>
                 </div>
@@ -618,16 +625,110 @@ export default function PremiumStudentPortfolio() {
                 <div className={`mt-6 p-6 rounded-2xl ${isDark ? 'bg-slate-800/50' : 'bg-slate-100/50'}`}>
                   <h4 className="font-bold font-poppins mb-4 flex items-center gap-2">
                     <Sparkles className="w-5 h-5 text-orange-500" />
-                    Current Focus Areas
+                    Key Responsibilities
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {[
-                      'Learning Web Development',
-                      'Building Personal Projects',
-                      'Enhancing Problem-Solving Skills',
-                      'Exploring AI & Machine Learning',
-                      'Participating in Competitions',
-                      'Contributing to Open Source'
+                      'Managing social media presence',
+                      'Creating engaging content',
+                      'Building brand awareness',
+                      'Analyzing performance metrics'
+                    ].map((responsibility, index) => (
+                      <div key={index} className="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
+                        <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                        <span className={`text-sm font-roboto ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{responsibility}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Co-Founder at NOVAA SPEED */}
+              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <div className="flex flex-col md:flex-row items-start gap-6">
+                  <div className="relative">
+                    <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
+                      <Lightbulb className="w-10 h-10 text-white" />
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white dark:border-slate-900 animate-pulse"></div>
+                  </div>
+                  
+                  <div className="flex-1">
+                    <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'}`}>
+                      Currently Working
+                    </div>
+                    <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text">
+                      Co-Founder
+                    </h3>
+                    <div className={`text-xl font-semibold mb-4 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
+                      NOVAA SPEED
+                    </div>
+                    <div className={`flex items-center gap-2 text-sm font-roboto mb-4 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                      <Calendar className="w-4 h-4" />
+                      October 2025 - Present
+                    </div>
+                  </div>
+                </div>
+
+                <div className={`mt-6 p-6 rounded-2xl ${isDark ? 'bg-slate-800/50' : 'bg-slate-100/50'}`}>
+                  <h4 className="font-bold font-poppins mb-4 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-orange-500" />
+                    Key Responsibilities
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      'Strategic business planning',
+                      'Product development oversight',
+                      'Team leadership & coordination',
+                      'Innovation & growth initiatives'
+                    ].map((responsibility, index) => (
+                      <div key={index} className="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
+                        <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                        <span className={`text-sm font-roboto ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{responsibility}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Student Intern at Scaler School Of Technology */}
+              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <div className="flex flex-col md:flex-row items-start gap-6">
+                  <div className="relative">
+                    <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
+                      <GraduationCap className="w-10 h-10 text-white" />
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white dark:border-slate-900 animate-pulse"></div>
+                  </div>
+                  
+                  <div className="flex-1">
+                    <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'}`}>
+                      Current Program
+                    </div>
+                    <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text">
+                      Student Intern
+                    </h3>
+                    <div className={`text-xl font-semibold mb-4 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
+                      Scaler School Of Technology
+                    </div>
+                    <div className={`flex items-center gap-2 text-sm font-roboto mb-4 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                      <Calendar className="w-4 h-4" />
+                      Young Innovator Internship Challenge - Edition 5
+                    </div>
+                  </div>
+                </div>
+
+                <div className={`mt-6 p-6 rounded-2xl ${isDark ? 'bg-slate-800/50' : 'bg-slate-100/50'}`}>
+                  <h4 className="font-bold font-poppins mb-4 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-orange-500" />
+                    Program Focus
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      'Hands-on technical projects',
+                      'Innovation & problem-solving',
+                      'Industry mentorship',
+                      'Skill development workshops'
                     ].map((focus, index) => (
                       <div key={index} className="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
                         <div className="w-2 h-2 rounded-full bg-orange-500"></div>
@@ -636,15 +737,16 @@ export default function PremiumStudentPortfolio() {
                     ))}
                   </div>
                 </div>
+              </div>
 
-                <div className={`mt-6 p-6 rounded-2xl border-2 border-dashed ${isDark ? 'border-slate-700 bg-slate-800/30' : 'border-slate-300 bg-slate-50'}`}>
-                  <div className="text-center">
-                    <Trophy className="w-12 h-12 mx-auto mb-3 text-orange-500 animate-pulse" />
-                    <h4 className="font-bold font-poppins mb-2">Open to Opportunities</h4>
-                    <p className={`text-sm font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                      Actively seeking internships, freelance projects, and collaborative opportunities to apply my skills and gain real-world experience
-                    </p>
-                  </div>
+              {/* Open to Opportunities Card */}
+              <div className={`p-10 rounded-3xl backdrop-blur-xl border-2 border-dashed hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'border-slate-700 bg-slate-800/30 hover:border-orange-500/50' : 'border-slate-300 bg-slate-50 hover:border-orange-500/50'}`}>
+                <div className="text-center">
+                  <Trophy className="w-12 h-12 mx-auto mb-3 text-orange-500 animate-pulse" />
+                  <h4 className="font-bold font-poppins mb-2">Open to Opportunities</h4>
+                  <p className={`text-sm font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Actively seeking internships, freelance projects, and collaborative opportunities to apply my skills and gain real-world experience
+                  </p>
                 </div>
               </div>
             </div>
