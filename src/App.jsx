@@ -600,7 +600,7 @@ export default function PremiumStudentPortfolio() {
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Users className="w-10 h-10 text-white" />
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-slate-900 animate-pulse"></div>
+                    <div className={`absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 animate-pulse ${isDark ? 'border-slate-900' : 'border-white'}`}></div>
                   </div>
                   
                   <div className="flex-1">
@@ -646,7 +646,7 @@ export default function PremiumStudentPortfolio() {
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Lightbulb className="w-10 h-10 text-white" />
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-slate-900 animate-pulse"></div>
+                    <div className={`absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 animate-pulse ${isDark ? 'border-slate-900' : 'border-white'}`}></div>
                   </div>
                   
                   <div className="flex-1">
@@ -692,7 +692,7 @@ export default function PremiumStudentPortfolio() {
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <GraduationCap className="w-10 h-10 text-white" />
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-slate-900 animate-pulse"></div>
+                    <div className={`absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 animate-pulse ${isDark ? 'border-slate-900' : 'border-white'}`}></div>
                   </div>
                   
                   <div className="flex-1">
