@@ -12,6 +12,49 @@ export default function PremiumStudentPortfolio() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Prevent copying and text selection
+  useEffect(() => {
+    // Prevent right-click context menu
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+      return false;
+    };
+
+    // Prevent copy
+    const handleCopy = (e) => {
+      e.preventDefault();
+      return false;
+    };
+
+    // Prevent cut
+    const handleCut = (e) => {
+      e.preventDefault();
+      return false;
+    };
+
+    // Prevent select all
+    const handleSelectAll = (e) => {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'a' || e.key === 'A')) {
+        e.preventDefault();
+        return false;
+      }
+    };
+
+    // Add event listeners
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('copy', handleCopy);
+    document.addEventListener('cut', handleCut);
+    document.addEventListener('keydown', handleSelectAll);
+
+    // Cleanup
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('copy', handleCopy);
+      document.removeEventListener('cut', handleCut);
+      document.removeEventListener('keydown', handleSelectAll);
+    };
+  }, []);
+
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
