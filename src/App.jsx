@@ -719,7 +719,7 @@ export default function PremiumStudentPortfolio() {
                     </div>
                     <div className={`flex items-center gap-2 text-sm font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       <Calendar className="w-4 h-4" />
-                      Current Program
+                      Ongoing
                     </div>
                   </div>
                 </div>
