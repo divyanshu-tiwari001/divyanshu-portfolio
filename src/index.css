@@ -4,6 +4,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Disable text selection and copying */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Allow text selection for input fields and editable content */
+input,
+textarea,
+select,
+[contenteditable="true"],
+[role="textbox"] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-20px); }

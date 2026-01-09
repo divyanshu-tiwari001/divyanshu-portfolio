@@ -12,6 +12,67 @@ export default function PremiumStudentPortfolio() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Prevent copying and text selection
+  useEffect(() => {
+    // Helper function to check if element is a form input or editable element
+    const isFormInput = (element) => {
+      if (!element) return false;
+      
+      const tagName = element.tagName;
+      const isEditable = element.isContentEditable; // This properly checks if element is editable (including inherited)
+      
+      return tagName === 'INPUT' || 
+             tagName === 'TEXTAREA' || 
+             tagName === 'SELECT' || 
+             isEditable ||
+             element.getAttribute('role') === 'textbox';
+    };
+
+    // Prevent right-click context menu
+    const handleContextMenu = (e) => {
+      if (!isFormInput(e.target)) {
+        e.preventDefault();
+      }
+    };
+
+    // Prevent copy
+    const handleCopy = (e) => {
+      if (!isFormInput(e.target)) {
+        e.preventDefault();
+      }
+    };
+
+    // Prevent cut
+    const handleCut = (e) => {
+      if (!isFormInput(e.target)) {
+        e.preventDefault();
+      }
+    };
+
+    // Prevent select all
+    const handleSelectAll = (e) => {
+      if (e.code === 'KeyA' && (e.ctrlKey || e.metaKey)) {
+        if (!isFormInput(e.target)) {
+          e.preventDefault();
+        }
+      }
+    };
+
+    // Add event listeners
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('copy', handleCopy);
+    document.addEventListener('cut', handleCut);
+    document.addEventListener('keydown', handleSelectAll);
+
+    // Cleanup
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('copy', handleCopy);
+      document.removeEventListener('cut', handleCut);
+      document.removeEventListener('keydown', handleSelectAll);
+    };
+  }, []);
+
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
