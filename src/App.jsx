@@ -695,12 +695,11 @@ export default function PremiumStudentPortfolio() {
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <GraduationCap className="w-10 h-10 text-white" />
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white animate-pulse"></div>
                   </div>
                   
                   <div className="flex-1">
-                    <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'}`}>
-                      Current Program
+                    <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-500/20 text-blue-600'}`}>
+                      Completed
                     </div>
                     <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text">
                       Student Intern
@@ -710,6 +709,10 @@ export default function PremiumStudentPortfolio() {
                     </div>
                     <div className={`text-sm font-roboto mb-4 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       Young Innovator Internship Challenge - Edition 5
+                    </div>
+                    <div className={`flex items-center gap-2 mb-6 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                      <Calendar className="w-4 h-4" />
+                      <span className="text-sm font-roboto">October 2025 - December 2025</span>
                     </div>
 
                     <div className={`p-6 rounded-2xl ${isDark ? 'bg-slate-800/50' : 'bg-slate-100/50'}`}>
