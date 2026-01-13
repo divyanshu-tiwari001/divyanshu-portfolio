@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles } from 'lucide-react';
+import { initializeContentProtection, cleanupContentProtection } from './utils/contentProtection';
 
 export default function PremiumStudentPortfolio() {
   const [isDark, setIsDark] = useState(true);
@@ -10,6 +11,23 @@ export default function PremiumStudentPortfolio() {
       setShowPopup(false);
     }, 6000);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Initialize comprehensive content protection
+  useEffect(() => {
+    const protection = initializeContentProtection({
+      enableDevToolsDetection: true,
+      enableScreenCaptureBlocking: true,
+      enableRecordingDetection: true,
+      enableCanvasProtection: true,
+      enableWatermark: true,
+      showWarnings: true,
+      logAttempts: true
+    });
+
+    return () => {
+      cleanupContentProtection();
+    };
   }, []);
 
   // Prevent copying and text selection
