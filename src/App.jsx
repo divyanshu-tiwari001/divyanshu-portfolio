@@ -15,7 +15,7 @@ export default function PremiumStudentPortfolio() {
 
   // Initialize comprehensive content protection
   useEffect(() => {
-    const protection = initializeContentProtection({
+    initializeContentProtection({
       enableDevToolsDetection: true,
       enableScreenCaptureBlocking: true,
       enableRecordingDetection: true,

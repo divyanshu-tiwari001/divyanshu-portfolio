@@ -199,24 +199,24 @@ export class ContentProtection {
       }
     };
 
-    // Method 3: Debugger detection
-    const debuggerCheck = () => {
-      const start = performance.now();
-      debugger; // eslint-disable-line no-debugger
-      const end = performance.now();
-      
-      if (end - start > 100 && !this.isDevToolsOpen) {
-        this.onDevToolsOpen();
-      }
-    };
+    // Method 3: Debugger detection (intentionally unused but available for future use)
+    // const debuggerCheck = () => {
+    //   const start = performance.now();
+    //   debugger; // eslint-disable-line no-debugger
+    //   const end = performance.now();
+    //   
+    //   if (end - start > 100 && !this.isDevToolsOpen) {
+    //     this.onDevToolsOpen();
+    //   }
+    // };
 
     // Periodic checks
     checkInterval = setInterval(() => {
       try {
         consoleCheck.call(self);
         sizeCheck.call(self);
-      } catch (e) {
-        // Ignore errors
+      } catch {
+        // Ignore errors during detection
       }
     }, 1000);
 
