@@ -3,6 +3,14 @@
  * Provides multiple layers of protection against content theft
  */
 
+// Configuration constants
+const DEVTOOLS_SIZE_THRESHOLD = 160;
+const LOW_FPS_THRESHOLD = 20;
+const RAPID_CANVAS_ACCESS_THRESHOLD = 30;
+const CANVAS_PROTECTION_COLOR = '#ff6b00';
+const CANVAS_PROTECTION_FONT = '20px Arial';
+const CANVAS_PROTECTION_TEXT = 'Protected Content';
+
 export class ContentProtection {
   constructor(options = {}) {
     this.options = {
@@ -112,10 +120,10 @@ export class ContentProtection {
         const ctx = blankCanvas.getContext('2d');
         ctx.fillStyle = 'rgba(0,0,0,0.1)';
         ctx.fillRect(0, 0, blankCanvas.width, blankCanvas.height);
-        ctx.fillStyle = '#ff6b00';
-        ctx.font = '20px Arial';
+        ctx.fillStyle = CANVAS_PROTECTION_COLOR;
+        ctx.font = CANVAS_PROTECTION_FONT;
         ctx.textAlign = 'center';
-        ctx.fillText('Protected Content', blankCanvas.width / 2, blankCanvas.height / 2);
+        ctx.fillText(CANVAS_PROTECTION_TEXT, blankCanvas.width / 2, blankCanvas.height / 2);
         
         return originalToDataURL.call(blankCanvas, ...args);
       };
@@ -189,8 +197,8 @@ export class ContentProtection {
 
     // Method 2: Window size detection
     const sizeCheck = () => {
-      const widthThreshold = window.outerWidth - window.innerWidth > 160;
-      const heightThreshold = window.outerHeight - window.innerHeight > 160;
+      const widthThreshold = window.outerWidth - window.innerWidth > DEVTOOLS_SIZE_THRESHOLD;
+      const heightThreshold = window.outerHeight - window.innerHeight > DEVTOOLS_SIZE_THRESHOLD;
       
       if ((widthThreshold || heightThreshold) && !this.isDevToolsOpen) {
         this.onDevToolsOpen();
@@ -199,16 +207,9 @@ export class ContentProtection {
       }
     };
 
-    // Method 3: Debugger detection (intentionally unused but available for future use)
-    // const debuggerCheck = () => {
-    //   const start = performance.now();
-    //   debugger; // eslint-disable-line no-debugger
-    //   const end = performance.now();
-    //   
-    //   if (end - start > 100 && !this.isDevToolsOpen) {
-    //     this.onDevToolsOpen();
-    //   }
-    // };
+    // Note: Debugger-based detection is available but not currently used
+    // as it can interfere with legitimate debugging. The detection can be
+    // enabled if needed by monitoring the execution time of debugger statements.
 
     // Periodic checks
     checkInterval = setInterval(() => {
@@ -308,7 +309,7 @@ export class ContentProtection {
         lastTime = currentTime;
         
         // Suspiciously low FPS might indicate recording
-        if (fps < 20) {
+        if (fps < LOW_FPS_THRESHOLD) {
           self.logAttempt(`Recording detection: Low FPS detected (${fps})`);
         }
       }
@@ -344,7 +345,7 @@ export class ContentProtection {
       
       clearTimeout(canvasAccessTimer);
       canvasAccessTimer = setTimeout(() => {
-        if (canvasAccessCount > 30) {
+        if (canvasAccessCount > RAPID_CANVAS_ACCESS_THRESHOLD) {
           self.logAttempt(`Recording detection: Rapid canvas access detected (${canvasAccessCount} calls)`);
         }
         canvasAccessCount = 0;
@@ -526,8 +527,8 @@ export class ContentProtection {
       const timestamp = new Date().toISOString();
       console.warn(`[Content Protection] ${timestamp}: ${message}`);
       
-      // Could also send to analytics or security monitoring service
-      // this.sendToSecurityMonitoring({ timestamp, message });
+      // TODO: Future enhancement - send security events to analytics or monitoring service
+      // Example: this.sendToSecurityMonitoring({ timestamp, message, userAgent: navigator.userAgent });
     }
   }
 
