@@ -691,7 +691,7 @@ export default function PremiumStudentPortfolio() {
                       Social Media Manager
                     </h3>
                     <div className={`text-lg font-semibold mb-4 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
-                      EM AUR
+                      <a href="https://www.linkedin.com/company/em-aur" target="_blank" rel="noopener noreferrer">EM AUR</a>
                     </div>
                     <div className={`flex items-center gap-2 mb-6 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       <Calendar className="w-4 h-4" />
@@ -708,7 +708,8 @@ export default function PremiumStudentPortfolio() {
                           'Managing social media presence',
                           'Creating engaging content',
                           'Building brand awareness',
-                          'Analyzing performance metrics'
+                          'Analyzing performance metrics',
+                          'Uploading posts regularly'
                         ].map((responsibility, index) => (
                           <div key={index} className="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
                             <div className="w-2 h-2 rounded-full bg-orange-500"></div>
@@ -738,7 +739,7 @@ export default function PremiumStudentPortfolio() {
                       Co-Founder
                     </h3>
                     <div className={`text-lg font-semibold mb-4 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
-                      NOVAA SPEED
+                      <a href="https://www.linkedin.com/company/novaa-speed/" target="_blank" rel="noopener noreferrer">NOVAA SPEED</a>
                     </div>
                     <div className={`flex items-center gap-2 mb-6 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       <Calendar className="w-4 h-4" />
