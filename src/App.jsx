@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages, Image } from 'lucide-react';
 import { initializeContentProtection, cleanupContentProtection } from './utils/contentProtection';
+import logo from './assets/logo.svg';
 
 export default function PremiumStudentPortfolio() {
   const [isDark, setIsDark] = useState(true);
@@ -297,9 +298,12 @@ export default function PremiumStudentPortfolio() {
         {/* Navigation */}
         <nav className={`sticky top-0 z-40 backdrop-blur-xl border-b transition-all duration-300 ${isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white/80 border-slate-200'}`}>
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text font-poppins hover:scale-110 transition-transform duration-300 cursor-pointer">
-              DT
-            </div>
+            <img 
+              src={logo} 
+              alt="DT Logo" 
+              className="h-12 hover:scale-110 transition-transform duration-300 cursor-pointer"
+              onClick={() => scrollTo('home')}
+            />
             <div className="hidden md:flex items-center space-x-8 font-poppins font-semibold">
               <a href="#home" onClick={(e) => { e.preventDefault(); scrollTo('home'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Home</a>
               <a href="#education" onClick={(e) => { e.preventDefault(); scrollTo('education'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Education</a>
@@ -749,7 +753,7 @@ export default function PremiumStudentPortfolio() {
             </div>
 
             <div className="max-w-5xl mx-auto space-y-8">
-              {/* Experience 1: EM AUR - Social Media Manager */}
+              {/* Experience 1: EM AUR - Consolidated */}
               <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -762,11 +766,8 @@ export default function PremiumStudentPortfolio() {
                       Currently Working
                     </div>
                     <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text">
-                      Social Media Manager
-                    </h3>
-                    <div className={`text-lg font-semibold mb-2 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
                       EM AUR
-                    </div>
+                    </h3>
                     <div className={`flex items-center gap-4 mb-4 flex-wrap ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4" />
@@ -777,68 +778,26 @@ export default function PremiumStudentPortfolio() {
                         <span className="text-sm font-roboto">India</span>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Experience 1b: EM AUR - Social Media Coordinator */}
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
-                <div className="flex flex-col md:flex-row items-start gap-6">
-                  <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
-                    <Users className="w-10 h-10 text-white" />
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white dark:border-slate-900 animate-pulse"></div>
-                  </div>
-                  
-                  <div className="flex-1">
-                    <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'}`}>
-                      Currently Working
-                    </div>
-                    <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text">
-                      Social Media Coordinator
-                    </h3>
-                    <div className={`text-lg font-semibold mb-2 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
-                      EM AUR
-                    </div>
-                    <div className={`flex items-center gap-4 mb-4 flex-wrap ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
-                        <span className="text-sm font-roboto">December 2025 - Present</span>
+                    
+                    {/* Multiple Roles */}
+                    <div className="space-y-3 mt-4">
+                      <div className={`flex items-center gap-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                        <div className={`px-3 py-1 rounded-lg text-sm font-semibold ${isDark ? 'bg-orange-500/20 text-orange-400' : 'bg-orange-500/20 text-orange-600'}`}>
+                          Social Media Manager
+                        </div>
+                        <span className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>December 2025 - Present</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4" />
-                        <span className="text-sm font-roboto">India</span>
+                      <div className={`flex items-center gap-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                        <div className={`px-3 py-1 rounded-lg text-sm font-semibold ${isDark ? 'bg-orange-500/20 text-orange-400' : 'bg-orange-500/20 text-orange-600'}`}>
+                          Social Media Coordinator
+                        </div>
+                        <span className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>December 2025 - Present</span>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Experience 1c: EM AUR - Technical Team Member */}
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
-                <div className="flex flex-col md:flex-row items-start gap-6">
-                  <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
-                    <Code className="w-10 h-10 text-white" />
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white dark:border-slate-900 animate-pulse"></div>
-                  </div>
-                  
-                  <div className="flex-1">
-                    <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'}`}>
-                      Currently Working
-                    </div>
-                    <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text">
-                      Technical Team Member
-                    </h3>
-                    <div className={`text-lg font-semibold mb-2 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
-                      EM AUR
-                    </div>
-                    <div className={`flex items-center gap-4 mb-4 flex-wrap ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
-                        <span className="text-sm font-roboto">December 2025 - Present</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4" />
-                        <span className="text-sm font-roboto">India</span>
+                      <div className={`flex items-center gap-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                        <div className={`px-3 py-1 rounded-lg text-sm font-semibold ${isDark ? 'bg-orange-500/20 text-orange-400' : 'bg-orange-500/20 text-orange-600'}`}>
+                          Technical Team Member
+                        </div>
+                        <span className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>December 2025 - Present</span>
                       </div>
                     </div>
                   </div>
