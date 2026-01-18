@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages, Image } from 'lucide-react';
 import { initializeContentProtection, cleanupContentProtection } from './utils/contentProtection';
-import logo from './assets/logo.svg';
 
 export default function PremiumStudentPortfolio() {
   const [isDark, setIsDark] = useState(true);
@@ -299,9 +298,9 @@ export default function PremiumStudentPortfolio() {
         <nav className={`sticky top-0 z-40 backdrop-blur-xl border-b transition-all duration-300 ${isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white/80 border-slate-200'}`}>
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <img 
-              src={logo} 
+              src="/logo.svg" 
               alt="DT Logo" 
-              className="h-12 hover:scale-110 transition-transform duration-300 cursor-pointer"
+              className="h-10 hover:scale-110 transition-transform duration-300 cursor-pointer"
               onClick={() => scrollTo('home')}
             />
             <div className="hidden md:flex items-center space-x-8 font-poppins font-semibold">
@@ -696,14 +695,6 @@ export default function PremiumStudentPortfolio() {
                     </p>
                   </div>
                 </div>
-                {/* Proficiency Bar */}
-                <div className="mt-6">
-                  <div className={`h-3 rounded-full overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
-                    <div className="h-full bg-gradient-to-r from-amber-500 to-orange-600 rounded-full relative overflow-hidden" style={{ width: '100%' }}>
-                      <div className="absolute inset-0 shimmer"></div>
-                    </div>
-                  </div>
-                </div>
               </div>
 
               {/* English */}
@@ -720,14 +711,6 @@ export default function PremiumStudentPortfolio() {
                     <p className={`text-sm font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       Proficient in technical communication and writing
                     </p>
-                  </div>
-                </div>
-                {/* Proficiency Bar */}
-                <div className="mt-6">
-                  <div className={`h-3 rounded-full overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
-                    <div className="h-full bg-gradient-to-r from-orange-500 to-red-600 rounded-full relative overflow-hidden" style={{ width: '65%' }}>
-                      <div className="absolute inset-0 shimmer"></div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -1073,16 +1056,14 @@ export default function PremiumStudentPortfolio() {
                   </div>
                 </div>
                 
-                {/* Certificate Image Placeholder */}
-                <div className={`p-8 rounded-xl border-2 border-dashed flex flex-col items-center justify-center min-h-[200px] ${isDark ? 'border-slate-700 bg-slate-800/30' : 'border-slate-300 bg-slate-100'}`}>
-                  <Image className={`w-16 h-16 mb-3 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
-                  <p className={`text-sm font-semibold font-roboto mb-1 ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
-                    Certificate Image Placeholder
-                  </p>
-                  <p className={`text-xs font-roboto ${isDark ? 'text-slate-600' : 'text-slate-400'}`}>
-                    {/* TODO: Add certificate image here */}
-                    Add certificate image
-                  </p>
+                {/* Certificate Image */}
+                <div className="rounded-xl overflow-hidden">
+                  <img 
+                    src="/certificate-excellence.svg" 
+                    alt="Certificate of Excellence - Scaler School of Technology" 
+                    className="w-full h-auto rounded-xl"
+                    style={{ maxWidth: '100%', height: 'auto' }}
+                  />
                 </div>
               </div>
 
@@ -1093,12 +1074,12 @@ export default function PremiumStudentPortfolio() {
                     <GraduationCap className="w-8 h-8 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold mb-2 font-poppins leading-tight">Startup School: Prompt to Prototype</h3>
+                    <h3 className="text-2xl font-bold mb-2 font-poppins leading-tight">Startup School: Prompt to Prototype "Certificate of Completion"</h3>
                     <div className={`text-sm font-semibold mb-2 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
                       Google for Startups x Scaler
                     </div>
                     <p className={`text-sm font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                      Certificate of Completion
+                      Comprehensive startup development program
                     </p>
                   </div>
                 </div>
@@ -1285,7 +1266,7 @@ export default function PremiumStudentPortfolio() {
               Emerging Developer | Creative Leader | Lifelong Learner
             </p>
             <p className={`text-sm font-roboto ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
-              © 2025 Designed & Built by <span className="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text font-bold">Divyanshu Tiwari</span>
+              © 2026 Designed & Built by <span className="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text font-bold">Divyanshu Tiwari</span>
             </p>
           </div>
         </footer>
