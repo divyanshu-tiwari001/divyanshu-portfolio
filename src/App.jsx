@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages } from 'lucide-react';
+import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages, Image } from 'lucide-react';
 import { initializeContentProtection, cleanupContentProtection } from './utils/contentProtection';
 
 export default function PremiumStudentPortfolio() {
@@ -297,12 +297,9 @@ export default function PremiumStudentPortfolio() {
         {/* Navigation */}
         <nav className={`sticky top-0 z-40 backdrop-blur-xl border-b transition-all duration-300 ${isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white/80 border-slate-200'}`}>
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <img 
-              src="/logo.svg" 
-              alt="DT Logo" 
-              className="h-10 hover:scale-110 transition-transform duration-300 cursor-pointer"
-              onClick={() => scrollTo('home')}
-            />
+            <div className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text font-poppins hover:scale-110 transition-transform duration-300 cursor-pointer" onClick={() => scrollTo('home')}>
+              DT
+            </div>
             <div className="hidden md:flex items-center space-x-8 font-poppins font-semibold">
               <a href="#home" onClick={(e) => { e.preventDefault(); scrollTo('home'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Home</a>
               <a href="#education" onClick={(e) => { e.preventDefault(); scrollTo('education'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Education</a>
@@ -1056,14 +1053,15 @@ export default function PremiumStudentPortfolio() {
                   </div>
                 </div>
                 
-                {/* Certificate Image */}
-                <div className="rounded-xl overflow-hidden">
-                  <img 
-                    src="/certificate-excellence.svg" 
-                    alt="Certificate of Excellence - Scaler School of Technology" 
-                    className="w-full h-auto rounded-xl"
-                    style={{ maxWidth: '100%', height: 'auto' }}
-                  />
+                {/* Certificate Image Placeholder */}
+                <div className={`p-8 rounded-xl border-2 border-dashed flex flex-col items-center justify-center min-h-[200px] ${isDark ? 'border-slate-700 bg-slate-800/30' : 'border-slate-300 bg-slate-100'}`}>
+                  <Image className={`w-16 h-16 mb-3 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
+                  <p className={`text-sm font-semibold font-roboto mb-1 ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
+                    Certificate Image Placeholder
+                  </p>
+                  <p className={`text-xs font-roboto ${isDark ? 'text-slate-600' : 'text-slate-400'}`}>
+                    Add certificate image
+                  </p>
                 </div>
               </div>
 
