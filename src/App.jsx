@@ -987,6 +987,15 @@ export default function PremiumStudentPortfolio() {
                     <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
+                
+                {/* Photo Placeholder */}
+                <div className={`mt-4 p-6 rounded-xl border-2 border-dashed flex flex-col items-center justify-center ${isDark ? 'border-slate-700 bg-slate-800/30' : 'border-slate-300 bg-slate-100'}`}>
+                  <Image className={`w-12 h-12 mb-2 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
+                  <p className={`text-sm font-semibold font-roboto ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
+                    Add Award Photo
+                  </p>
+                  {/* TODO: Add award photo here */}
+                </div>
               </div>
 
               {/* Award 2: Scaler Onboarding Kit */}
