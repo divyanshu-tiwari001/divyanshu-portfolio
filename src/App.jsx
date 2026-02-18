@@ -769,8 +769,13 @@ export default function PremiumStudentPortfolio() {
                         backdropFilter: 'blur(20px) saturate(180%)',
                         WebkitBackdropFilter: 'blur(20px) saturate(180%)',
                         border: '1px solid rgba(255, 255, 255, 0.1)',
-                        boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
-                      } : {}}
+                        boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+                        transform: `translate(${magneticPositions[`achievement-${index}`]?.x || 0}px, ${magneticPositions[`achievement-${index}`]?.y || 0}px)`,
+                        transition: 'transform 0.3s ease-out'
+                      } : {
+                        transform: `translate(${magneticPositions[`achievement-${index}`]?.x || 0}px, ${magneticPositions[`achievement-${index}`]?.y || 0}px)`,
+                        transition: 'transform 0.3s ease-out'
+                      }}
                       onMouseMove={(e) => handleMagneticMove(e, `achievement-${index}`)}
                       onMouseLeave={() => handleMagneticLeave(`achievement-${index}`)}
                     >
