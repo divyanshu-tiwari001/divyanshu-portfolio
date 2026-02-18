@@ -2,11 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages, Image } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
+import Tilt from 'react-parallax-tilt';
 import { initializeContentProtection, cleanupContentProtection } from './utils/contentProtection';
 
 export default function PremiumStudentPortfolio() {
   const [isDark, setIsDark] = useState(true);
   const [showPopup, setShowPopup] = useState(true);
+  const [magneticPosition, setMagneticPosition] = useState({ x: 0, y: 0 });
+
+  const handleMagneticMove = (e, index) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
+    setMagneticPosition({ x, y });
+  };
+
+  const handleMagneticLeave = () => {
+    setMagneticPosition({ x: 0, y: 0 });
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -485,7 +499,22 @@ export default function PremiumStudentPortfolio() {
               variants={fadeInUp}
               className="max-w-4xl mx-auto"
             >
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+              <Tilt 
+                tiltMaxAngleX={10} 
+                tiltMaxAngleY={10} 
+                scale={1.02}
+                transitionSpeed={400}
+                glareEnable={true}
+                glareMaxOpacity={0.2}
+                glareColor="#ff6b00"
+                glarePosition="all"
+              >
+                <div 
+                  className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+                  onMouseMove={(e) => handleMagneticMove(e, 0)}
+                  onMouseLeave={handleMagneticLeave}
+                  style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                >
                 
                 {/* Timeline Line */}
                 <div className="absolute left-10 top-32 bottom-32 w-0.5 bg-gradient-to-b from-amber-500 to-orange-600 hidden md:block"></div>
@@ -570,6 +599,7 @@ export default function PremiumStudentPortfolio() {
                   </div>
                 </div>
               </div>
+              </Tilt>
             </motion.div>
           </div>
         </section>
@@ -719,16 +749,31 @@ export default function PremiumStudentPortfolio() {
                 }
               ].map((achievement, index) => (
                 <motion.div key={index} variants={staggerItem}>
-                  <div className={`group relative p-8 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 overflow-hidden ${
-                    index === 0 
-                      ? isDark ? 'bg-slate-900/70 border-slate-700/50' : 'bg-white/70 border-slate-300/50'
-                      : isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'
-                  }`} style={index === 0 ? {
-                    backdropFilter: 'blur(20px) saturate(180%)',
-                    WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
-                  } : {}}>
+                  <Tilt 
+                    tiltMaxAngleX={10} 
+                    tiltMaxAngleY={10} 
+                    scale={1.02}
+                    transitionSpeed={400}
+                    glareEnable={true}
+                    glareMaxOpacity={0.2}
+                    glareColor="#ff6b00"
+                    glarePosition="all"
+                  >
+                    <div 
+                      className={`group relative p-8 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 overflow-hidden ${
+                        index === 0 
+                          ? isDark ? 'bg-slate-900/70 border-slate-700/50' : 'bg-white/70 border-slate-300/50'
+                          : isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'
+                      }`} 
+                      style={index === 0 ? {
+                        backdropFilter: 'blur(20px) saturate(180%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
+                      } : {}}
+                      onMouseMove={(e) => handleMagneticMove(e, index)}
+                      onMouseLeave={handleMagneticLeave}
+                    >
                   <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold ${isDark ? 'bg-slate-800 text-amber-400' : 'bg-slate-100 text-orange-600'}`}>
                     {achievement.year}
                   </div>
@@ -744,6 +789,7 @@ export default function PremiumStudentPortfolio() {
                     ))}
                   </div>
                   </div>
+                  </Tilt>
                 </motion.div>
               ))}
             </motion.div>
@@ -902,7 +948,22 @@ export default function PremiumStudentPortfolio() {
             >
               {/* Hindi */}
               <motion.div variants={staggerItem}>
-                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <Tilt 
+                  tiltMaxAngleX={10} 
+                  tiltMaxAngleY={10} 
+                  scale={1.02}
+                  transitionSpeed={400}
+                  glareEnable={true}
+                  glareMaxOpacity={0.2}
+                  glareColor="#ff6b00"
+                  glarePosition="all"
+                >
+                  <div 
+                    className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+                    onMouseMove={(e) => handleMagneticMove(e, 0)}
+                    onMouseLeave={handleMagneticLeave}
+                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                  >
                 <div className="flex items-start gap-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Languages className="w-8 h-8 text-white" />
@@ -918,11 +979,27 @@ export default function PremiumStudentPortfolio() {
                   </div>
                 </div>
                 </div>
+                </Tilt>
               </motion.div>
 
               {/* English */}
               <motion.div variants={staggerItem}>
-                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <Tilt 
+                  tiltMaxAngleX={10} 
+                  tiltMaxAngleY={10} 
+                  scale={1.02}
+                  transitionSpeed={400}
+                  glareEnable={true}
+                  glareMaxOpacity={0.2}
+                  glareColor="#ff6b00"
+                  glarePosition="all"
+                >
+                  <div 
+                    className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+                    onMouseMove={(e) => handleMagneticMove(e, 1)}
+                    onMouseLeave={handleMagneticLeave}
+                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                  >
                 <div className="flex items-start gap-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Languages className="w-8 h-8 text-white" />
@@ -938,6 +1015,7 @@ export default function PremiumStudentPortfolio() {
                   </div>
                 </div>
                 </div>
+                </Tilt>
               </motion.div>
             </motion.div>
           </div>
@@ -975,7 +1053,22 @@ export default function PremiumStudentPortfolio() {
             >
               {/* Experience 1: EM AUR - Consolidated */}
               <motion.div variants={staggerItem}>
-                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <Tilt 
+                  tiltMaxAngleX={10} 
+                  tiltMaxAngleY={10} 
+                  scale={1.02}
+                  transitionSpeed={400}
+                  glareEnable={true}
+                  glareMaxOpacity={0.2}
+                  glareColor="#ff6b00"
+                  glarePosition="all"
+                >
+                  <div 
+                    className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+                    onMouseMove={(e) => handleMagneticMove(e, 0)}
+                    onMouseLeave={handleMagneticLeave}
+                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                  >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Users className="w-10 h-10 text-white" />
@@ -1024,11 +1117,27 @@ export default function PremiumStudentPortfolio() {
                   </div>
                 </div>
                 </div>
+                </Tilt>
               </motion.div>
 
               {/* Experience 2: Nexstep Network - Project Intern */}
               <motion.div variants={staggerItem}>
-                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <Tilt 
+                  tiltMaxAngleX={10} 
+                  tiltMaxAngleY={10} 
+                  scale={1.02}
+                  transitionSpeed={400}
+                  glareEnable={true}
+                  glareMaxOpacity={0.2}
+                  glareColor="#ff6b00"
+                  glarePosition="all"
+                >
+                  <div 
+                    className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+                    onMouseMove={(e) => handleMagneticMove(e, 1)}
+                    onMouseLeave={handleMagneticLeave}
+                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                  >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Briefcase className="w-10 h-10 text-white" />
@@ -1058,11 +1167,27 @@ export default function PremiumStudentPortfolio() {
                   </div>
                 </div>
                 </div>
+                </Tilt>
               </motion.div>
 
               {/* Experience 3: C.S. DAV Public School - Deputy Head Boy */}
               <motion.div variants={staggerItem}>
-                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <Tilt 
+                  tiltMaxAngleX={10} 
+                  tiltMaxAngleY={10} 
+                  scale={1.02}
+                  transitionSpeed={400}
+                  glareEnable={true}
+                  glareMaxOpacity={0.2}
+                  glareColor="#ff6b00"
+                  glarePosition="all"
+                >
+                  <div 
+                    className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+                    onMouseMove={(e) => handleMagneticMove(e, 2)}
+                    onMouseLeave={handleMagneticLeave}
+                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                  >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-yellow-500 to-amber-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Trophy className="w-10 h-10 text-white" />
@@ -1092,11 +1217,27 @@ export default function PremiumStudentPortfolio() {
                   </div>
                 </div>
                 </div>
+                </Tilt>
               </motion.div>
 
               {/* Experience 4: Muskurahat Foundation - Fundraising Intern */}
               <motion.div variants={staggerItem}>
-                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <Tilt 
+                  tiltMaxAngleX={10} 
+                  tiltMaxAngleY={10} 
+                  scale={1.02}
+                  transitionSpeed={400}
+                  glareEnable={true}
+                  glareMaxOpacity={0.2}
+                  glareColor="#ff6b00"
+                  glarePosition="all"
+                >
+                  <div 
+                    className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+                    onMouseMove={(e) => handleMagneticMove(e, 3)}
+                    onMouseLeave={handleMagneticLeave}
+                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                  >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Users className="w-10 h-10 text-white" />
@@ -1126,11 +1267,27 @@ export default function PremiumStudentPortfolio() {
                   </div>
                 </div>
                 </div>
+                </Tilt>
               </motion.div>
 
               {/* Experience 5: Scaler School of Technology - Student Intern */}
               <motion.div variants={staggerItem}>
-                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <Tilt 
+                  tiltMaxAngleX={10} 
+                  tiltMaxAngleY={10} 
+                  scale={1.02}
+                  transitionSpeed={400}
+                  glareEnable={true}
+                  glareMaxOpacity={0.2}
+                  glareColor="#ff6b00"
+                  glarePosition="all"
+                >
+                  <div 
+                    className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+                    onMouseMove={(e) => handleMagneticMove(e, 4)}
+                    onMouseLeave={handleMagneticLeave}
+                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                  >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <GraduationCap className="w-10 h-10 text-white" />
@@ -1185,6 +1342,7 @@ export default function PremiumStudentPortfolio() {
                   </div>
                 </div>
                 </div>
+                </Tilt>
               </motion.div>
 
               {/* Open to More Opportunities Card */}
@@ -1233,7 +1391,22 @@ export default function PremiumStudentPortfolio() {
             >
               {/* Award 1: Essay Writing Competition */}
               <motion.div variants={staggerItem}>
-                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-amber-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-amber-500/50' : 'bg-white/50 border-slate-200 hover:border-amber-500/50'}`}>
+                <Tilt 
+                  tiltMaxAngleX={10} 
+                  tiltMaxAngleY={10} 
+                  scale={1.02}
+                  transitionSpeed={400}
+                  glareEnable={true}
+                  glareMaxOpacity={0.2}
+                  glareColor="#ff6b00"
+                  glarePosition="all"
+                >
+                  <div 
+                    className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-amber-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-amber-500/50' : 'bg-white/50 border-slate-200 hover:border-amber-500/50'}`}
+                    onMouseMove={(e) => handleMagneticMove(e, 0)}
+                    onMouseLeave={handleMagneticLeave}
+                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                  >
                 <div className="w-20 h-20 mb-6 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-lg">
                   <Trophy className="w-10 h-10 text-white" />
                 </div>
@@ -1253,11 +1426,27 @@ export default function PremiumStudentPortfolio() {
                   ))}
                 </div>
                 </div>
+                </Tilt>
               </motion.div>
 
               {/* Award 2: Scaler Onboarding Kit */}
               <motion.div variants={staggerItem}>
-                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <Tilt 
+                  tiltMaxAngleX={10} 
+                  tiltMaxAngleY={10} 
+                  scale={1.02}
+                  transitionSpeed={400}
+                  glareEnable={true}
+                  glareMaxOpacity={0.2}
+                  glareColor="#ff6b00"
+                  glarePosition="all"
+                >
+                  <div 
+                    className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+                    onMouseMove={(e) => handleMagneticMove(e, 1)}
+                    onMouseLeave={handleMagneticLeave}
+                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                  >
                 <div className="w-20 h-20 mb-6 rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-lg">
                   <Award className="w-10 h-10 text-white" />
                 </div>
@@ -1281,6 +1470,7 @@ export default function PremiumStudentPortfolio() {
                   {/* TODO: Add award photo here */}
                 </div>
                 </div>
+                </Tilt>
               </motion.div>
             </motion.div>
           </div>
