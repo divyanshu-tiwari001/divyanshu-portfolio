@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages, Image } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { initializeContentProtection, cleanupContentProtection } from './utils/contentProtection';
 
 export default function PremiumStudentPortfolio() {
@@ -93,6 +94,35 @@ export default function PremiumStudentPortfolio() {
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // Framer Motion animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    show: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6 }
+    }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const staggerItem = {
+    hidden: { opacity: 0, y: 30 },
+    show: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5 }
+    }
   };
 
   return (
@@ -393,7 +423,13 @@ export default function PremiumStudentPortfolio() {
           <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
           
           <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-16">
+            <motion.div 
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+              className="text-center mb-16"
+            >
               <div className="inline-block px-6 py-2 mb-4 rounded-full bg-gradient-to-r from-amber-600/20 to-orange-600/20 border border-amber-500/30 hover:scale-105 transition-transform duration-300">
                 <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text font-montserrat">
                   Academic Journey
@@ -403,9 +439,15 @@ export default function PremiumStudentPortfolio() {
               <p className={`text-xl max-w-2xl mx-auto font-poppins ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                 Building a strong foundation for tomorrow's innovations
               </p>
-            </div>
+            </motion.div>
 
-            <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+              className="max-w-4xl mx-auto"
+            >
               <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 
                 {/* Timeline Line */}
@@ -491,14 +533,20 @@ export default function PremiumStudentPortfolio() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
         {/* Achievements Section */}
         <section id="achievements" className="py-24 px-6">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
+            <motion.div 
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+              className="text-center mb-16"
+            >
               <div className="inline-block px-6 py-2 mb-4 rounded-full bg-gradient-to-r from-amber-600/20 to-orange-600/20 border border-amber-500/30 hover:scale-105 transition-transform duration-300">
                 <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text font-montserrat">
                   Recognition & Milestones
@@ -508,9 +556,15 @@ export default function PremiumStudentPortfolio() {
               <p className={`text-xl max-w-2xl mx-auto font-poppins ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                 Recognized excellence in creative writing, programming education, and innovation
               </p>
-            </div>
+            </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={staggerContainer}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            >
               {[
                 {
                   title: 'First Prize - Essay Writing',
@@ -537,7 +591,8 @@ export default function PremiumStudentPortfolio() {
                   year: '2024'
                 }
               ].map((achievement, index) => (
-                <div key={index} className={`group relative p-8 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 overflow-hidden ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <motion.div key={index} variants={staggerItem}>
+                  <div className={`group relative p-8 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 overflow-hidden ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                   <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold ${isDark ? 'bg-slate-800 text-amber-400' : 'bg-slate-100 text-orange-600'}`}>
                     {achievement.year}
                   </div>
@@ -552,16 +607,23 @@ export default function PremiumStudentPortfolio() {
                       <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400 animate-pulse" style={{ animationDelay: `${i * 0.1}s` }} />
                     ))}
                   </div>
-                </div>
+                  </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
         {/* About Section */}
         <section id="about" className="py-24 px-6">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
+            <motion.div 
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+              className="text-center mb-16"
+            >
               <div className="inline-block px-6 py-2 mb-4 rounded-full bg-gradient-to-r from-amber-600/20 to-orange-600/20 border border-amber-500/30 hover:scale-105 transition-transform duration-300">
                 <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text font-montserrat">
                   Core Competencies
@@ -571,7 +633,7 @@ export default function PremiumStudentPortfolio() {
               <p className={`text-xl max-w-2xl mx-auto font-poppins ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                 A unique blend of creative excellence and technical learning
               </p>
-            </div>
+            </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
               {[
@@ -629,32 +691,46 @@ export default function PremiumStudentPortfolio() {
         {/* Tech Stack */}
         <section id="tech-stack" className={`py-24 px-6 ${isDark ? 'bg-slate-900/30' : 'bg-white/30'}`}>
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
+            <motion.div 
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+              className="text-center mb-16"
+            >
               <div className="inline-block px-6 py-2 mb-4 rounded-full bg-gradient-to-r from-amber-600/20 to-orange-600/20 border border-amber-500/30 hover:scale-105 transition-transform duration-300">
                 <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text font-montserrat">
                   Technologies
                 </span>
               </div>
               <h2 className="text-5xl font-bold mb-6 font-playfair">My Tech Stack</h2>
-            </div>
+            </motion.div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={staggerContainer}
+              className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6"
+            >
               {[
                 { name: 'HTML', icon: '🌐' }, { name: 'CSS', icon: '🎨' }, { name: 'Frontend Development', icon: '</>' },
                 { name: 'Python', icon: '🐍' }, { name: 'Node.js', icon: '🟢' }, { name: 'React', icon: '⚛️' },
                 { name: 'Tailwind', icon: '💨' }, { name: 'GitHub', icon: '📦' }, { name: 'AI Tools', icon: '🤖' }, { name: 'Vercel', icon: '▲' },
                 { name: 'Netlify', icon: '🚀' }, { name: 'VS Code', icon: '💻' }, { name: 'Claude', icon: '⚛︎' },{ name: 'Gemini', icon: '✦' }, { name: 'ChatGPT', icon: '֎' },  { name: 'Google AI Studio', icon: '👾' }
               ].map((tech, index) => (
-                <div key={index} className={`group p-6 rounded-2xl backdrop-blur-xl border hover:-translate-y-2 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <motion.div key={index} variants={staggerItem}>
+                  <div className={`group p-6 rounded-2xl backdrop-blur-xl border hover:-translate-y-2 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                   <div className="text-4xl mb-3 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300">
                     {tech.icon}
                   </div>
                   <div className={`text-sm font-semibold font-poppins ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                     {tech.name}
                   </div>
-                </div>
+                  </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -663,7 +739,13 @@ export default function PremiumStudentPortfolio() {
           <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
           
           <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-16">
+            <motion.div 
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+              className="text-center mb-16"
+            >
               <div className="inline-block px-6 py-2 mb-4 rounded-full bg-gradient-to-r from-amber-600/20 to-orange-600/20 border border-amber-500/30 hover:scale-105 transition-transform duration-300">
                 <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text font-montserrat">
                   Communication Skills
@@ -673,11 +755,18 @@ export default function PremiumStudentPortfolio() {
               <p className={`text-xl max-w-2xl mx-auto font-poppins ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                 Multilingual capabilities for effective global communication
               </p>
-            </div>
+            </motion.div>
 
-            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={staggerContainer}
+              className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8"
+            >
               {/* Hindi */}
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+              <motion.div variants={staggerItem}>
+                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 <div className="flex items-start gap-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Languages className="w-8 h-8 text-white" />
@@ -692,10 +781,12 @@ export default function PremiumStudentPortfolio() {
                     </p>
                   </div>
                 </div>
-              </div>
+                </div>
+              </motion.div>
 
               {/* English */}
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+              <motion.div variants={staggerItem}>
+                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 <div className="flex items-start gap-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Languages className="w-8 h-8 text-white" />
@@ -710,8 +801,9 @@ export default function PremiumStudentPortfolio() {
                     </p>
                   </div>
                 </div>
-              </div>
-            </div>
+                </div>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
@@ -720,7 +812,13 @@ export default function PremiumStudentPortfolio() {
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
           
           <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-16">
+            <motion.div 
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+              className="text-center mb-16"
+            >
               <div className="inline-block px-6 py-2 mb-4 rounded-full bg-gradient-to-r from-amber-600/20 to-orange-600/20 border border-amber-500/30 hover:scale-105 transition-transform duration-300">
                 <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text font-montserrat">
                   Professional Journey
@@ -730,11 +828,18 @@ export default function PremiumStudentPortfolio() {
               <p className={`text-xl max-w-2xl mx-auto font-poppins ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                 Building real-world skills through diverse professional experiences
               </p>
-            </div>
+            </motion.div>
 
-            <div className="max-w-5xl mx-auto space-y-8">
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={staggerContainer}
+              className="max-w-5xl mx-auto space-y-8"
+            >
               {/* Experience 1: EM AUR - Consolidated */}
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+              <motion.div variants={staggerItem}>
+                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Users className="w-10 h-10 text-white" />
@@ -782,10 +887,12 @@ export default function PremiumStudentPortfolio() {
                     </div>
                   </div>
                 </div>
-              </div>
+                </div>
+              </motion.div>
 
               {/* Experience 2: Nexstep Network - Project Intern */}
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+              <motion.div variants={staggerItem}>
+                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Briefcase className="w-10 h-10 text-white" />
@@ -814,10 +921,12 @@ export default function PremiumStudentPortfolio() {
                     </div>
                   </div>
                 </div>
-              </div>
+                </div>
+              </motion.div>
 
               {/* Experience 3: C.S. DAV Public School - Deputy Head Boy */}
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+              <motion.div variants={staggerItem}>
+                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-yellow-500 to-amber-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Trophy className="w-10 h-10 text-white" />
@@ -846,10 +955,12 @@ export default function PremiumStudentPortfolio() {
                     </div>
                   </div>
                 </div>
-              </div>
+                </div>
+              </motion.div>
 
               {/* Experience 4: Muskurahat Foundation - Fundraising Intern */}
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+              <motion.div variants={staggerItem}>
+                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Users className="w-10 h-10 text-white" />
@@ -878,10 +989,12 @@ export default function PremiumStudentPortfolio() {
                     </div>
                   </div>
                 </div>
-              </div>
+                </div>
+              </motion.div>
 
               {/* Experience 5: Scaler School of Technology - Student Intern */}
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+              <motion.div variants={staggerItem}>
+                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <GraduationCap className="w-10 h-10 text-white" />
@@ -935,10 +1048,12 @@ export default function PremiumStudentPortfolio() {
                     </div>
                   </div>
                 </div>
-              </div>
+                </div>
+              </motion.div>
 
               {/* Open to More Opportunities Card */}
-              <div className={`p-10 rounded-3xl border-2 border-dashed backdrop-blur-xl transition-all duration-500 ${isDark ? 'border-slate-700 bg-slate-800/30' : 'border-slate-300 bg-slate-50'}`}>
+              <motion.div variants={staggerItem}>
+                <div className={`p-10 rounded-3xl border-2 border-dashed backdrop-blur-xl transition-all duration-500 ${isDark ? 'border-slate-700 bg-slate-800/30' : 'border-slate-300 bg-slate-50'}`}>
                 <div className="text-center">
                   <Trophy className="w-12 h-12 mx-auto mb-3 text-orange-500 animate-pulse" />
                   <h4 className="font-bold font-poppins mb-2">Open to More Opportunities</h4>
@@ -946,15 +1061,22 @@ export default function PremiumStudentPortfolio() {
                     Actively seeking internships, freelance projects, and collaborative opportunities to apply my skills and gain real-world experience
                   </p>
                 </div>
-              </div>
-            </div>
+                </div>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
         {/* Awards Section */}
         <section id="awards" className={`py-24 px-6 ${isDark ? 'bg-slate-900/30' : 'bg-white/30'}`}>
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
+            <motion.div 
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+              className="text-center mb-16"
+            >
               <div className="inline-block px-6 py-2 mb-4 rounded-full bg-gradient-to-r from-amber-600/20 to-orange-600/20 border border-amber-500/30 hover:scale-105 transition-transform duration-300">
                 <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text font-montserrat">
                   Recognition & Honors
@@ -964,11 +1086,18 @@ export default function PremiumStudentPortfolio() {
               <p className={`text-xl max-w-2xl mx-auto font-poppins ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                 Celebrating achievements and excellence in various domains
               </p>
-            </div>
+            </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={staggerContainer}
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+            >
               {/* Award 1: Essay Writing Competition */}
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-amber-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-amber-500/50' : 'bg-white/50 border-slate-200 hover:border-amber-500/50'}`}>
+              <motion.div variants={staggerItem}>
+                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-amber-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-amber-500/50' : 'bg-white/50 border-slate-200 hover:border-amber-500/50'}`}>
                 <div className="w-20 h-20 mb-6 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-lg">
                   <Trophy className="w-10 h-10 text-white" />
                 </div>
@@ -987,10 +1116,12 @@ export default function PremiumStudentPortfolio() {
                     <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-              </div>
+                </div>
+              </motion.div>
 
               {/* Award 2: Scaler Onboarding Kit */}
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+              <motion.div variants={staggerItem}>
+                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 <div className="w-20 h-20 mb-6 rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-lg">
                   <Award className="w-10 h-10 text-white" />
                 </div>
@@ -1013,8 +1144,9 @@ export default function PremiumStudentPortfolio() {
                   </p>
                   {/* TODO: Add award photo here */}
                 </div>
-              </div>
-            </div>
+                </div>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
@@ -1023,7 +1155,13 @@ export default function PremiumStudentPortfolio() {
           <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
           
           <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-16">
+            <motion.div 
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+              className="text-center mb-16"
+            >
               <div className="inline-block px-6 py-2 mb-4 rounded-full bg-gradient-to-r from-amber-600/20 to-orange-600/20 border border-amber-500/30 hover:scale-105 transition-transform duration-300">
                 <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text font-montserrat">
                   Professional Development
@@ -1033,11 +1171,18 @@ export default function PremiumStudentPortfolio() {
               <p className={`text-xl max-w-2xl mx-auto font-poppins ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                 Continuous learning and skill validation through recognized programs
               </p>
-            </div>
+            </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={staggerContainer}
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+            >
               {/* Certification 1: Certificate of Excellence */}
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+              <motion.div variants={staggerItem}>
+                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 <div className="flex items-start gap-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Award className="w-8 h-8 text-white" />
@@ -1063,10 +1208,12 @@ export default function PremiumStudentPortfolio() {
                     Add certificate image
                   </p>
                 </div>
-              </div>
+                </div>
+              </motion.div>
 
               {/* Certification 2: Startup School */}
-              <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+              <motion.div variants={staggerItem}>
+                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 <div className="flex items-start gap-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <GraduationCap className="w-8 h-8 text-white" />
@@ -1093,8 +1240,9 @@ export default function PremiumStudentPortfolio() {
                     Add certificate image
                   </p>
                 </div>
-              </div>
-            </div>
+                </div>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
@@ -1105,7 +1253,13 @@ export default function PremiumStudentPortfolio() {
           <div className="absolute bottom-10 right-10 w-80 h-80 bg-white rounded-full blur-3xl opacity-10 animate-float-delay-2"></div>
 
           <div className="relative max-w-7xl mx-auto">
-            <div className="text-center mb-16">
+            <motion.div 
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+              className="text-center mb-16"
+            >
               <div className="inline-block px-6 py-2 mb-4 rounded-full bg-white/20 border border-white/30 backdrop-blur-sm hover:scale-105 transition-transform duration-300">
                 <span className="text-sm font-bold uppercase tracking-wider text-white font-montserrat">
                   Let's Connect
@@ -1115,7 +1269,7 @@ export default function PremiumStudentPortfolio() {
               <p className="text-xl max-w-2xl mx-auto text-white/90 font-poppins">
                 I'm always open to new opportunities and learning experiences
               </p>
-            </div>
+            </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
               {/* Contact Info Cards */}
