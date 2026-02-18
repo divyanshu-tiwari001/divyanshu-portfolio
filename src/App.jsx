@@ -8,18 +8,18 @@ import { initializeContentProtection, cleanupContentProtection } from './utils/c
 export default function PremiumStudentPortfolio() {
   const [isDark, setIsDark] = useState(true);
   const [showPopup, setShowPopup] = useState(true);
-  const [magneticPosition, setMagneticPosition] = useState({ x: 0, y: 0 });
+  const [magneticPositions, setMagneticPositions] = useState({});
 
-  const handleMagneticMove = (e, index) => {
+  const handleMagneticMove = (e, key) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
     const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
-    setMagneticPosition({ x, y });
+    setMagneticPositions(prev => ({ ...prev, [key]: { x, y } }));
   };
 
-  const handleMagneticLeave = () => {
-    setMagneticPosition({ x: 0, y: 0 });
+  const handleMagneticLeave = (key) => {
+    setMagneticPositions(prev => ({ ...prev, [key]: { x: 0, y: 0 } }));
   };
 
   useEffect(() => {
@@ -511,9 +511,9 @@ export default function PremiumStudentPortfolio() {
               >
                 <div 
                   className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                  onMouseMove={(e) => handleMagneticMove(e, 0)}
-                  onMouseLeave={handleMagneticLeave}
-                  style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                  onMouseMove={(e) => handleMagneticMove(e, 'education')}
+                  onMouseLeave={() => handleMagneticLeave('education')}
+                  style={{ transform: `translate(${magneticPositions['education']?.x || 0}px, ${magneticPositions['education']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
                 >
                 
                 {/* Timeline Line */}
@@ -771,8 +771,8 @@ export default function PremiumStudentPortfolio() {
                         border: '1px solid rgba(255, 255, 255, 0.1)',
                         boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
                       } : {}}
-                      onMouseMove={(e) => handleMagneticMove(e, index)}
-                      onMouseLeave={handleMagneticLeave}
+                      onMouseMove={(e) => handleMagneticMove(e, `achievement-${index}`)}
+                      onMouseLeave={() => handleMagneticLeave(`achievement-${index}`)}
                     >
                   <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold ${isDark ? 'bg-slate-800 text-amber-400' : 'bg-slate-100 text-orange-600'}`}>
                     {achievement.year}
@@ -960,9 +960,9 @@ export default function PremiumStudentPortfolio() {
                 >
                   <div 
                     className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                    onMouseMove={(e) => handleMagneticMove(e, 0)}
-                    onMouseLeave={handleMagneticLeave}
-                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                    onMouseMove={(e) => handleMagneticMove(e, 'language-hindi')}
+                    onMouseLeave={() => handleMagneticLeave('language-hindi')}
+                    style={{ transform: `translate(${magneticPositions['language-hindi']?.x || 0}px, ${magneticPositions['language-hindi']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
                   >
                 <div className="flex items-start gap-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -996,9 +996,9 @@ export default function PremiumStudentPortfolio() {
                 >
                   <div 
                     className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                    onMouseMove={(e) => handleMagneticMove(e, 1)}
-                    onMouseLeave={handleMagneticLeave}
-                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                    onMouseMove={(e) => handleMagneticMove(e, 'language-english')}
+                    onMouseLeave={() => handleMagneticLeave('language-english')}
+                    style={{ transform: `translate(${magneticPositions['language-english']?.x || 0}px, ${magneticPositions['language-english']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
                   >
                 <div className="flex items-start gap-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -1065,9 +1065,9 @@ export default function PremiumStudentPortfolio() {
                 >
                   <div 
                     className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                    onMouseMove={(e) => handleMagneticMove(e, 0)}
-                    onMouseLeave={handleMagneticLeave}
-                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                    onMouseMove={(e) => handleMagneticMove(e, 'exp-em-aur')}
+                    onMouseLeave={() => handleMagneticLeave('exp-em-aur')}
+                    style={{ transform: `translate(${magneticPositions['exp-em-aur']?.x || 0}px, ${magneticPositions['exp-em-aur']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
                   >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -1134,9 +1134,9 @@ export default function PremiumStudentPortfolio() {
                 >
                   <div 
                     className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                    onMouseMove={(e) => handleMagneticMove(e, 1)}
-                    onMouseLeave={handleMagneticLeave}
-                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                    onMouseMove={(e) => handleMagneticMove(e, 'exp-nexstep')}
+                    onMouseLeave={() => handleMagneticLeave('exp-nexstep')}
+                    style={{ transform: `translate(${magneticPositions['exp-nexstep']?.x || 0}px, ${magneticPositions['exp-nexstep']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
                   >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -1184,9 +1184,9 @@ export default function PremiumStudentPortfolio() {
                 >
                   <div 
                     className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                    onMouseMove={(e) => handleMagneticMove(e, 2)}
-                    onMouseLeave={handleMagneticLeave}
-                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                    onMouseMove={(e) => handleMagneticMove(e, 'exp-deputy-head-boy')}
+                    onMouseLeave={() => handleMagneticLeave('exp-deputy-head-boy')}
+                    style={{ transform: `translate(${magneticPositions['exp-deputy-head-boy']?.x || 0}px, ${magneticPositions['exp-deputy-head-boy']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
                   >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-yellow-500 to-amber-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -1234,9 +1234,9 @@ export default function PremiumStudentPortfolio() {
                 >
                   <div 
                     className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                    onMouseMove={(e) => handleMagneticMove(e, 3)}
-                    onMouseLeave={handleMagneticLeave}
-                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                    onMouseMove={(e) => handleMagneticMove(e, 'exp-muskurahat')}
+                    onMouseLeave={() => handleMagneticLeave('exp-muskurahat')}
+                    style={{ transform: `translate(${magneticPositions['exp-muskurahat']?.x || 0}px, ${magneticPositions['exp-muskurahat']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
                   >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -1284,9 +1284,9 @@ export default function PremiumStudentPortfolio() {
                 >
                   <div 
                     className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                    onMouseMove={(e) => handleMagneticMove(e, 4)}
-                    onMouseLeave={handleMagneticLeave}
-                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                    onMouseMove={(e) => handleMagneticMove(e, 'exp-scaler')}
+                    onMouseLeave={() => handleMagneticLeave('exp-scaler')}
+                    style={{ transform: `translate(${magneticPositions['exp-scaler']?.x || 0}px, ${magneticPositions['exp-scaler']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
                   >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -1403,9 +1403,9 @@ export default function PremiumStudentPortfolio() {
                 >
                   <div 
                     className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-amber-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-amber-500/50' : 'bg-white/50 border-slate-200 hover:border-amber-500/50'}`}
-                    onMouseMove={(e) => handleMagneticMove(e, 0)}
-                    onMouseLeave={handleMagneticLeave}
-                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                    onMouseMove={(e) => handleMagneticMove(e, 'award-essay')}
+                    onMouseLeave={() => handleMagneticLeave('award-essay')}
+                    style={{ transform: `translate(${magneticPositions['award-essay']?.x || 0}px, ${magneticPositions['award-essay']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
                   >
                 <div className="w-20 h-20 mb-6 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-lg">
                   <Trophy className="w-10 h-10 text-white" />
@@ -1443,9 +1443,9 @@ export default function PremiumStudentPortfolio() {
                 >
                   <div 
                     className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                    onMouseMove={(e) => handleMagneticMove(e, 1)}
-                    onMouseLeave={handleMagneticLeave}
-                    style={{ transform: `translate(${magneticPosition.x}px, ${magneticPosition.y}px)`, transition: 'transform 0.3s ease-out' }}
+                    onMouseMove={(e) => handleMagneticMove(e, 'award-scaler')}
+                    onMouseLeave={() => handleMagneticLeave('award-scaler')}
+                    style={{ transform: `translate(${magneticPositions['award-scaler']?.x || 0}px, ${magneticPositions['award-scaler']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
                   >
                 <div className="w-20 h-20 mb-6 rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-lg">
                   <Award className="w-10 h-10 text-white" />
