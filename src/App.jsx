@@ -31,7 +31,7 @@ export default function PremiumStudentPortfolio() {
     const errors = {};
     if (!formData.name.trim()) errors.name = 'Name is required';
     if (!formData.email.trim()) errors.email = 'Email is required';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = 'Please enter a valid email address';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = 'Please enter a valid email address (e.g., name@example.com)';
     if (!formData.subject.trim()) errors.subject = 'Subject is required';
     if (!formData.message.trim()) errors.message = 'Message is required';
     return errors;
@@ -56,15 +56,18 @@ export default function PremiumStudentPortfolio() {
     setFormStatus('loading');
     
     try {
+      // FormSubmit.co requires form-encoded data
+      const formElement = e.target;
+      const formDataToSend = new FormData(formElement);
+      
+      // Add hidden fields
+      formDataToSend.append('_subject', 'New message from Portfolio!');
+      formDataToSend.append('_captcha', 'false');
+      formDataToSend.append('_template', 'table');
+      
       const response = await fetch('https://formsubmit.co/divyanshutiwari@duck.com', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          _subject: 'New message from Portfolio!',
-          _captcha: 'false',
-          _template: 'table'
-        })
+        body: formDataToSend
       });
       
       if (response.ok) {
@@ -457,22 +460,19 @@ export default function PremiumStudentPortfolio() {
           <div 
             className="absolute top-20 left-10 w-96 h-96 bg-amber-500 rounded-full blur-3xl opacity-20 animate-float" 
             style={{ 
-              transform: `translateY(${scrollY * 0.3}px)`,
-              willChange: 'transform'
+              transform: `translateY(${scrollY * 0.3}px)`
             }}
           ></div>
           <div 
             className="absolute top-40 right-20 w-80 h-80 bg-orange-500 rounded-full blur-3xl opacity-20 animate-float-delay-2" 
             style={{ 
-              transform: `translateY(${scrollY * 0.4}px)`,
-              willChange: 'transform'
+              transform: `translateY(${scrollY * 0.4}px)`
             }}
           ></div>
           <div 
             className="absolute bottom-20 left-1/3 w-72 h-72 bg-yellow-500 rounded-full blur-3xl opacity-20 animate-float-delay-4" 
             style={{ 
-              transform: `translateY(${scrollY * 0.5}px)`,
-              willChange: 'transform'
+              transform: `translateY(${scrollY * 0.5}px)`
             }}
           ></div>
 
@@ -514,8 +514,8 @@ export default function PremiumStudentPortfolio() {
                 <ChevronRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
-              <button onClick={() => window.open('#', '_blank')} className={`px-8 py-4 text-lg font-bold rounded-full border-2 border-orange-500 transition-all duration-300 font-poppins hover:scale-105 hover:shadow-xl ${isDark ? 'text-orange-400 hover:bg-orange-500 hover:text-white' : 'text-orange-600 hover:bg-orange-600 hover:text-white'}`}>
-                Download Resume
+              <button onClick={() => scrollTo('contact')} className={`px-8 py-4 text-lg font-bold rounded-full border-2 border-orange-500 transition-all duration-300 font-poppins hover:scale-105 hover:shadow-xl ${isDark ? 'text-orange-400 hover:bg-orange-500 hover:text-white' : 'text-orange-600 hover:bg-orange-600 hover:text-white'}`}>
+                Get in Touch
               </button>
             </div>
 
