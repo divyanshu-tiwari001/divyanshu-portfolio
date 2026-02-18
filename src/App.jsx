@@ -117,12 +117,16 @@ export default function PremiumStudentPortfolio() {
 
   // Prevent copying and text selection
   useEffect(() => {
-    // Helper function to check if element is a form input or editable element
+    // Helper function to check if element is a form input, editable element, or in contact section
     const isFormInput = (element) => {
       if (!element) return false;
       
       const tagName = element.tagName;
-      const isEditable = element.isContentEditable; // This properly checks if element is editable (including inherited)
+      const isEditable = element.isContentEditable;
+      
+      // Check if element is within the contact section
+      const contactSection = element.closest('#contact');
+      if (contactSection) return true; // Allow all interactions in contact section
       
       return tagName === 'INPUT' || 
              tagName === 'TEXTAREA' || 
@@ -131,28 +135,28 @@ export default function PremiumStudentPortfolio() {
              element.getAttribute('role') === 'textbox';
     };
 
-    // Prevent right-click context menu
+    // Prevent right-click context menu (except in contact section)
     const handleContextMenu = (e) => {
       if (!isFormInput(e.target)) {
         e.preventDefault();
       }
     };
 
-    // Prevent copy
+    // Prevent copy (except in contact section)
     const handleCopy = (e) => {
       if (!isFormInput(e.target)) {
         e.preventDefault();
       }
     };
 
-    // Prevent cut
+    // Prevent cut (except in contact section)
     const handleCut = (e) => {
       if (!isFormInput(e.target)) {
         e.preventDefault();
       }
     };
 
-    // Prevent select all
+    // Prevent select all (except in contact section)
     const handleSelectAll = (e) => {
       if (e.code === 'KeyA' && (e.ctrlKey || e.metaKey)) {
         if (!isFormInput(e.target)) {
