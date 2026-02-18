@@ -299,15 +299,30 @@ export default function PremiumStudentPortfolio() {
               </p>
               
               <div className="flex gap-3 mb-6">
-                <div className={`flex-1 p-3 rounded-xl text-center ${isDark ? 'bg-slate-800' : 'bg-slate-100'}`}>
+                <div className={`flex-1 p-3 rounded-xl text-center ${isDark ? 'bg-slate-800/70' : 'bg-white/70'}`} style={{
+                  backdropFilter: 'blur(20px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
+                }}>
                   <div className="text-2xl font-bold text-orange-500 font-poppins">10+</div>
                   <div className={`text-xs font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Certificates</div>
                 </div>
-                <div className={`flex-1 p-3 rounded-xl text-center ${isDark ? 'bg-slate-800' : 'bg-slate-100'}`}>
+                <div className={`flex-1 p-3 rounded-xl text-center ${isDark ? 'bg-slate-800/70' : 'bg-white/70'}`} style={{
+                  backdropFilter: 'blur(20px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
+                }}>
                   <div className="text-2xl font-bold text-orange-500 font-poppins">3+</div>
                   <div className={`text-xs font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Awards</div>
                 </div>
-                <div className={`flex-1 p-3 rounded-xl text-center ${isDark ? 'bg-slate-800' : 'bg-slate-100'}`}>
+                <div className={`flex-1 p-3 rounded-xl text-center ${isDark ? 'bg-slate-800/70' : 'bg-white/70'}`} style={{
+                  backdropFilter: 'blur(20px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
+                }}>
                   <div className="text-2xl font-bold text-orange-500 font-poppins">200+</div>
                   <div className={`text-xs font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Hours Learning</div>
                 </div>
@@ -325,7 +340,10 @@ export default function PremiumStudentPortfolio() {
         )}
 
         {/* Navigation */}
-        <nav className={`sticky top-0 z-40 backdrop-blur-xl border-b transition-all duration-300 ${isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white/80 border-slate-200'}`}>
+        <nav className={`sticky top-0 z-40 transition-all duration-300 ${isDark ? 'bg-slate-950/70 border-slate-800/50' : 'bg-white/70 border-slate-200/50'} backdrop-filter backdrop-blur-[20px] backdrop-saturate-[180%] border-b`} style={{ 
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)'
+        }}>
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <div className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text font-poppins hover:scale-110 transition-transform duration-300 cursor-pointer" onClick={() => scrollTo('home')}>
               DT
@@ -592,7 +610,16 @@ export default function PremiumStudentPortfolio() {
                 }
               ].map((achievement, index) => (
                 <motion.div key={index} variants={staggerItem}>
-                  <div className={`group relative p-8 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 overflow-hidden ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                  <div className={`group relative p-8 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 overflow-hidden ${
+                    index === 0 
+                      ? isDark ? 'bg-slate-900/70 border-slate-700/50' : 'bg-white/70 border-slate-300/50'
+                      : isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'
+                  }`} style={index === 0 ? {
+                    backdropFilter: 'blur(20px) saturate(180%)',
+                    WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
+                  } : {}}>
                   <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold ${isDark ? 'bg-slate-800 text-amber-400' : 'bg-slate-100 text-orange-600'}`}>
                     {achievement.year}
                   </div>
