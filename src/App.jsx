@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages, Image } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Typewriter from 'typewriter-effect';
 import { initializeContentProtection, cleanupContentProtection } from './utils/contentProtection';
 
 export default function PremiumStudentPortfolio() {
@@ -370,35 +371,53 @@ export default function PremiumStudentPortfolio() {
           <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-yellow-500 rounded-full blur-3xl opacity-20 animate-float-delay-4"></div>
 
           <div className="max-w-7xl mx-auto text-center relative z-10">
-            <div className="inline-block px-6 py-2 mb-6 rounded-full bg-gradient-to-r from-amber-600/20 to-orange-600/20 border border-amber-500/30 animate-slide-bottom hover:scale-105 transition-transform duration-300">
-              <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text font-montserrat">
-                Emerging Developer & Creative Leader
+            <div className="inline-block px-6 py-2 mb-6 rounded-full bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-500/30 animate-slide-bottom hover:scale-105 transition-transform duration-300">
+              <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text font-montserrat">
+                Available for Opportunities
               </span>
             </div>
             
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight font-playfair animate-scale-in">
-              Hi, I'm <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text animate-gradient">Divyanshu Tiwari</span>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight font-playfair animate-scale-in">
+              I Build <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text animate-gradient">Digital Experiences</span> That Make an Impact
             </h1>
             
-            <p className={`text-xl md:text-2xl mb-12 max-w-3xl mx-auto font-poppins animate-slide-bottom ${isDark ? 'text-slate-300' : 'text-slate-600'}`} style={{ animationDelay: '0.2s' }}>
-              A passionate 16-year-old developer from Bihar, India, focused on building user-friendly websites and apps. I use my creative skills to turn complex code into simple, effective solutions.
+            <div className={`text-2xl md:text-3xl mb-4 font-bold font-poppins ${isDark ? 'text-amber-400' : 'text-orange-600'}`} style={{ minHeight: '45px' }}>
+              <Typewriter
+                options={{
+                  strings: [
+                    'Full-Stack Developer',
+                    'Creative Problem Solver',
+                    'UI/UX Enthusiast',
+                    'Tech Innovator'
+                  ],
+                  autoStart: true,
+                  loop: true,
+                  deleteSpeed: 50,
+                  delay: 80
+                }}
+              />
+            </div>
+
+            <p className={`text-lg md:text-xl mb-12 max-w-3xl mx-auto font-poppins animate-slide-bottom ${isDark ? 'text-slate-300' : 'text-slate-600'}`} style={{ animationDelay: '0.2s' }}>
+              Passionate full-stack developer specializing in React, modern web technologies, and creative problem-solving. Currently pursuing senior secondary education while building real-world projects and gaining professional experience.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-slide-bottom" style={{ animationDelay: '0.4s' }}>
-              <button onClick={() => scrollTo('achievements')} className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-lg font-bold rounded-full hover:scale-105 hover:shadow-xl hover:shadow-orange-500/50 transition-all duration-300 font-poppins relative overflow-hidden">
-                <span className="relative z-10">View Achievements</span>
+              <button onClick={() => scrollTo('achievements')} className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-lg font-bold rounded-full hover:scale-105 hover:shadow-xl hover:shadow-orange-500/50 transition-all duration-300 font-poppins relative overflow-hidden flex items-center justify-center gap-2">
+                <span className="relative z-10">View My Projects</span>
+                <ChevronRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
-              <button onClick={() => scrollTo('contact')} className={`px-8 py-4 text-lg font-bold rounded-full border-2 border-orange-500 transition-all duration-300 font-poppins hover:scale-105 hover:shadow-xl ${isDark ? 'text-orange-400 hover:bg-orange-500 hover:text-white' : 'text-orange-600 hover:bg-orange-600 hover:text-white'}`}>
-                Get in Touch
+              <button onClick={() => window.open('#', '_blank')} className={`px-8 py-4 text-lg font-bold rounded-full border-2 border-orange-500 transition-all duration-300 font-poppins hover:scale-105 hover:shadow-xl ${isDark ? 'text-orange-400 hover:bg-orange-500 hover:text-white' : 'text-orange-600 hover:bg-orange-600 hover:text-white'}`}>
+                Download Resume
               </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {[
-                { icon: Award, value: '10+', label: 'Certifications', delay: '0.1s' },
-                { icon: BookOpen, value: '200+', label: 'Learning Hours', delay: '0.2s' },
-                { icon: Trophy, value: '3+', label: 'Competition Wins', delay: '0.3s' }
+                { icon: Award, value: '10+', label: 'Certificates Earned', delay: '0.1s' },
+                { icon: Trophy, value: '3+', label: 'Awards Won', delay: '0.2s' },
+                { icon: BookOpen, value: '200+', label: 'Hours of Learning', delay: '0.3s' }
               ].map((stat, index) => (
                 <div 
                   key={index} 
