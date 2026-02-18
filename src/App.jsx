@@ -11,6 +11,9 @@ export default function PremiumStudentPortfolio() {
   const [showPopup, setShowPopup] = useState(true);
   const [magneticPositions, setMagneticPositions] = useState({});
   const [scrollY, setScrollY] = useState(0);
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
+  const [formStatus, setFormStatus] = useState('idle'); // idle, loading, success, error
+  const [formErrors, setFormErrors] = useState({});
 
   const handleMagneticMove = (e, key) => {
     const card = e.currentTarget;
@@ -22,6 +25,60 @@ export default function PremiumStudentPortfolio() {
 
   const handleMagneticLeave = (key) => {
     setMagneticPositions(prev => ({ ...prev, [key]: { x: 0, y: 0 } }));
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.name.trim()) errors.name = 'Name is required';
+    if (!formData.email.trim()) errors.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = 'Please enter a valid email address';
+    if (!formData.subject.trim()) errors.subject = 'Subject is required';
+    if (!formData.message.trim()) errors.message = 'Message is required';
+    return errors;
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (formErrors[name]) {
+      setFormErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const errors = validateForm();
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      return;
+    }
+    
+    setFormStatus('loading');
+    
+    try {
+      const response = await fetch('https://formsubmit.co/divyanshutiwari@duck.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          _subject: 'New message from Portfolio!',
+          _captcha: 'false',
+          _template: 'table'
+        })
+      });
+      
+      if (response.ok) {
+        setFormStatus('success');
+        setTimeout(() => {
+          setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+          setFormStatus('idle');
+        }, 3000);
+      } else {
+        setFormStatus('error');
+      }
+    } catch (error) {
+      setFormStatus('error');
+    }
   };
 
   // Parallax scroll effect
@@ -1677,94 +1734,145 @@ export default function PremiumStudentPortfolio() {
                 </h3>
                 
                 <form 
-                  action="https://formsubmit.co/divyanshutiwari@duck.com" 
-                  method="POST"
+                  onSubmit={handleSubmit}
                   className="space-y-4"
                 >
-                  {/* Hidden fields for FormSubmit configuration */}
-                  <input type="hidden" name="_subject" value="New message from Portfolio!" />
-                  <input type="hidden" name="_captcha" value="false" />
-                  <input type="hidden" name="_template" value="table" />
-                  
-                  <div>
+                  <motion.div whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
                     <label className="block text-sm font-semibold text-white/90 mb-2 font-roboto">
                       Name <span className="text-red-400">*</span>
                     </label>
                     <input
                       type="text"
                       name="name"
-                      required
+                      value={formData.name}
+                      onChange={handleInputChange}
                       placeholder="Your full name"
                       className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all duration-300 font-roboto"
                     />
-                  </div>
+                    {formErrors.name && <p className="text-xs text-red-300 mt-1">{formErrors.name}</p>}
+                  </motion.div>
 
-                  <div>
+                  <motion.div whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
                     <label className="block text-sm font-semibold text-white/90 mb-2 font-roboto">
                       Email <span className="text-red-400">*</span>
                     </label>
                     <input
                       type="email"
                       name="email"
-                      required
+                      value={formData.email}
+                      onChange={handleInputChange}
                       placeholder="your.email@example.com"
                       className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all duration-300 font-roboto"
                     />
-                  </div>
+                    {formErrors.email && <p className="text-xs text-red-300 mt-1">{formErrors.email}</p>}
+                  </motion.div>
 
-                  <div>
+                  <motion.div whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
                     <label className="block text-sm font-semibold text-white/90 mb-2 font-roboto">
                       Phone Number
                     </label>
                     <input
                       type="tel"
                       name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
                       placeholder="+91 1234567890 (optional)"
                       className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all duration-300 font-roboto"
                     />
-                  </div>
+                  </motion.div>
 
-                  <div>
+                  <motion.div whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
                     <label className="block text-sm font-semibold text-white/90 mb-2 font-roboto">
                       Subject <span className="text-red-400">*</span>
                     </label>
                     <input
                       type="text"
                       name="subject"
-                      required
+                      value={formData.subject}
+                      onChange={handleInputChange}
                       placeholder="What's this about?"
                       className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all duration-300 font-roboto"
                     />
-                  </div>
+                    {formErrors.subject && <p className="text-xs text-red-300 mt-1">{formErrors.subject}</p>}
+                  </motion.div>
 
-                  <div>
+                  <motion.div whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
                     <label className="block text-sm font-semibold text-white/90 mb-2 font-roboto">
                       Message <span className="text-red-400">*</span>
                     </label>
                     <textarea
                       name="message"
-                      required
+                      value={formData.message}
+                      onChange={handleInputChange}
                       rows="4"
                       placeholder="Tell me about your project, idea, or just say hi..."
                       className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all duration-300 resize-none font-roboto"
                     />
-                  </div>
+                    {formErrors.message && <p className="text-xs text-red-300 mt-1">{formErrors.message}</p>}
+                  </motion.div>
 
                   <button
                     type="submit"
-                    className="w-full px-8 py-4 bg-white text-orange-600 font-bold rounded-full hover:scale-105 hover:shadow-2xl transition-all duration-300 font-poppins relative overflow-hidden group"
+                    disabled={formStatus === 'loading' || formStatus === 'success'}
+                    className="w-full px-8 py-4 bg-white text-orange-600 font-bold rounded-full hover:scale-105 hover:shadow-2xl transition-all duration-300 font-poppins relative overflow-hidden group disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
                     <span className="relative z-10 flex items-center justify-center gap-2">
-                      <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                      Send Message
+                      {formStatus === 'loading' && (
+                        <>
+                          <div className="w-5 h-5 border-2 border-orange-600 border-t-transparent rounded-full animate-spin"></div>
+                          <span>Sending...</span>
+                        </>
+                      )}
+                      {formStatus === 'success' && (
+                        <>
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          <span>Sent!</span>
+                        </>
+                      )}
+                      {(formStatus === 'idle' || formStatus === 'error') && (
+                        <>
+                          <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                          <span>Send Message</span>
+                        </>
+                      )}
                     </span>
                     <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                   </button>
+
+                  {formStatus === 'error' && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="p-3 rounded-xl bg-red-500/20 border border-red-500/30 text-white text-center"
+                    >
+                      <p className="text-sm">Unable to send message. Please check your connection and try again, or email me directly at divyanshutiwari@duck.com</p>
+                    </motion.div>
+                  )}
 
                   <p className="text-xs text-white/60 text-center font-roboto">
                     Your message will be sent directly to my email
                   </p>
                 </form>
+
+                {formStatus === 'success' && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="mt-4 p-4 rounded-xl bg-green-500/20 border border-green-500/30 text-white text-center"
+                  >
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    </div>
+                    <p className="font-semibold">Message sent successfully!</p>
+                    <p className="text-sm text-white/80">I'll get back to you soon.</p>
+                  </motion.div>
+                )}
               </div>
             </div>
           </div>
