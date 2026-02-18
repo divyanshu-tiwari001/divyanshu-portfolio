@@ -3,6 +3,7 @@ import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, 
 import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
 import Tilt from 'react-parallax-tilt';
+import CustomCursor from './components/CustomCursor';
 import { initializeContentProtection, cleanupContentProtection } from './utils/contentProtection';
 
 export default function PremiumStudentPortfolio() {
@@ -142,6 +143,7 @@ export default function PremiumStudentPortfolio() {
 
   return (
     <>
+      <CustomCursor />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=swap');
         
