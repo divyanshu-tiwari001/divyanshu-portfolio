@@ -491,10 +491,12 @@ export default function PremiumStudentPortfolio() {
               <Typewriter
                 options={{
                   strings: [
-                    'Full-Stack Developer',
+                    'AI-Powered Developer',
+                    'Prompt Engineer',
+                    'Frontend Developer',
+                    'Python Programmer',
                     'Creative Problem Solver',
-                    'UI/UX Enthusiast',
-                    'Tech Innovator'
+                    'Team Leader'
                   ],
                   autoStart: true,
                   loop: true,
@@ -505,7 +507,7 @@ export default function PremiumStudentPortfolio() {
             </div>
 
             <p className={`text-lg md:text-xl mb-12 max-w-3xl mx-auto font-poppins animate-slide-bottom ${isDark ? 'text-slate-300' : 'text-slate-600'}`} style={{ animationDelay: '0.2s' }}>
-              Passionate full-stack developer specializing in React, modern web technologies, and creative problem-solving. Currently pursuing senior secondary education while building real-world projects and gaining professional experience.
+              Developer leveraging <strong>AI Prompting, Vibe Coding, HTML &amp; CSS, and Python</strong> to build real-world projects. Currently pursuing senior secondary education, applying hands-on technical and leadership skills across professional and creative domains.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-slide-bottom" style={{ animationDelay: '0.4s' }}>
