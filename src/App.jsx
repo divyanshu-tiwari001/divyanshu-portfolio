@@ -696,96 +696,6 @@ export default function PremiumStudentPortfolio() {
           </div>
         </section>
 
-        {/* Technical Skills Section */}
-        <section id="skills" className={`py-24 px-6 relative overflow-hidden ${isDark ? 'bg-slate-900/30' : 'bg-white/30'}`}>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
-          
-          <div className="max-w-7xl mx-auto relative z-10">
-            <motion.div 
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeInUp}
-              className="text-center mb-16"
-            >
-              <div className="inline-block px-6 py-2 mb-4 rounded-full bg-gradient-to-r from-amber-600/20 to-orange-600/20 border border-amber-500/30 hover:scale-105 transition-transform duration-300">
-                <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text font-montserrat">
-                  Technical Expertise
-                </span>
-              </div>
-              <h2 className="text-5xl font-bold mb-6 font-playfair">My Skills</h2>
-              <p className={`text-xl max-w-2xl mx-auto font-poppins ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                Proficient in modern technologies and tools for building exceptional digital experiences
-              </p>
-            </motion.div>
-
-            <div className="max-w-4xl mx-auto space-y-8">
-              {[
-                { category: 'Frontend', skills: [
-                  { name: 'React', level: 90 },
-                  { name: 'JavaScript', level: 85 },
-                  { name: 'HTML/CSS', level: 95 },
-                  { name: 'Tailwind CSS', level: 90 }
-                ]},
-                { category: 'Backend', skills: [
-                  { name: 'Node.js', level: 70 },
-                  { name: 'Python', level: 75 }
-                ]},
-                { category: 'Tools', skills: [
-                  { name: 'Git', level: 80 },
-                  { name: 'Figma', level: 70 },
-                  { name: 'VS Code', level: 95 }
-                ]},
-                { category: 'Design', skills: [
-                  { name: 'UI/UX Principles', level: 75 }
-                ]}
-              ].map((category, catIndex) => (
-                <motion.div 
-                  key={catIndex}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-50px" }}
-                  variants={staggerContainer}
-                  className={`p-8 rounded-3xl backdrop-blur-xl border ${isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-white/50 border-slate-200'}`}
-                >
-                  <h3 className="text-2xl font-bold mb-6 font-poppins bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text">
-                    {category.category}
-                  </h3>
-                  <div className="space-y-6">
-                    {category.skills.map((skill, skillIndex) => (
-                      <motion.div 
-                        key={skillIndex}
-                        variants={staggerItem}
-                        className="group"
-                      >
-                        <div className="flex justify-between items-center mb-2">
-                          <span className={`font-semibold font-poppins ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
-                            {skill.name}
-                          </span>
-                          <span className={`text-sm font-bold ${isDark ? 'text-amber-400' : 'text-orange-600'}`}>
-                            {skill.level}%
-                          </span>
-                        </div>
-                        <div className={`h-3 rounded-full overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${skill.level}%` }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1.2, ease: "easeOut", delay: skillIndex * 0.1 }}
-                            className="h-full bg-gradient-to-r from-amber-500 to-orange-600 rounded-full relative overflow-hidden"
-                          >
-                            <div className="absolute inset-0 shimmer"></div>
-                          </motion.div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Achievements Section */}
         <section id="achievements" className="py-24 px-6">
           <div className="max-w-7xl mx-auto">
@@ -939,26 +849,48 @@ export default function PremiumStudentPortfolio() {
 
             <div className={`p-10 rounded-3xl backdrop-blur-xl border ${isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-white/50 border-slate-200'}`}>
               <h3 className="text-3xl font-bold mb-8 text-center font-poppins">Learning Journey</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-8">
                 {[
-                  { name: 'HTML & CSS', icon: Code, percent: 5 },
-                  { name: 'Frontend Development using AI', icon: Zap, percent: 60 },
-                  { name: 'Python', icon: Target, percent: 10 },
-                  { name: 'Vibe Coding', icon: Lightbulb, percent: 70.5 },
-                   { name: 'AI Prompting/Prompt Engineering', icon: Sparkles, percent: 89.5 }
-                ].map((skill, index) => (
-                  <div key={index} className="space-y-3 group hover:scale-105 transition-transform duration-300">
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-3">
-                        <skill.icon className="w-5 h-5 text-orange-500 group-hover:rotate-12 transition-transform duration-300" />
-                        <span className="font-poppins">{skill.name}</span>
-                      </div>
-                      <span className="text-sm font-bold text-orange-500 font-poppins">{skill.percent}%</span>
-                    </div>
-                    <div className={`h-3 rounded-full overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
-                      <div className="h-full bg-gradient-to-r from-amber-500 to-orange-600 rounded-full relative overflow-hidden" style={{ width: `${skill.percent}%`, transition: 'width 1s ease-out' }}>
-                        <div className="absolute inset-0 shimmer"></div>
-                      </div>
+                  { 
+                    category: 'Frontend', 
+                    skills: [
+                      { name: 'HTML & CSS', icon: Code, percent: 5 },
+                      { name: 'Frontend Development using AI', icon: Zap, percent: 60 }
+                    ]
+                  },
+                  { 
+                    category: 'Backend', 
+                    skills: [
+                      { name: 'Python', icon: Target, percent: 10 }
+                    ]
+                  },
+                  { 
+                    category: 'Tools & AI', 
+                    skills: [
+                      { name: 'Vibe Coding', icon: Lightbulb, percent: 70.5 },
+                      { name: 'AI Prompting/Prompt Engineering', icon: Sparkles, percent: 89.5 }
+                    ]
+                  }
+                ].map((category, catIndex) => (
+                  <div key={catIndex}>
+                    <h4 className="text-xl font-bold mb-4 font-poppins bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">{category.category}</h4>
+                    <div className="space-y-4">
+                      {category.skills.map((skill, index) => (
+                        <div key={index} className="space-y-2 group hover:scale-105 transition-transform duration-300">
+                          <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                              <skill.icon className="w-5 h-5 text-orange-500 group-hover:rotate-12 transition-transform duration-300" />
+                              <span className="font-poppins">{skill.name}</span>
+                            </div>
+                            <span className="text-sm font-bold text-orange-500 font-poppins">{skill.percent}%</span>
+                          </div>
+                          <div className={`h-3 rounded-full overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
+                            <div className="h-full bg-gradient-to-r from-amber-500 to-orange-600 rounded-full relative overflow-hidden" style={{ width: `${skill.percent}%`, transition: 'width 1s ease-out' }}>
+                              <div className="absolute inset-0 shimmer"></div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))}
