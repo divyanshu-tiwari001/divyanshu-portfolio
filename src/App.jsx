@@ -651,7 +651,7 @@ export default function PremiumStudentPortfolio() {
                     </span>
                   </div>
                   <div className={`text-sm font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                    Senior Secondary (Classes 11-12) • Expected Completion: 2027
+                    Senior Secondary (Classes 11-12) • Completion: 2027
                   </div>
                 </div>
 
