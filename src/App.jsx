@@ -647,7 +647,7 @@ export default function PremiumStudentPortfolio() {
                       <span className="font-bold font-poppins">Current Grade</span>
                     </div>
                     <span className="px-4 py-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white text-sm font-bold">
-                      Class 11th
+                      Class 12th
                     </span>
                   </div>
                   <div className={`text-sm font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
@@ -684,10 +684,10 @@ export default function PremiumStudentPortfolio() {
                     <span className={`text-sm font-semibold font-poppins ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       Senior Secondary Progress
                     </span>
-                    <span className="text-sm font-bold text-orange-500">Year 1 of 2</span>
+                    <span className="text-sm font-bold text-orange-500">Year 2 of 2</span>
                   </div>
                   <div className={`h-3 rounded-full overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
-                    <div className="h-full bg-gradient-to-r from-amber-500 to-orange-600 rounded-full transition-all duration-1000 relative overflow-hidden" style={{ width: '50%' }}>
+                    <div className="h-full bg-gradient-to-r from-amber-500 to-orange-600 rounded-full transition-all duration-1000 relative overflow-hidden" style={{ width: '100%' }}>
                       <div className="absolute inset-0 shimmer"></div>
                     </div>
                   </div>
