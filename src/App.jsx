@@ -6,6 +6,10 @@ import Tilt from 'react-parallax-tilt';
 import CustomCursor from './components/CustomCursor';
 import { initializeContentProtection, cleanupContentProtection } from './utils/contentProtection';
 
+const FEATURE_FLAGS = {
+  SHOW_PROJECTS: true, // Set to false to hide the Projects section
+};
+
 export default function PremiumStudentPortfolio() {
   const [isDark, setIsDark] = useState(true);
   const [showPopup, setShowPopup] = useState(true);
@@ -447,6 +451,9 @@ export default function PremiumStudentPortfolio() {
               <a href="#experience" onClick={(e) => { e.preventDefault(); scrollTo('experience'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Experience</a>
               <a href="#awards" onClick={(e) => { e.preventDefault(); scrollTo('awards'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Awards</a>
               <a href="#about" onClick={(e) => { e.preventDefault(); scrollTo('about'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>About</a>
+              {FEATURE_FLAGS.SHOW_PROJECTS && (
+                <a href="#projects" onClick={(e) => { e.preventDefault(); scrollTo('projects'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Projects</a>
+              )}
               <a href="#contact" onClick={(e) => { e.preventDefault(); scrollTo('contact'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Contact</a>
             </div>
             <button onClick={() => setIsDark(!isDark)} className={`p-3 rounded-full hover:scale-110 hover:rotate-180 transition-all duration-500 ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
@@ -511,7 +518,7 @@ export default function PremiumStudentPortfolio() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-slide-bottom" style={{ animationDelay: '0.4s' }}>
-              <button onClick={() => scrollTo('achievements')} className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-lg font-bold rounded-full hover:scale-105 hover:shadow-xl hover:shadow-orange-500/50 transition-all duration-300 font-poppins relative overflow-hidden flex items-center justify-center gap-2">
+              <button onClick={() => scrollTo(FEATURE_FLAGS.SHOW_PROJECTS ? 'projects' : 'achievements')} className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-lg font-bold rounded-full hover:scale-105 hover:shadow-xl hover:shadow-orange-500/50 transition-all duration-300 font-poppins relative overflow-hidden flex items-center justify-center gap-2">
                 <span className="relative z-10">View My Projects</span>
                 <ChevronRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -946,6 +953,130 @@ export default function PremiumStudentPortfolio() {
             </motion.div>
           </div>
         </section>
+
+        {/* Projects Section */}
+        {FEATURE_FLAGS.SHOW_PROJECTS && (
+        <section id="projects" className="py-24 px-6 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
+
+          <div className="max-w-7xl mx-auto relative z-10">
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+              className="text-center mb-16"
+            >
+              <div className="inline-block px-6 py-2 mb-4 rounded-full bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border border-blue-500/30 hover:scale-105 transition-transform duration-300">
+                <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text font-montserrat">
+                  My Work
+                </span>
+              </div>
+              <h2 className="text-5xl font-bold mb-6 font-playfair">Projects</h2>
+              <p className={`text-xl max-w-2xl mx-auto font-poppins ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                Real-world projects demonstrating practical application of my skills
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={staggerContainer}
+              className="max-w-5xl mx-auto space-y-8"
+            >
+              {/* Project Card: Class 11th IP Practicals */}
+              <motion.div variants={staggerItem}>
+                <Tilt
+                  tiltMaxAngleX={10}
+                  tiltMaxAngleY={10}
+                  scale={1.02}
+                  transitionSpeed={400}
+                  glareEnable={true}
+                  glareMaxOpacity={0.2}
+                  glareColor="#3b82f6"
+                  glarePosition="all"
+                >
+                  <div
+                    className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-blue-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-blue-500/50' : 'bg-white/50 border-slate-200 hover:border-blue-500/50'}`}
+                    onMouseMove={(e) => handleMagneticMove(e, 'proj-class11')}
+                    onMouseLeave={() => handleMagneticLeave('proj-class11')}
+                    style={{ transform: `translate(${magneticPositions['proj-class11']?.x || 0}px, ${magneticPositions['proj-class11']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
+                  >
+                    <div className="flex flex-col md:flex-row items-start gap-6">
+                      <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg flex-shrink-0">
+                        <Code className="w-10 h-10 text-white" />
+                        <div className={`absolute -top-2 -right-2 px-2 py-0.5 rounded-full text-xs font-bold ${isDark ? 'bg-slate-800 text-blue-400' : 'bg-white text-blue-600'} border border-blue-500/30`}>
+                          2026
+                        </div>
+                      </div>
+
+                      <div className="flex-1">
+                        <h3 className="text-3xl font-bold mb-1 font-poppins bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text">
+                          Class 11th IP Practicals
+                        </h3>
+                        <p className={`text-sm font-semibold mb-4 font-roboto ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                          Informatics Practices — Python &amp; MySQL
+                        </p>
+                        <p className={`mb-6 font-roboto leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                          A comprehensive collection of 16 Python programs and 9 MySQL queries covering core IP syllabus — from grade calculators and financial math to dictionary operations and full CRUD database management.
+                        </p>
+
+                        {/* Tech Tags */}
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {['Python', 'MySQL', 'Data Structures', 'CRUD'].map((tag) => (
+                            <span key={tag} className={`px-3 py-1 rounded-full text-xs font-bold ${isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-500/20 text-blue-600'}`}>
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Stats Row */}
+                        <div className={`flex flex-wrap gap-6 mb-6 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                          {[
+                            { value: '16', label: 'Python Programs' },
+                            { value: '9', label: 'MySQL Queries' },
+                            { value: '25', label: 'Total Programs' },
+                          ].map((stat) => (
+                            <div key={stat.label} className="text-center">
+                              <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text font-poppins">{stat.value}</div>
+                              <div className={`text-xs font-roboto ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{stat.label}</div>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* GitHub Link */}
+                        <a
+                          href="https://github.com/divyanshu-tiwari001/class11th-practical"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold font-poppins hover:scale-105 hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-300"
+                        >
+                          <Github className="w-4 h-4" />
+                          View on GitHub
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </Tilt>
+              </motion.div>
+
+              {/* More Projects Coming Soon */}
+              <motion.div variants={staggerItem}>
+                <div className={`p-10 rounded-3xl border-2 border-dashed backdrop-blur-xl transition-all duration-500 ${isDark ? 'border-slate-700 bg-slate-800/30' : 'border-slate-300 bg-slate-50'}`}>
+                  <div className="text-center">
+                    <Sparkles className="w-12 h-12 mx-auto mb-3 text-blue-500 animate-pulse" />
+                    <h4 className="font-bold font-poppins mb-2">More Projects Coming Soon</h4>
+                    <p className={`text-sm font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                      Currently building more projects with Python, React, and AI tools. Stay tuned for updates!
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+        )}
 
         {/* Languages Section */}
         <section id="languages" className="py-24 px-6 relative overflow-hidden">
