@@ -1621,7 +1621,7 @@ export default function PremiumStudentPortfolio() {
                   glarePosition="all"
                 >
                   <div 
-                    className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+                    className={`group p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
                     onMouseMove={(e) => handleMagneticMove(e, 'award-scaler')}
                     onMouseLeave={() => handleMagneticLeave('award-scaler')}
                     style={{ transform: `translate(${magneticPositions['award-scaler']?.x || 0}px, ${magneticPositions['award-scaler']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
@@ -1645,7 +1645,7 @@ export default function PremiumStudentPortfolio() {
                   src={scalerOnboardingKit}
                   alt="Scaler Onboarding Kit award photo"
                   loading="lazy"
-                  className="mt-4 w-full rounded-xl object-cover hover:scale-105 transition-transform duration-300"
+                  className="mt-4 w-full rounded-xl object-cover transform transition-all duration-500 group-hover:scale-105"
                 />
                 </div>
                 </Tilt>
@@ -1686,7 +1686,7 @@ export default function PremiumStudentPortfolio() {
             >
               {/* Certification 1: Certificate of Excellence */}
               <motion.div variants={staggerItem}>
-                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <div className={`group p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 <div className="flex items-start gap-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <Award className="w-8 h-8 text-white" />
@@ -1707,14 +1707,14 @@ export default function PremiumStudentPortfolio() {
                   src={scalerCertificate}
                   alt="Certificate of Excellence from Scaler School of Technology"
                   loading="lazy"
-                  className="w-full rounded-xl object-cover hover:scale-105 transition-transform duration-300"
+                  className="w-full rounded-xl object-cover transform transition-all duration-500 group-hover:scale-105"
                 />
                 </div>
               </motion.div>
 
               {/* Certification 2: Startup School */}
               <motion.div variants={staggerItem}>
-                <div className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <div className={`group p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
                 <div className="flex items-start gap-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <GraduationCap className="w-8 h-8 text-white" />
@@ -1735,7 +1735,7 @@ export default function PremiumStudentPortfolio() {
                   src={googleStartupCertificate}
                   alt="Google Startup School certificate for Divyanshu Tiwari"
                   loading="lazy"
-                  className="w-full rounded-xl object-cover hover:scale-105 transition-transform duration-300"
+                  className="w-full rounded-xl object-cover transform transition-all duration-500 group-hover:scale-105"
                 />
                 </div>
               </motion.div>
