@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Codecademy, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages, Image } from 'lucide-react';
+import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages, Image } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
 import Tilt from 'react-parallax-tilt';
 import CustomCursor from './components/CustomCursor';
 import { initializeContentProtection, cleanupContentProtection } from './utils/contentProtection';
+
+// Custom Codecademy logo icon (official "cc" circle mark)
+const CodecademyIcon = ({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className} role="img" aria-label="Codecademy">
+    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-1.26 16.408c-.88.512-1.857.77-2.928.77-1.6 0-2.903-.5-3.908-1.498C2.9 14.682 2.397 13.392 2.397 12c0-1.392.503-2.682 1.507-3.68C4.91 7.322 6.213 6.822 7.812 6.822c1.057 0 2.022.252 2.893.755.87.503 1.55 1.207 2.04 2.11l-2.08 1.21c-.272-.562-.64-.994-1.1-1.296a2.847 2.847 0 0 0-1.584-.45c-.863 0-1.565.287-2.106.862-.54.574-.81 1.3-.81 2.176 0 .875.27 1.6.81 2.174.541.575 1.243.862 2.106.862.603 0 1.137-.153 1.6-.46.463-.306.835-.748 1.115-1.325l2.067 1.197c-.482.904-1.154 1.61-2.018 2.121zm8.65.77c-.879.512-1.857.77-2.928.77-1.6 0-2.903-.5-3.907-1.498-.303-.298-.565-.628-.785-.986l2.067-1.197c.28.577.652 1.019 1.115 1.325.463.307.997.46 1.6.46.864 0 1.566-.287 2.107-.862.54-.575.81-1.3.81-2.174 0-.876-.27-1.602-.81-2.176-.541-.575-1.243-.862-2.107-.862-.578 0-1.1.15-1.564.45-.464.3-.84.733-1.12 1.296l-2.08-1.21c.49-.903 1.17-1.607 2.04-2.11.871-.503 1.836-.755 2.894-.755 1.6 0 2.902.5 3.907 1.498 1.004.998 1.507 2.288 1.507 3.68 0 1.392-.503 2.682-1.507 3.68z"/>
+  </svg>
+);
 
 const FEATURE_FLAGS = {
   SHOW_PROJECTS: true, // Set to false to hide the Projects section
@@ -1786,8 +1793,8 @@ export default function PremiumStudentPortfolio() {
                     { icon: Github, link: 'https://github.com/divyanshu-tiwari001' },
                     { icon: Linkedin, link: 'https://www.linkedin.com/in/its-tiwari/' },
                     { icon: Twitter, link: 'https://x.com/Divyanshut011' },
-                    { icon: Instagram, link: 'https://www.instagram.com/divyanshu.tiiwari' }
-                    { icon: Codecademy, link: 'https://www.codecademy.com/profiles/divyanshutiwari01' } 
+                    { icon: Instagram, link: 'https://www.instagram.com/divyanshu.tiiwari' },
+                    { icon: CodecademyIcon, link: 'https://www.codecademy.com/profiles/divyanshutiwari01' }
                   ].map((social, index) => (
                     <a key={index} href={social.link} target="_blank" rel="noopener noreferrer" className="group p-4 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white hover:text-orange-600 transition-all duration-300 hover:scale-125 hover:rotate-12">
                       <social.icon className="w-6 h-6 text-white group-hover:text-orange-600" />
