@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages, Image } from 'lucide-react';
+import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages } from 'lucide-react';
+import dtLogo from './assets/dt_logo.png';
+import scalerCertificate from './assets/scaler_certificate.jpg';
+import scalerOnboardingKit from './assets/scaler_onboarding_kit.jpg';
+import googleStartupCertificate from './assets/google_startup_school_certificate_Divyanshu_Tiwari.jpg';
 import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
 import Tilt from 'react-parallax-tilt';
@@ -448,9 +452,15 @@ export default function PremiumStudentPortfolio() {
           WebkitBackdropFilter: 'blur(20px) saturate(180%)'
         }}>
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text font-poppins hover:scale-110 transition-transform duration-300 cursor-pointer" onClick={() => scrollTo('home')}>
-              DT
-            </div>
+            <img
+              src={dtLogo}
+              alt="DT Logo"
+              className="h-10 hover:scale-110 transition-transform duration-300 cursor-pointer"
+              onClick={() => scrollTo('home')}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && scrollTo('home')}
+              tabIndex={0}
+              role="button"
+            />
             <div className="hidden md:flex items-center space-x-8 font-poppins font-semibold">
               <a href="#home" onClick={(e) => { e.preventDefault(); scrollTo('home'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Home</a>
               <a href="#education" onClick={(e) => { e.preventDefault(); scrollTo('education'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Education</a>
@@ -1630,14 +1640,13 @@ export default function PremiumStudentPortfolio() {
                   Received for excellent performance in Young Innovators Internship Challenge Edition 5
                 </p>
                 
-                {/* Photo Placeholder */}
-                <div className={`mt-4 p-6 rounded-xl border-2 border-dashed flex flex-col items-center justify-center ${isDark ? 'border-slate-700 bg-slate-800/30' : 'border-slate-300 bg-slate-100'}`}>
-                  <Image className={`w-12 h-12 mb-2 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
-                  <p className={`text-sm font-semibold font-roboto ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
-                    Add Award Photo
-                  </p>
-                  {/* TODO: Add award photo here */}
-                </div>
+                {/* Award Photo */}
+                <img
+                  src={scalerOnboardingKit}
+                  alt="Scaler Onboarding Kit award photo"
+                  loading="lazy"
+                  className="mt-4 w-full rounded-xl object-cover hover:scale-105 transition-transform duration-300"
+                />
                 </div>
                 </Tilt>
               </motion.div>
@@ -1693,16 +1702,13 @@ export default function PremiumStudentPortfolio() {
                   </div>
                 </div>
                 
-                {/* Certificate Image Placeholder */}
-                <div className={`p-8 rounded-xl border-2 border-dashed flex flex-col items-center justify-center min-h-[200px] ${isDark ? 'border-slate-700 bg-slate-800/30' : 'border-slate-300 bg-slate-100'}`}>
-                  <Image className={`w-16 h-16 mb-3 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
-                  <p className={`text-sm font-semibold font-roboto mb-1 ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
-                    Certificate Image Placeholder
-                  </p>
-                  <p className={`text-xs font-roboto ${isDark ? 'text-slate-600' : 'text-slate-400'}`}>
-                    Add certificate image
-                  </p>
-                </div>
+                {/* Certificate Image */}
+                <img
+                  src={scalerCertificate}
+                  alt="Certificate of Excellence from Scaler School of Technology"
+                  loading="lazy"
+                  className="w-full rounded-xl object-cover hover:scale-105 transition-transform duration-300"
+                />
                 </div>
               </motion.div>
 
@@ -1724,17 +1730,13 @@ export default function PremiumStudentPortfolio() {
                   </div>
                 </div>
                 
-                {/* Certificate Image Placeholder */}
-                <div className={`p-8 rounded-xl border-2 border-dashed flex flex-col items-center justify-center min-h-[200px] ${isDark ? 'border-slate-700 bg-slate-800/30' : 'border-slate-300 bg-slate-100'}`}>
-                  <Image className={`w-16 h-16 mb-3 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
-                  <p className={`text-sm font-semibold font-roboto mb-1 ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
-                    Certificate Image Placeholder
-                  </p>
-                  <p className={`text-xs font-roboto ${isDark ? 'text-slate-600' : 'text-slate-400'}`}>
-                    {/* TODO: Add certificate image here */}
-                    Add certificate image
-                  </p>
-                </div>
+                {/* Certificate Image */}
+                <img
+                  src={googleStartupCertificate}
+                  alt="Google Startup School certificate for Divyanshu Tiwari"
+                  loading="lazy"
+                  className="w-full rounded-xl object-cover hover:scale-105 transition-transform duration-300"
+                />
                 </div>
               </motion.div>
             </motion.div>
