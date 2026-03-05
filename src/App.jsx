@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages, Image } from 'lucide-react';
+import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Codecademy, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages, Image } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
 import Tilt from 'react-parallax-tilt';
@@ -1787,6 +1787,7 @@ export default function PremiumStudentPortfolio() {
                     { icon: Linkedin, link: 'https://www.linkedin.com/in/its-tiwari/' },
                     { icon: Twitter, link: 'https://x.com/Divyanshut011' },
                     { icon: Instagram, link: 'https://www.instagram.com/divyanshu.tiiwari' }
+                    { icon: Codecademy, link: 'https://www.codecademy.com/profiles/divyanshutiwari01' } 
                   ].map((social, index) => (
                     <a key={index} href={social.link} target="_blank" rel="noopener noreferrer" className="group p-4 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white hover:text-orange-600 transition-all duration-300 hover:scale-125 hover:rotate-12">
                       <social.icon className="w-6 h-6 text-white group-hover:text-orange-600" />
