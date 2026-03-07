@@ -1325,7 +1325,7 @@ export default function PremiumStudentPortfolio() {
                   
                   <div className="flex-1">
                     <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'}`}>
-                      Currently Working • 4 months
+                      Currently Working • 6 months
                     </div>
                     <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text">
                       Project Intern
@@ -1375,7 +1375,7 @@ export default function PremiumStudentPortfolio() {
                   
                   <div className="flex-1">
                     <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'}`}>
-                      Currently Serving • 11 months
+                      Completed • 11 months
                     </div>
                     <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-yellow-500 to-amber-600 bg-clip-text">
                       Deputy Head Boy
