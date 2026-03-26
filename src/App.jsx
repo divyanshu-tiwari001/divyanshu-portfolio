@@ -234,6 +234,7 @@ export default function PremiumStudentPortfolio() {
 
   return (
     <>
+      <SGAParticles />
       <CustomCursor />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=swap');
