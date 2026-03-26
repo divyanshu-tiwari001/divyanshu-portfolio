@@ -9,6 +9,7 @@ import Typewriter from 'typewriter-effect';
 import Tilt from 'react-parallax-tilt';
 import CustomCursor from './components/CustomCursor';
 import { initializeContentProtection, cleanupContentProtection } from './utils/contentProtection';
+import SGAParticles from './components/SGAParticles';
 
 // Custom Codecademy logo icon (official "cc" circle mark)
 const CodecademyIcon = ({ className }) => (
