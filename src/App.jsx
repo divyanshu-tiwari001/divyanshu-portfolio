@@ -32,7 +32,9 @@ export default function PremiumStudentPortfolio() {
   const [formStatus, setFormStatus] = useState('idle'); // idle, loading, success, error
   const [formErrors, setFormErrors] = useState({});
 
-  const handleMagneticMove = (e, key) => {
+    const handleMagneticMove = (e, key) => {
+    // Abort if the user is on a touch device (phones/tablets)
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
@@ -100,16 +102,6 @@ export default function PremiumStudentPortfolio() {
       setFormStatus('error');
     }
   };
-
-  // Parallax scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -484,24 +476,18 @@ export default function PremiumStudentPortfolio() {
 
         {/* Hero Section */}
         <section id="home" className="relative pt-32 pb-20 px-6 overflow-hidden">
-          <div 
+                    <motion.div 
             className="absolute top-20 left-10 w-96 h-96 bg-amber-500 rounded-full blur-3xl opacity-20 animate-float" 
-            style={{ 
-              transform: `translateY(${scrollY * 0.3}px)`
-            }}
-          ></div>
-          <div 
+            style={{ y: y1 }}
+          ></motion.div>
+          <motion.div 
             className="absolute top-40 right-20 w-80 h-80 bg-orange-500 rounded-full blur-3xl opacity-20 animate-float-delay-2" 
-            style={{ 
-              transform: `translateY(${scrollY * 0.4}px)`
-            }}
-          ></div>
-          <div 
+            style={{ y: y2 }}
+          ></motion.div>
+          <motion.div 
             className="absolute bottom-20 left-1/3 w-72 h-72 bg-yellow-500 rounded-full blur-3xl opacity-20 animate-float-delay-4" 
-            style={{ 
-              transform: `translateY(${scrollY * 0.5}px)`
-            }}
-          ></div>
+            style={{ y: y3 }}
+          ></motion.div>
 
           <div className="max-w-7xl mx-auto text-center relative z-10">
             <div className="inline-block px-6 py-2 mb-6 rounded-full bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-500/30 animate-slide-bottom hover:scale-105 transition-transform duration-300">
