@@ -53,13 +53,18 @@ function getTargetParticleCount() {
   return scaled;
 }
 
-export default function SGAParticles() {
+export default function SGAParticles({ enabled = false }) {
   const canvasRef = useRef();
   const particleList = useRef([]);
   const dimensions = useRef({ width: window.innerWidth, height: window.innerHeight, dpr: 1 });
   const mouse = useRef({ x: -1000, y: -1000 });
   const formingWord = useRef(false);
-
+  
+if (!enabled) {
+  // Return an empty fragment or null. No canvas, no side-effects.
+  return null;
+    }
+  
   // Utility: set canvas size (handles dpr)
   function setCanvasSize() {
     /** Handle device pixel ratio for sharpness on retina screens */
