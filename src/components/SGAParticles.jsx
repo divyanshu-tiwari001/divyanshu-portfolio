@@ -82,7 +82,7 @@ if (!enabled) {
     
     dimensions.current = { width, height, dpr };
     
-    // 🔥 ADDED: Set the transform scale ONCE here, not in the loop
+    // ADDED: Set the transform scale ONCE here, not in the loop
     const ctx = c.getContext("2d");
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
@@ -201,13 +201,13 @@ if (!enabled) {
     let lastTime = performance.now();
 
         function animate(ts) {
-      if (!running) return;
-      const c = canvasRef.current;
-      const ctx = c.getContext("2d")
-      // 🔥 CHANGE THIS: Remove 'dpr' and delete the ctx.setTransform line
-      const { width, height } = dimensions.current;
-      
-      const dt = Math.min((ts - lastTime) / 1000, 0.33);
+  if (!running) return;
+  const c = canvasRef.current;
+  const ctx = c.getContext("2d")
+  const { width, height } = dimensions.current;
+  const dt = Math.min((ts - lastTime) / 1000, 0.33); [span_4](start_span)/[span_4](end_span)
+          lastTime = ts;
+          
       // ... keep the background gradient stuff ...
       // BG
       const grad = ctx.createLinearGradient(0, 0, 0, height);
