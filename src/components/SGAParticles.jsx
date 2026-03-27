@@ -66,18 +66,26 @@ if (!enabled) {
     }
   
   // Utility: set canvas size (handles dpr)
-  function setCanvasSize() {
+    function setCanvasSize() {
     /** Handle device pixel ratio for sharpness on retina screens */
     const dpr = window.devicePixelRatio || 1;
     const width = window.innerWidth, height = window.innerHeight;
     const c = canvasRef.current;
+    
     // Set actual pixel size
     c.width = Math.round(width * dpr);
     c.height = Math.round(height * dpr);
+    
     // Set CSS/display size (visible onscreen)
     c.style.width = width + "px";
     c.style.height = height + "px";
+    
     dimensions.current = { width, height, dpr };
+    
+    // 🔥 ADDED: Set the transform scale ONCE here, not in the loop
+    const ctx = c.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
     // rescale existing particles into visible area (on resize)
     particleList.current.forEach(p => {
       p.x = lerp(0, width, p.x / c.width);
@@ -192,15 +200,15 @@ if (!enabled) {
     let running = true;
     let lastTime = performance.now();
 
-    function animate(ts) {
+        function animate(ts) {
       if (!running) return;
       const c = canvasRef.current;
-      const ctx = c.getContext("2d");
-      const { dpr, width, height } = dimensions.current;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // IMPORTANT: scale all drawing ops for retina
-
+      const ctx = c.getContext("2d")
+      // 🔥 CHANGE THIS: Remove 'dpr' and delete the ctx.setTransform line
+      const { width, height } = dimensions.current;
+      
       const dt = Math.min((ts - lastTime) / 1000, 0.33);
-      lastTime = ts;
+      // ... keep the background gradient stuff ...
       // BG
       const grad = ctx.createLinearGradient(0, 0, 0, height);
       grad.addColorStop(0, CONFIG.BG_GRADIENT[0]);
@@ -238,16 +246,15 @@ if (!enabled) {
             p.vy += (dy / (d + 0.1)) * force * 0.07;
           }
         }
-        // Blur/glow
         ctx.save();
         ctx.globalAlpha = p.opacity;
-        ctx.filter = `blur(${p.blur}px) drop-shadow(0 0 ${p.size*CONFIG.GLOW}px #fff3)`;
         ctx.font = `700 ${p.size}px 'Segoe UI Symbol', sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = p.color;
-        ctx.shadowColor = "#cbfaff";
-        ctx.shadowBlur = 6;
+        
+        // Drawing raw text without dynamic native shadows or CSS filters.
+        // This stops the mobile GPU from having a meltdown.
         ctx.fillText(p.char, p.x, p.y);
         ctx.restore();
         // Age & recycle
