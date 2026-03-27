@@ -20,6 +20,7 @@ const CodecademyIcon = ({ className }) => (
 
 const FEATURE_FLAGS = {
   SHOW_PROJECTS: true, // Set to false to hide the Projects section
+  SHOW_PARTICLES: true, //SGA Particles feature flag
 };
 
 export default function PremiumStudentPortfolio() {
@@ -234,7 +235,7 @@ export default function PremiumStudentPortfolio() {
 
   return (
     <>
-      <SGAParticles />
+      <SGAParticles enabled={FEATURE_FLAGS.SHOW_PARTICLES} />
       <CustomCursor />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=swap');
