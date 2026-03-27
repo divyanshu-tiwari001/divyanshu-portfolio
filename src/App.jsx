@@ -4,7 +4,7 @@ import dtLogo from './assets/dt_logo.png';
 import scalerCertificate from './assets/scaler_certificate.jpg';
 import scalerOnboardingKit from './assets/scaler_onboarding_kit.jpg';
 import googleStartupCertificate from './assets/google_startup_school_certificate_Divyanshu_Tiwari.jpg';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
 import Tilt from 'react-parallax-tilt';
 import CustomCursor from './components/CustomCursor';
@@ -27,11 +27,13 @@ export default function PremiumStudentPortfolio() {
   const [isDark, setIsDark] = useState(true);
   const [showPopup, setShowPopup] = useState(true);
   const [magneticPositions, setMagneticPositions] = useState({});
-  const [scrollY, setScrollY] = useState(0);
+  const { scrollYProgress } = useScroll();
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, 400]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [0, 500]);
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
   const [formStatus, setFormStatus] = useState('idle'); // idle, loading, success, error
   const [formErrors, setFormErrors] = useState({});
-
     const handleMagneticMove = (e, key) => {
     // Abort if the user is on a touch device (phones/tablets)
     if (window.matchMedia("(pointer: coarse)").matches) return;
