@@ -100,6 +100,7 @@ function SGAParticlesCanvas() {
     c.style.height = height + "px";
 
     const ctx = c.getContext("2d");
+    if (!ctx) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     dimensions.current = { width, height, dpr };
@@ -163,7 +164,7 @@ function SGAParticlesCanvas() {
     function onMouseMove(e) {
       const dx = e.clientX - mouse.current.x;
       const dy = e.clientY - mouse.current.y;
-      if (dx * dx + dy * dy > 100) {
+      if (dx * dx + dy * dy > 400) { // 400 = 20px squared (distance threshold)
         mouse.current = { x: e.clientX, y: e.clientY };
       }
     }
@@ -189,6 +190,8 @@ function SGAParticlesCanvas() {
 
     function tryFormWord() {
       if (formingWord.current || !isVisible.current) return;
+      // Skip word formation on confirmed low-end devices to reduce rendering load
+      if (isLowEndDevice.current) return;
       formingWord.current = true;
       const word = ENGLISH_WORDS[Math.floor(Math.random() * ENGLISH_WORDS.length)];
       const { width, height } = dimensions.current;
@@ -252,6 +255,11 @@ function SGAParticlesCanvas() {
 
       const c = canvasRef.current;
       const ctx = c.getContext("2d");
+      // Graceful context recovery: if context is unavailable, skip this frame
+      if (!ctx) {
+        requestAnimationFrame(animate);
+        return;
+      }
       const { width, height } = dimensions.current;
       // Clamp dt to avoid large jumps after tab-switch resume
       const dt = Math.min(elapsed / 1000, 0.033);
