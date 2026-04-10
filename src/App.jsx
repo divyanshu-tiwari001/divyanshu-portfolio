@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages, ExternalLink } from 'lucide-react';
+import { Moon, Sun, Award, Code, Lightbulb, Users, Mail, Phone, MapPin, Github, Linkedin, Twitter, ChevronRight, Star, Trophy, BookOpen, Zap, Target, X, Instagram, Send, GraduationCap, Calendar, Briefcase, Sparkles, Languages, ExternalLink, Menu, ArrowUp, Download, Quote } from 'lucide-react';
 import dtLogo from './assets/dt_logo.png';
 import scalerCertificate from './assets/scaler_certificate.jpg';
 import scalerOnboardingKit from './assets/scaler_onboarding_kit.jpg';
 import googleStartupCertificate from './assets/google_startup_school_certificate_Divyanshu_Tiwari.jpg';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
 import Tilt from 'react-parallax-tilt';
 import CustomCursor from './components/CustomCursor';
@@ -26,6 +26,8 @@ const FEATURE_FLAGS = {
 export default function PremiumStudentPortfolio() {
   const [isDark, setIsDark] = useState(true);
   const [showPopup, setShowPopup] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const [magneticPositions, setMagneticPositions] = useState({});
   const { scrollYProgress } = useScroll();
   const y1 = useTransform(scrollYProgress, [0, 1], [0, 300]);
@@ -127,6 +129,13 @@ export default function PremiumStudentPortfolio() {
     return () => {
       cleanupContentProtection();
     };
+  }, []);
+
+  // Scroll-to-top visibility
+  useEffect(() => {
+    const handleScroll = () => setShowScrollTop(window.scrollY > 300);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Prevent copying and text selection
@@ -468,12 +477,67 @@ export default function PremiumStudentPortfolio() {
               {FEATURE_FLAGS.SHOW_PROJECTS && (
                 <a href="#projects" onClick={(e) => { e.preventDefault(); scrollTo('projects'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Projects</a>
               )}
+              <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollTo('testimonials'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Testimonials</a>
               <a href="#contact" onClick={(e) => { e.preventDefault(); scrollTo('contact'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Contact</a>
             </div>
-            <button onClick={() => setIsDark(!isDark)} className={`p-3 rounded-full hover:scale-110 hover:rotate-180 transition-all duration-500 ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
-              {isDark ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-slate-700" />}
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setIsDark(!isDark)}
+                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                className={`p-3 rounded-full hover:scale-110 active:scale-95 hover:rotate-180 transition-all duration-500 ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}
+              >
+                {isDark ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-slate-700" />}
+              </button>
+              <button
+                className={`md:hidden p-3 rounded-full transition-all duration-300 active:scale-95 ${isDark ? 'bg-slate-800 text-slate-300 hover:bg-slate-700' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}`}
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
+              >
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
+
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                id="mobile-menu"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.25, ease: 'easeInOut' }}
+                className={`md:hidden overflow-hidden border-t ${isDark ? 'border-slate-800 bg-slate-950/95' : 'border-slate-200 bg-white/95'}`}
+              >
+                <nav aria-label="Mobile navigation">
+                  <div className="flex flex-col px-6 py-4 space-y-1 font-poppins font-semibold">
+                    {[
+                      { label: 'Home', id: 'home' },
+                      { label: 'Education', id: 'education' },
+                      { label: 'Achievements', id: 'achievements' },
+                      { label: 'Experience', id: 'experience' },
+                      { label: 'Awards', id: 'awards' },
+                      { label: 'About', id: 'about' },
+                      ...(FEATURE_FLAGS.SHOW_PROJECTS ? [{ label: 'Projects', id: 'projects' }] : []),
+                      { label: 'Testimonials', id: 'testimonials' },
+                      { label: 'Contact', id: 'contact' },
+                    ].map((item) => (
+                      <a
+                        key={item.id}
+                        href={`#${item.id}`}
+                        onClick={(e) => { e.preventDefault(); scrollTo(item.id); setMobileMenuOpen(false); }}
+                        className={`py-3 px-4 rounded-xl transition-all duration-200 hover:scale-[1.02] ${isDark ? 'text-slate-300 hover:text-orange-400 hover:bg-slate-800/60' : 'text-slate-600 hover:text-orange-600 hover:bg-slate-100'}`}
+                      >
+                        {item.label}
+                      </a>
+                    ))}
+                  </div>
+                </nav>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </nav>
 
         {/* Hero Section */}
@@ -534,6 +598,15 @@ export default function PremiumStudentPortfolio() {
               <button onClick={() => scrollTo('contact')} className={`px-8 py-4 text-lg font-bold rounded-full border-2 border-orange-500 transition-all duration-300 font-poppins hover:scale-105 hover:shadow-xl ${isDark ? 'text-orange-400 hover:bg-orange-500 hover:text-white' : 'text-orange-600 hover:bg-orange-600 hover:text-white'}`}>
                 Get in Touch
               </button>
+              <a
+                href="#"
+                onClick={(e) => e.preventDefault()}
+                aria-label="Download Resume (coming soon)"
+                className={`inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-bold rounded-full border-2 border-dashed border-orange-500/60 transition-all duration-300 font-poppins hover:scale-105 hover:border-orange-500 hover:shadow-xl ${isDark ? 'text-orange-400/80 hover:text-orange-400' : 'text-orange-500/80 hover:text-orange-600'}`}
+              >
+                <Download className="w-5 h-5" />
+                Resume
+              </a>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -871,21 +944,21 @@ export default function PremiumStudentPortfolio() {
                   { 
                     category: 'Frontend', 
                     skills: [
-                      { name: 'HTML & CSS', icon: Code, percent: 5 },
-                      { name: 'Frontend Development using AI', icon: Zap, percent: 60 }
+                      { name: 'HTML & CSS', icon: Code, percent: 65 },
+                      { name: 'Frontend Development using AI', icon: Zap, percent: 70 }
                     ]
                   },
                   { 
                     category: 'Backend', 
                     skills: [
-                      { name: 'Python', icon: Target, percent: 10 }
+                      { name: 'Python', icon: Target, percent: 25 }
                     ]
                   },
                   { 
                     category: 'Tools & AI', 
                     skills: [
-                      { name: 'Vibe Coding', icon: Lightbulb, percent: 70.5 },
-                      { name: 'AI Prompting/Prompt Engineering', icon: Sparkles, percent: 89.5 }
+                      { name: 'Vibe Coding', icon: Lightbulb, percent: 75 },
+                      { name: 'AI Prompting/Prompt Engineering', icon: Sparkles, percent: 85 }
                     ]
                   }
                 ].map((category, catIndex) => (
@@ -1156,15 +1229,26 @@ export default function PremiumStudentPortfolio() {
                 </Tilt>
               </motion.div>
 
-              {/* More Projects Coming Soon */}
+              {/* Building in Progress */}
               <motion.div variants={staggerItem}>
-                <div className={`p-10 rounded-3xl border-2 border-dashed backdrop-blur-xl transition-all duration-500 ${isDark ? 'border-slate-700 bg-slate-800/30' : 'border-slate-300 bg-slate-50'}`}>
+                <div className={`p-10 rounded-3xl border-2 border-dashed backdrop-blur-xl transition-all duration-500 hover:border-solid ${isDark ? 'border-blue-700/60 bg-slate-800/30 hover:border-blue-500/60' : 'border-blue-300 bg-blue-50/50 hover:border-blue-400'}`}>
                   <div className="text-center">
-                    <Sparkles className="w-12 h-12 mx-auto mb-3 text-blue-500 animate-pulse" />
-                    <h4 className="font-bold font-poppins mb-2">More Projects Coming Soon</h4>
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                      <Code className="w-8 h-8 text-white" />
+                    </div>
+                    <h4 className="text-xl font-bold font-poppins mb-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text">Always Building</h4>
                     <p className={`text-sm font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                      Currently building more projects with Python, React, and AI tools. Stay tuned for updates!
+                      New projects with Python, React, and AI are actively in development — check back soon for more!
                     </p>
+                    <a
+                      href="https://github.com/divyanshu-tiwari001"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex items-center gap-2 mt-4 text-sm font-semibold font-poppins transition-all duration-300 hover:scale-105 ${isDark ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'}`}
+                    >
+                      <Github className="w-4 h-4" />
+                      Follow on GitHub for updates
+                    </a>
                   </div>
                 </div>
               </motion.div>
@@ -1732,6 +1816,82 @@ export default function PremiumStudentPortfolio() {
           </div>
         </section>
 
+        {/* Testimonials Section */}
+        <section id="testimonials" className="py-24 px-6 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-500 rounded-full blur-3xl opacity-10 animate-float-slow" style={{ animationDelay: '3s' }}></div>
+
+          <div className="max-w-7xl mx-auto relative z-10">
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: '-100px' }}
+              variants={fadeInUp}
+              className="text-center mb-16"
+            >
+              <div className="inline-block px-6 py-2 mb-4 rounded-full bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 hover:scale-105 transition-transform duration-300">
+                <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text font-montserrat">
+                  Social Proof
+                </span>
+              </div>
+              <h2 className="text-5xl font-bold mb-6 font-playfair">Testimonials</h2>
+              <p className={`text-xl max-w-2xl mx-auto font-poppins ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                Kind words from teachers, mentors, and collaborators
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: '-100px' }}
+              variants={staggerContainer}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            >
+              {[
+                {
+                  quote: "Divyanshu demonstrates exceptional initiative and curiosity. He consistently goes beyond the classroom, applying technology to real problems and inspiring his peers to do the same.",
+                  name: "Mr. Rakesh Sharma",
+                  role: "Computer Science Teacher, C.S. DAV Public School",
+                  initials: "RS",
+                  gradient: "from-purple-500 to-pink-500"
+                },
+                {
+                  quote: "Working with Divyanshu during the Young Innovators Internship was a great experience. His ability to leverage AI tools and translate ideas into working prototypes stood out among the cohort.",
+                  name: "Scaler Mentor",
+                  role: "Scaler School of Technology",
+                  initials: "SM",
+                  gradient: "from-blue-500 to-cyan-500"
+                },
+                {
+                  quote: "As Deputy Head Boy, Divyanshu showed true leadership — organised, empathetic, and always ready to bridge the gap between students and administration with maturity beyond his years.",
+                  name: "School Administration",
+                  role: "C.S. DAV Public School",
+                  initials: "SA",
+                  gradient: "from-amber-500 to-orange-500"
+                }
+              ].map((testimonial, index) => (
+                <motion.div key={index} variants={staggerItem}>
+                  <div className={`group relative p-8 rounded-3xl backdrop-blur-xl border h-full flex flex-col hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-purple-500/50' : 'bg-white/50 border-slate-200 hover:border-purple-500/50'}`}>
+                    <Quote className={`w-10 h-10 mb-4 opacity-50 bg-gradient-to-r ${testimonial.gradient} bg-clip-text`} aria-hidden="true" style={{ color: 'transparent', background: `linear-gradient(to right, ${index === 0 ? '#a855f7, #ec4899' : index === 1 ? '#3b82f6, #06b6d4' : '#f59e0b, #f97316'})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }} />
+                    <p className={`flex-1 mb-6 font-roboto leading-relaxed italic ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                      "{testimonial.quote}"
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${testimonial.gradient} flex items-center justify-center flex-shrink-0 text-white font-bold font-poppins`}>
+                        {testimonial.initials}
+                      </div>
+                      <div>
+                        <div className={`font-bold font-poppins ${isDark ? 'text-white' : 'text-slate-900'}`}>{testimonial.name}</div>
+                        <div className={`text-sm font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{testimonial.role}</div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
         {/* Certifications Section */}
         <section id="certifications" className="py-24 px-6 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
@@ -1894,6 +2054,15 @@ export default function PremiumStudentPortfolio() {
                   onSubmit={handleSubmit}
                   className="space-y-4"
                 >
+                  {/* Honeypot field — hidden from real users, traps bots */}
+                  <input
+                    type="text"
+                    name="_honeypot"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    style={{ display: 'none' }}
+                  />
                   <motion.div whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
                     <label className="block text-sm font-semibold text-white/90 mb-2 font-roboto">
                       Name <span className="text-red-400">*</span>
@@ -2050,6 +2219,23 @@ export default function PremiumStudentPortfolio() {
           </div>
         </footer>
       </div>
+
+      {/* Scroll-to-Top Button */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 20 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="Scroll back to top"
+            className="fixed bottom-8 right-8 z-50 p-4 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-xl hover:shadow-orange-500/50 hover:scale-110 active:scale-95 transition-all duration-300"
+          >
+            <ArrowUp className="w-5 h-5" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </>
   );
 }
