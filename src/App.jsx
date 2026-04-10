@@ -21,6 +21,7 @@ const CodecademyIcon = ({ className }) => (
 const FEATURE_FLAGS = {
   SHOW_PROJECTS: true, // Set to false to hide the Projects section
   SHOW_PARTICLES: true, //SGA Particles feature flag
+  SHOW_TESTIMONIALS: true, // Set to false to hide the Testimonials section
 };
 
 export default function PremiumStudentPortfolio() {
@@ -477,7 +478,9 @@ export default function PremiumStudentPortfolio() {
               {FEATURE_FLAGS.SHOW_PROJECTS && (
                 <a href="#projects" onClick={(e) => { e.preventDefault(); scrollTo('projects'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Projects</a>
               )}
-              <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollTo('testimonials'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Testimonials</a>
+              {FEATURE_FLAGS.SHOW_TESTIMONIALS && (
+                <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollTo('testimonials'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Testimonials</a>
+              )}
               <a href="#contact" onClick={(e) => { e.preventDefault(); scrollTo('contact'); }} className={`transition-all duration-300 hover:scale-110 ${isDark ? 'text-slate-300 hover:text-orange-400' : 'text-slate-600 hover:text-orange-600'}`}>Contact</a>
             </div>
             <div className="flex items-center gap-3">
@@ -521,7 +524,7 @@ export default function PremiumStudentPortfolio() {
                       { label: 'Awards', id: 'awards' },
                       { label: 'About', id: 'about' },
                       ...(FEATURE_FLAGS.SHOW_PROJECTS ? [{ label: 'Projects', id: 'projects' }] : []),
-                      { label: 'Testimonials', id: 'testimonials' },
+                      ...(FEATURE_FLAGS.SHOW_TESTIMONIALS ? [{ label: 'Testimonials', id: 'testimonials' }] : []),
                       { label: 'Contact', id: 'contact' },
                     ].map((item) => (
                       <a
@@ -1817,6 +1820,7 @@ export default function PremiumStudentPortfolio() {
         </section>
 
         {/* Testimonials Section */}
+        {FEATURE_FLAGS.SHOW_TESTIMONIALS && (
         <section id="testimonials" className="py-24 px-6 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-500 rounded-full blur-3xl opacity-10 animate-float-slow" style={{ animationDelay: '3s' }}></div>
@@ -1891,6 +1895,7 @@ export default function PremiumStudentPortfolio() {
             </motion.div>
           </div>
         </section>
+        )}
 
         {/* Certifications Section */}
         <section id="certifications" className="py-24 px-6 relative overflow-hidden">
