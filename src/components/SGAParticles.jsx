@@ -17,83 +17,102 @@ const ASCII_TO_SGA = {
 };
 
 const CONFIG = {
-  BASE_PARTICLE_COUNT: 44, // New: this will scale with resolution
-  MIN_SIZE: 20,
-  MAX_SIZE: 38,
-  MIN_SPEED: 0.06,
-  MAX_SPEED: 0.22,
-  FADE_IN_OUT_TIME: 1.5, // seconds, for smoother alpha
-  MAX_LIFE: 7, // seconds
-  BLUR: 4, // px
-  GLOW: 0.22, // 0–1, more is white, less is original color
-  BG_GRADIENT: ["#121528", "#232940"], // background
-  PARTICLE_COLOR: "rgba(110, 210, 245, 1)", // premium blue
-  PARTICLE_WORD_COLOR: "rgba(255,255,255,0.23)",
-  WORD_FORM_INTERVAL: 7000, // ms
-  WORD_DISPLAY_TIME: 1800 // ms
+  MIN_SIZE: 16,
+  MAX_SIZE: 28,
+  MIN_SPEED: 0.04,
+  MAX_SPEED: 0.15,
+  FADE_IN_OUT_TIME: 1.5,
+  MAX_LIFE: 7,
+  BLUR: 2,
+  BG_GRADIENT: ["#121528", "#232940"],
+  PARTICLE_COLOR: "rgba(110, 210, 245, 0.8)",
+  PARTICLE_WORD_COLOR: "rgba(255,255,255,0.2)",
+  WORD_FORM_INTERVAL: 7000,
+  WORD_DISPLAY_TIME: 1800,
+  // Only calculate mouse repel when mouse is within this distance
+  MOUSE_REPEL_RANGE: 80,
+  MOUSE_REPEL_RANGE_SQ: 6400,
 };
 
 function randomBetween(a, b) { return a + (b - a) * Math.random(); }
 function lerp(a, b, t) { return a + (b - a) * t; }
 function pickSGALetter(char) {
   const up = char.toUpperCase();
-  return up in ASCII_TO_SGA ? SGA[ASCII_TO_SGA[up] % SGA.length] : SGA[Math.floor(Math.random()*SGA.length)];
+  return up in ASCII_TO_SGA ? SGA[ASCII_TO_SGA[up] % SGA.length] : SGA[Math.floor(Math.random() * SGA.length)];
 }
 
-// Particle count scales based on screen area and device pixel ratio
+// Particle count: aggressively reduced on mobile to prevent crashes
 function getTargetParticleCount() {
-  const area = window.innerWidth * window.innerHeight;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const area = width * height;
   const dpi = window.devicePixelRatio || 1;
-  // Tweak these numbers until it "feels" minimal, not cluttered:
-  let scaled = Math.round(
-    CONFIG.BASE_PARTICLE_COUNT * (area / (1280 * 800)) * (dpi > 1.1 ? 0.76 : 1)
-  );
-  if (scaled < 18) scaled = 18;
-  if (scaled > 80) scaled = 80;
-  return scaled;
+  const isMobile = width < 768;
+  // High DPR or small screen signals a low-end / constrained device
+  const isLowEnd = dpi > 2 || area < 1_000_000;
+
+  let count;
+  if (isMobile) {
+    count = isLowEnd
+      ? Math.round(8 + (area / 1_000_000) * 4)   // scales ~8–12 across typical mobile areas
+      : Math.round(12 + (area / 1_000_000) * 6);  // scales ~12–18 across typical mobile areas
+  } else {
+    count = Math.round(30 + (area / (1280 * 800)) * 20); // 30–50
+  }
+  return Math.max(6, Math.min(count, isMobile ? 20 : 50));
 }
 
-export default function SGAParticles({ enabled = false }) {
+// Frame rate target: 30 fps on mobile/high-DPI to avoid battery drain
+function getTargetFps() {
+  const isMobile = window.innerWidth < 768;
+  const dpi = window.devicePixelRatio || 1;
+  return isMobile || dpi > 2 ? 30 : 60;
+}
+
+function SGAParticlesCanvas() {
   const canvasRef = useRef();
   const particleList = useRef([]);
   const dimensions = useRef({ width: window.innerWidth, height: window.innerHeight, dpr: 1 });
   const mouse = useRef({ x: -1000, y: -1000 });
   const formingWord = useRef(false);
-  
-if (!enabled) {
-  // Return an empty fragment or null. No canvas, no side-effects.
-  return null;
-    }
-  
-  // Utility: set canvas size (handles dpr)
-    function setCanvasSize() {
-    /** Handle device pixel ratio for sharpness on retina screens */
-    const dpr = window.devicePixelRatio || 1;
-    const width = window.innerWidth, height = window.innerHeight;
+
+  // Cached rendering state — created once, invalidated on resize
+  const cachedGradient = useRef(null);
+  // Page Visibility: pause animation when tab is hidden
+  const isVisible = useRef(true);
+  // Frame-rate cap state
+  const targetFps = useRef(getTargetFps());
+  const frameIntervalMs = useRef(1000 / targetFps.current);
+  // Performance monitoring: track slow frames to detect low-end devices
+  const slowFrameCount = useRef(0);
+  const isLowEndDevice = useRef(false);
+
+  function setCanvasSize() {
+    // Cap DPR at 2 to limit memory/rendering cost on high-DPI screens
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const width = window.innerWidth;
+    const height = window.innerHeight;
     const c = canvasRef.current;
-    
-    // Set actual pixel size
+
     c.width = Math.round(width * dpr);
     c.height = Math.round(height * dpr);
-    
-    // Set CSS/display size (visible onscreen)
     c.style.width = width + "px";
     c.style.height = height + "px";
-    
-    dimensions.current = { width, height, dpr };
-    
-    // ADDED: Set the transform scale ONCE here, not in the loop
+
     const ctx = c.getContext("2d");
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    // rescale existing particles into visible area (on resize)
+    dimensions.current = { width, height, dpr };
+    // Invalidate gradient cache so it is rebuilt at the new canvas size
+    cachedGradient.current = null;
+
+    // Rescale existing particle positions into the new visible area
     particleList.current.forEach(p => {
       p.x = lerp(0, width, p.x / c.width);
       p.y = lerp(0, height, p.y / c.height);
     });
   }
 
-  // Particle factory
   function makeParticle(isWord = false, pos = null, char = null, color = null) {
     const { width, height } = dimensions.current;
     return {
@@ -103,121 +122,156 @@ if (!enabled) {
       vy: randomBetween(-CONFIG.MAX_SPEED, CONFIG.MAX_SPEED),
       char: char ?? SGA[Math.floor(Math.random() * SGA.length)],
       size: randomBetween(CONFIG.MIN_SIZE, CONFIG.MAX_SIZE),
+      // Pre-calculate font string to avoid string concatenation every frame
+      font: `600 ${Math.round(randomBetween(CONFIG.MIN_SIZE, CONFIG.MAX_SIZE))}px 'Segoe UI Symbol', sans-serif`,
       opacity: 0,
-      maxOpacity: lerp(0.5, 1, Math.random()),
-      blur: CONFIG.BLUR,
+      maxOpacity: lerp(0.4, 0.8, Math.random()),
       color: color ?? CONFIG.PARTICLE_COLOR,
       age: 0,
-      fadeInTime: randomBetween(0.6, CONFIG.FADE_IN_OUT_TIME),
+      fadeInTime: randomBetween(0.4, CONFIG.FADE_IN_OUT_TIME),
       fadeOutTime: randomBetween(0.6, CONFIG.FADE_IN_OUT_TIME),
       life: randomBetween(CONFIG.MAX_LIFE / 2, CONFIG.MAX_LIFE),
       isWord,
     };
   }
 
-  // Setup effect
   useEffect(() => {
     setCanvasSize();
-    // Responsive/retina resize
+
+    // Recalculate frame target after layout is known
+    targetFps.current = getTargetFps();
+    frameIntervalMs.current = 1000 / targetFps.current;
+
     window.addEventListener("resize", setCanvasSize);
 
-    // Set initial particle count to match display
     let targetCount = getTargetParticleCount();
     particleList.current = Array.from({ length: targetCount }, () => makeParticle());
 
-    // Reduce count on very small mobile devices after a short time (orientation fixes/safety)
-    let sizeCheckTimer = setTimeout(() => {
-      let newCount = getTargetParticleCount();
-      if (particleList.current.length !== newCount) {
-        if (particleList.current.length > newCount) {
-          particleList.current.length = newCount;
-        } else {
-          // Add more
-          particleList.current.push(...Array.from(
-            { length: newCount - particleList.current.length },
-            () => makeParticle()
-          ));
-        }
+    // Recheck particle count after orientation settle (safety net)
+    const sizeCheckTimer = setTimeout(() => {
+      const newCount = getTargetParticleCount();
+      if (particleList.current.length > newCount) {
+        particleList.current.length = newCount;
+      } else if (particleList.current.length < newCount) {
+        particleList.current.push(
+          ...Array.from({ length: newCount - particleList.current.length }, () => makeParticle())
+        );
       }
-    }, 1000);
+    }, 1500);
 
-    // Mouse for subtle repel
+    // Track mouse; only update when moved enough to matter (avoids micro-update spam)
     function onMouseMove(e) {
-      mouse.current = { x: e.clientX, y: e.clientY };
+      const dx = e.clientX - mouse.current.x;
+      const dy = e.clientY - mouse.current.y;
+      if (dx * dx + dy * dy > 100) {
+        mouse.current = { x: e.clientX, y: e.clientY };
+      }
     }
     window.addEventListener("mousemove", onMouseMove);
 
-    // Reduce motion support
+    // Page Visibility API — pause/resume animation to save battery
+    function onVisibilityChange() {
+      isVisible.current = !document.hidden;
+      if (isVisible.current) requestAnimationFrame(animate);
+    }
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let wordTimer;
     function scheduleWordForm() {
       wordTimer = setTimeout(() => {
-        tryFormWord();
+        if (isVisible.current) tryFormWord();
         scheduleWordForm();
       }, CONFIG.WORD_FORM_INTERVAL + randomBetween(0, 3000));
     }
     scheduleWordForm();
 
-    // Word formation
     function tryFormWord() {
-      if (formingWord.current) return;
+      if (formingWord.current || !isVisible.current) return;
       formingWord.current = true;
       const word = ENGLISH_WORDS[Math.floor(Math.random() * ENGLISH_WORDS.length)];
       const { width, height } = dimensions.current;
-      // spacing and scaling
-      const spacing = Math.min(42, width / (word.length + 2));
+      const spacing = Math.min(36, width / (word.length + 2));
       const startX = width / 2 - ((word.length - 1) * spacing) / 2;
       const midY = randomBetween(height * 0.3, height * 0.7);
-      // Assign particles from the pool to letters
-      for (let i = 0; i < word.length; i++) {
-        let p = particleList.current[i];
-        p.x = startX + i * spacing + randomBetween(-8, 8);
-        p.y = midY + randomBetween(-8, 8);
-        p.vx = randomBetween(-0.04, 0.04);
-        p.vy = randomBetween(-0.04, 0.04);
+
+      for (let i = 0; i < word.length && i < particleList.current.length; i++) {
+        const p = particleList.current[i];
+        p.x = startX + i * spacing + randomBetween(-6, 6);
+        p.y = midY + randomBetween(-6, 6);
+        p.vx = randomBetween(-0.02, 0.02);
+        p.vy = randomBetween(-0.02, 0.02);
         p.char = pickSGALetter(word[i]);
         p.isWord = true;
         p.color = CONFIG.PARTICLE_WORD_COLOR;
-        p.size = lerp(CONFIG.MAX_SIZE * 0.95, CONFIG.MAX_SIZE * 1.08, Math.random());
-        p.fadeInTime = 0.4;
-        p.fadeOutTime = 1.0;
+        p.size = lerp(CONFIG.MAX_SIZE * 0.9, CONFIG.MAX_SIZE * 1.0, Math.random());
+        p.font = `600 ${Math.round(p.size)}px 'Segoe UI Symbol', sans-serif`;
+        p.fadeInTime = 0.3;
+        p.fadeOutTime = 0.8;
         p.life = CONFIG.WORD_DISPLAY_TIME / 1000;
-        p.maxOpacity = 0.26;
+        p.maxOpacity = 0.2;
         p.age = 0;
       }
+
       setTimeout(() => {
-        // Revert assigned particles
-        for (let i = 0; i < word.length; i++) {
-          let p = particleList.current[i];
-          Object.assign(p, makeParticle());
+        for (let i = 0; i < word.length && i < particleList.current.length; i++) {
+          Object.assign(particleList.current[i], makeParticle());
         }
         formingWord.current = false;
       }, CONFIG.WORD_DISPLAY_TIME + 500);
     }
 
-    // Animation
     let running = true;
-    let lastTime = performance.now();
+    let lastFrameMs = performance.now();
 
-        function animate(ts) {
-  if (!running) return;
-  const c = canvasRef.current;
-  const ctx = c.getContext("2d")
-  const { width, height } = dimensions.current;
-  const dt = Math.min((ts - lastTime) / 1000, 0.33); [span_4](start_span)/[span_4](end_span)
-          lastTime = ts;
-          
-      // ... keep the background gradient stuff ...
-      // BG
-      const grad = ctx.createLinearGradient(0, 0, 0, height);
-      grad.addColorStop(0, CONFIG.BG_GRADIENT[0]);
-      grad.addColorStop(1, CONFIG.BG_GRADIENT[1]);
-      ctx.fillStyle = grad;
+    function animate(ts) {
+      if (!running) return;
+      // Pause when tab is hidden — resume via visibilitychange handler
+      if (!isVisible.current) return;
+
+      // Frame-rate cap: skip frame if not enough time has elapsed
+      const elapsed = ts - lastFrameMs;
+      if (elapsed < frameIntervalMs.current) {
+        requestAnimationFrame(animate);
+        return;
+      }
+      // Carry over leftover time so the cap stays accurate
+      lastFrameMs = ts - (elapsed % frameIntervalMs.current);
+
+      // Performance monitoring: detect slow device after 10 consecutive slow frames
+      if (elapsed > frameIntervalMs.current * 2.5) {
+        slowFrameCount.current++;
+        if (slowFrameCount.current > 10 && !isLowEndDevice.current) {
+          isLowEndDevice.current = true;
+          // Graceful degradation: halve particle count on confirmed slow device
+          const reduced = Math.max(6, Math.floor(particleList.current.length / 2));
+          particleList.current.length = reduced;
+        }
+      }
+
+      const c = canvasRef.current;
+      const ctx = c.getContext("2d");
+      const { width, height } = dimensions.current;
+      // Clamp dt to avoid large jumps after tab-switch resume
+      const dt = Math.min(elapsed / 1000, 0.033);
+
+      // Reuse cached gradient; only recreate after resize (cachedGradient nulled in setCanvasSize)
+      if (!cachedGradient.current) {
+        const grad = ctx.createLinearGradient(0, 0, 0, height);
+        grad.addColorStop(0, CONFIG.BG_GRADIENT[0]);
+        grad.addColorStop(1, CONFIG.BG_GRADIENT[1]);
+        cachedGradient.current = grad;
+      }
+      ctx.fillStyle = cachedGradient.current;
       ctx.fillRect(0, 0, width, height);
-      // Skip everything except fade-out if user prefers reduced motion
-      for (let p of particleList.current) {
-        // Fade opacity in and out
+
+      // Set shared context state once per frame (not inside the particle loop)
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      for (const p of particleList.current) {
+        // Fade opacity in / out
         if (p.age < p.fadeInTime) {
           p.opacity = lerp(0, p.maxOpacity, p.age / p.fadeInTime);
         } else if (p.age > p.life - p.fadeOutTime) {
@@ -225,53 +279,56 @@ if (!enabled) {
         } else {
           p.opacity = p.maxOpacity;
         }
-        // Motion unless reduced motion
+
         if (!p.isWord && !prefersReducedMotion) {
           p.x += p.vx * dt * 60;
           p.y += p.vy * dt * 60;
         }
+
         // Border wrap
         if (p.x < -40) p.x = width + 40;
         if (p.x > width + 40) p.x = -40;
         if (p.y < -40) p.y = height + 40;
         if (p.y > height + 40) p.y = -40;
-        // Mouse repel
-        if (!p.isWord && !prefersReducedMotion && mouse.current.x > -1) {
+
+        // Mouse repel: use distance-squared to avoid sqrt unless particle is close enough
+        if (!p.isWord && !prefersReducedMotion && mouse.current.x >= 0) {
           const dx = p.x - mouse.current.x;
           const dy = p.y - mouse.current.y;
-          const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < 90) {
-            const force = (90 - d) / 90 * 1.3;
-            p.vx += (dx / (d + 0.1)) * force * 0.07;
-            p.vy += (dy / (d + 0.1)) * force * 0.07;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < CONFIG.MOUSE_REPEL_RANGE_SQ) {
+            const d = Math.sqrt(distSq);
+            const force = (CONFIG.MOUSE_REPEL_RANGE - d) / CONFIG.MOUSE_REPEL_RANGE * 0.9;
+            p.vx += (dx / (d + 0.1)) * force * 0.05;
+            p.vy += (dy / (d + 0.1)) * force * 0.05;
           }
         }
-        ctx.save();
+
         ctx.globalAlpha = p.opacity;
-        ctx.font = `700 ${p.size}px 'Segoe UI Symbol', sans-serif`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
+        // Reuse pre-calculated font string instead of building it every frame
+        ctx.font = p.font;
         ctx.fillStyle = p.color;
-        
-        // Drawing raw text without dynamic native shadows or CSS filters.
-        // This stops the mobile GPU from having a meltdown.
-        ctx.fillText(p.char, p.x, p.y);
-        ctx.restore();
-        // Age & recycle
+        ctx.fillText(p.char, Math.round(p.x), Math.round(p.y));
+
         p.age += dt;
         if (!p.isWord && p.age > p.life) {
           Object.assign(p, makeParticle());
         }
       }
+
+      // Reset globalAlpha so subsequent draws are unaffected
+      ctx.globalAlpha = 1;
+
       requestAnimationFrame(animate);
     }
+
     requestAnimationFrame(animate);
 
-    // Cleanup
     return () => {
       running = false;
       window.removeEventListener("resize", setCanvasSize);
       window.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       if (wordTimer) clearTimeout(wordTimer);
       clearTimeout(sizeCheckTimer);
     };
@@ -284,12 +341,19 @@ if (!enabled) {
         display: "block",
         position: "fixed",
         zIndex: -1,
-        top: 0, left: 0,
-        width: "100vw", height: "100vh",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
         background: "none",
         pointerEvents: "none",
       }}
       aria-hidden
     />
   );
+}
+
+export default function SGAParticles({ enabled = false }) {
+  if (!enabled) return null;
+  return <SGAParticlesCanvas />;
 }
