@@ -346,7 +346,7 @@ export default function PremiumStudentPortfolio() {
         }
       `}</style>
 
-      <div className={`min-h-screen transition-colors duration-500 ${isDark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-900'}`}>
+      <div className={`min-h-screen transition-colors duration-500 ${isDark ? 'text-white' : 'bg-slate-50 text-slate-900'}`}>
 
         {/* Enhanced Welcome Popup */}
         {showPopup && (
