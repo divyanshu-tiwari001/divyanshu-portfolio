@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Award, Trophy, BookOpen, ChevronRight, Download } from 'lucide-react';
-import Typewriter from 'typewriter-effect';
+import SGAParticleText from './SGAParticleText';
 import { FEATURE_FLAGS } from '../utils/featureFlags';
 import { fadeInUp } from '../utils/animations';
 
@@ -32,23 +32,8 @@ export default function HeroSection({ isDark, scrollTo, y1, y2, y3 }) {
           I Build <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text animate-gradient">Digital Experiences</span> That Make an Impact
         </h1>
 
-        <div className={`text-2xl md:text-3xl mb-4 font-bold font-poppins ${isDark ? 'text-amber-400' : 'text-orange-600'}`} style={{ minHeight: '45px' }}>
-          <Typewriter
-            options={{
-              strings: [
-                'AI-Powered Developer',
-                'Prompt Engineer',
-                'Frontend Developer',
-                'Python Programmer',
-                'Creative Problem Solver',
-                'Team Leader'
-              ],
-              autoStart: true,
-              loop: true,
-              deleteSpeed: 50,
-              delay: 80
-            }}
-          />
+        <div className="mb-4" style={{ minHeight: `${72}px` }}>
+          <SGAParticleText isDark={isDark} />
         </div>
 
         <p className={`text-lg md:text-xl mb-12 max-w-3xl mx-auto font-poppins animate-slide-bottom ${isDark ? 'text-slate-300' : 'text-slate-600'}`} style={{ animationDelay: '0.2s' }}>
