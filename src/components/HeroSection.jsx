@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Award, Trophy, BookOpen, ChevronRight, Download } from 'lucide-react';
 import SGAParticleText from './SGAParticleText';
@@ -6,6 +6,7 @@ import { FEATURE_FLAGS } from '../utils/featureFlags';
 import { fadeInUp } from '../utils/animations';
 
 export default function HeroSection({ isDark, scrollTo, y1, y2, y3 }) {
+  const particleAnchorRef = useRef(null);
   return (
     <section id="home" className="relative pt-32 pb-20 px-6 overflow-hidden">
       <motion.div
@@ -32,8 +33,8 @@ export default function HeroSection({ isDark, scrollTo, y1, y2, y3 }) {
           I Build <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text animate-gradient">Digital Experiences</span> That Make an Impact
         </h1>
 
-        <div className="mb-4" style={{ minHeight: `${72}px` }}>
-          <SGAParticleText isDark={isDark} />
+        <div ref={particleAnchorRef} className="mb-4" style={{ minHeight: `${72}px` }}>
+          <SGAParticleText isDark={isDark} anchorRef={particleAnchorRef} />
         </div>
 
         <p className={`text-lg md:text-xl mb-12 max-w-3xl mx-auto font-poppins animate-slide-bottom ${isDark ? 'text-slate-300' : 'text-slate-600'}`} style={{ animationDelay: '0.2s' }}>

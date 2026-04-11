@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dark-mode base colour that matches the SGAParticles canvas gradient.
+   Ensures the page background is visible before the canvas first paints. */
+html, body {
+  background: #121528;
+}
+
 /* Disable text selection and copying */
 * {
   -webkit-user-select: none;
