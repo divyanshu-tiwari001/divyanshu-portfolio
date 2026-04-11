@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useScroll, useTransform } from 'framer-motion';
 import CustomCursor from './components/CustomCursor';
 import SGAParticles from './components/SGAParticles';
+import CardParticleLeak from './components/CardParticleLeak';
 import { initializeContentProtection, cleanupContentProtection } from './utils/contentProtection';
 import { FEATURE_FLAGS } from './utils/featureFlags';
 
@@ -211,6 +212,7 @@ export default function PremiumStudentPortfolio() {
   return (
     <>
       <SGAParticles enabled={FEATURE_FLAGS.SHOW_PARTICLES} />
+      <CardParticleLeak />
       <CustomCursor />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=swap');
