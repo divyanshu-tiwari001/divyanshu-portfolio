@@ -23,6 +23,8 @@ import CertificationsSection from './components/CertificationsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import Showcase3DSection from './components/Showcase3DSection';
+import StartupAnimation from './components/StartupAnimation';
 
 export default function PremiumStudentPortfolio() {
   const [isDark, setIsDark] = useState(true);
@@ -30,6 +32,7 @@ export default function PremiumStudentPortfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [magneticPositions, setMagneticPositions] = useState({});
+  const [startupDone, setStartupDone] = useState(false);
   const { scrollYProgress } = useScroll();
   const y1 = useTransform(scrollYProgress, [0, 1], [0, 300]);
   const y2 = useTransform(scrollYProgress, [0, 1], [0, 400]);
@@ -118,6 +121,7 @@ export default function PremiumStudentPortfolio() {
 
   // Initialize comprehensive content protection
   useEffect(() => {
+    if (!FEATURE_FLAGS.SHOW_CONTENT_PROTECTION) return;
     initializeContentProtection({
       enableDevToolsDetection: true,
       enableScreenCaptureBlocking: true,
@@ -211,9 +215,12 @@ export default function PremiumStudentPortfolio() {
 
   return (
     <>
+      {/* Startup Animation */}
+      {!startupDone && <StartupAnimation onComplete={() => setStartupDone(true)} />}
+
       <SGAParticles enabled={FEATURE_FLAGS.SHOW_PARTICLES} />
-      <CardParticleLeak />
-      <CustomCursor />
+      {FEATURE_FLAGS.SHOW_CARD_PARTICLE_LEAK && <CardParticleLeak />}
+      {FEATURE_FLAGS.SHOW_CUSTOM_CURSOR && <CustomCursor />}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=swap');
         
@@ -351,7 +358,7 @@ export default function PremiumStudentPortfolio() {
       <div className={`min-h-screen transition-colors duration-500 ${isDark ? 'text-white' : 'bg-slate-50 text-slate-900'}`}>
 
         {/* Enhanced Welcome Popup */}
-        {showPopup && (
+        {FEATURE_FLAGS.SHOW_WELCOME_POPUP && showPopup && (
           <WelcomePopup isDark={isDark} setShowPopup={setShowPopup} />
         )}
 
@@ -365,32 +372,49 @@ export default function PremiumStudentPortfolio() {
         />
 
         {/* Hero Section */}
-        <HeroSection isDark={isDark} scrollTo={scrollTo} y1={y1} y2={y2} y3={y3} />
+        {FEATURE_FLAGS.SHOW_HERO_SECTION && (
+          <HeroSection isDark={isDark} scrollTo={scrollTo} y1={y1} y2={y2} y3={y3} scrollYProgress={scrollYProgress} />
+        )}
 
         {/* Trust Indicators */}
-        <TrustIndicators isDark={isDark} />
+        {FEATURE_FLAGS.SHOW_TRUST_INDICATORS && (
+          <TrustIndicators isDark={isDark} />
+        )}
+
+        {/* 3D Showcase Section */}
+        {FEATURE_FLAGS.SHOW_3D_MODEL && (
+          <Showcase3DSection isDark={isDark} scrollYProgress={scrollYProgress} />
+        )}
 
         {/* Education Section */}
-        <EducationSection
-          isDark={isDark}
-          magneticPositions={magneticPositions}
-          handleMagneticMove={handleMagneticMove}
-          handleMagneticLeave={handleMagneticLeave}
-        />
+        {FEATURE_FLAGS.SHOW_EDUCATION && (
+          <EducationSection
+            isDark={isDark}
+            magneticPositions={magneticPositions}
+            handleMagneticMove={handleMagneticMove}
+            handleMagneticLeave={handleMagneticLeave}
+          />
+        )}
 
         {/* Achievements Section */}
-        <AchievementsSection
-          isDark={isDark}
-          magneticPositions={magneticPositions}
-          handleMagneticMove={handleMagneticMove}
-          handleMagneticLeave={handleMagneticLeave}
-        />
+        {FEATURE_FLAGS.SHOW_ACHIEVEMENTS && (
+          <AchievementsSection
+            isDark={isDark}
+            magneticPositions={magneticPositions}
+            handleMagneticMove={handleMagneticMove}
+            handleMagneticLeave={handleMagneticLeave}
+          />
+        )}
 
         {/* About Section */}
-        <AboutSection isDark={isDark} />
+        {FEATURE_FLAGS.SHOW_ABOUT && (
+          <AboutSection isDark={isDark} />
+        )}
 
         {/* Tech Stack */}
-        <TechStackSection isDark={isDark} />
+        {FEATURE_FLAGS.SHOW_TECH_STACK && (
+          <TechStackSection isDark={isDark} />
+        )}
 
         {/* Projects Section */}
         {FEATURE_FLAGS.SHOW_PROJECTS && (
@@ -403,28 +427,34 @@ export default function PremiumStudentPortfolio() {
         )}
 
         {/* Languages Section */}
-        <LanguagesSection
-          isDark={isDark}
-          magneticPositions={magneticPositions}
-          handleMagneticMove={handleMagneticMove}
-          handleMagneticLeave={handleMagneticLeave}
-        />
+        {FEATURE_FLAGS.SHOW_LANGUAGES && (
+          <LanguagesSection
+            isDark={isDark}
+            magneticPositions={magneticPositions}
+            handleMagneticMove={handleMagneticMove}
+            handleMagneticLeave={handleMagneticLeave}
+          />
+        )}
 
         {/* Work Experience Section */}
-        <WorkExperienceSection
-          isDark={isDark}
-          magneticPositions={magneticPositions}
-          handleMagneticMove={handleMagneticMove}
-          handleMagneticLeave={handleMagneticLeave}
-        />
+        {FEATURE_FLAGS.SHOW_WORK_EXPERIENCE && (
+          <WorkExperienceSection
+            isDark={isDark}
+            magneticPositions={magneticPositions}
+            handleMagneticMove={handleMagneticMove}
+            handleMagneticLeave={handleMagneticLeave}
+          />
+        )}
 
         {/* Awards Section */}
-        <AwardsSection
-          isDark={isDark}
-          magneticPositions={magneticPositions}
-          handleMagneticMove={handleMagneticMove}
-          handleMagneticLeave={handleMagneticLeave}
-        />
+        {FEATURE_FLAGS.SHOW_AWARDS && (
+          <AwardsSection
+            isDark={isDark}
+            magneticPositions={magneticPositions}
+            handleMagneticMove={handleMagneticMove}
+            handleMagneticLeave={handleMagneticLeave}
+          />
+        )}
 
         {/* Testimonials Section */}
         {FEATURE_FLAGS.SHOW_TESTIMONIALS && (
@@ -432,24 +462,32 @@ export default function PremiumStudentPortfolio() {
         )}
 
         {/* Certifications Section */}
-        <CertificationsSection isDark={isDark} />
+        {FEATURE_FLAGS.SHOW_CERTIFICATIONS && (
+          <CertificationsSection isDark={isDark} />
+        )}
 
         {/* Contact Section */}
-        <ContactSection
-          isDark={isDark}
-          formData={formData}
-          formStatus={formStatus}
-          formErrors={formErrors}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-        />
+        {FEATURE_FLAGS.SHOW_CONTACT && (
+          <ContactSection
+            isDark={isDark}
+            formData={formData}
+            formStatus={formStatus}
+            formErrors={formErrors}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+          />
+        )}
 
         {/* Footer */}
-        <Footer isDark={isDark} />
+        {FEATURE_FLAGS.SHOW_FOOTER && (
+          <Footer isDark={isDark} />
+        )}
       </div>
 
       {/* Scroll-to-Top Button */}
-      <ScrollToTop showScrollTop={showScrollTop} />
+      {FEATURE_FLAGS.SHOW_SCROLL_TO_TOP && (
+        <ScrollToTop showScrollTop={showScrollTop} />
+      )}
     </>
   );
 }

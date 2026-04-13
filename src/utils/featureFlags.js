@@ -1,5 +1,36 @@
 export const FEATURE_FLAGS = {
-  SHOW_PROJECTS: true, // Set to false to hide the Projects section
-  SHOW_PARTICLES: true, //SGA Particles feature flag
-  SHOW_TESTIMONIALS: false, // Set to false to hide the Testimonials section
+  // Particle Effects
+  SHOW_PARTICLES: true,
+  SHOW_CURSOR_TRAIL: true,
+  SHOW_CARD_PARTICLE_LEAK: true,
+  SHOW_PARTICLE_TEXT_FORMATION: true,
+
+  // Main Sections
+  SHOW_HERO_SECTION: true,
+  SHOW_TRUST_INDICATORS: true,
+  SHOW_EDUCATION: true,
+  SHOW_ACHIEVEMENTS: true,
+  SHOW_ABOUT: true,
+  SHOW_TECH_STACK: true,
+  SHOW_PROJECTS: true,
+  SHOW_LANGUAGES: true,
+  SHOW_WORK_EXPERIENCE: true,
+  SHOW_AWARDS: true,
+  SHOW_TESTIMONIALS: false,
+  SHOW_CERTIFICATIONS: true,
+  SHOW_CONTACT: true,
+  SHOW_FOOTER: true,
+
+  // UI Components
+  SHOW_CUSTOM_CURSOR: true,
+  SHOW_WELCOME_POPUP: true,
+  SHOW_SCROLL_TO_TOP: true,
+  SHOW_RESUME_BUTTON: false, // REMOVED
+
+  // Security
+  SHOW_CONTENT_PROTECTION: true,
+
+  // 3D Features
+  SHOW_3D_MODEL: true,
+  ENABLE_3D_SCROLL_ANIMATIONS: true,
 };
