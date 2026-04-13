@@ -121,6 +121,7 @@ export default function PremiumStudentPortfolio() {
 
   // Initialize comprehensive content protection
   useEffect(() => {
+    if (!FEATURE_FLAGS.SHOW_CONTENT_PROTECTION) return;
     initializeContentProtection({
       enableDevToolsDetection: true,
       enableScreenCaptureBlocking: true,
@@ -216,7 +217,7 @@ export default function PremiumStudentPortfolio() {
     <StartupAnimation isDark={isDark} enabled={FEATURE_FLAGS.SHOW_STARTUP_ANIMATION}>
       <SGAParticles enabled={FEATURE_FLAGS.SHOW_PARTICLES} />
       {FEATURE_FLAGS.SHOW_CARD_LEAK && <CardParticleLeak />}
-      <CustomCursor />
+      {FEATURE_FLAGS.SHOW_CUSTOM_CURSOR && <CustomCursor />}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=swap');
         
@@ -368,7 +369,9 @@ export default function PremiumStudentPortfolio() {
         />
 
         {/* Hero Section */}
-        <HeroSection isDark={isDark} scrollTo={scrollTo} y1={y1} y2={y2} y3={y3} />
+        {FEATURE_FLAGS.SHOW_HERO_SECTION && (
+          <HeroSection isDark={isDark} scrollTo={scrollTo} y1={y1} y2={y2} y3={y3} />
+        )}
 
         {/* 3D Avatar Section */}
         {FEATURE_FLAGS.SHOW_3D_AVATAR_SECTION && (
@@ -467,7 +470,7 @@ export default function PremiumStudentPortfolio() {
         )}
 
         {/* Footer */}
-        <Footer isDark={isDark} />
+        {FEATURE_FLAGS.SHOW_FOOTER && <Footer isDark={isDark} />}
       </div>
 
       {/* Scroll-to-Top Button */}

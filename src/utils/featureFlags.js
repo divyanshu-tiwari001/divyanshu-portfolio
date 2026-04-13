@@ -5,6 +5,7 @@ export const FEATURE_FLAGS = {
   SHOW_CARD_LEAK: true,
 
   // Hero Section
+  SHOW_HERO_SECTION: true,
   SHOW_HERO_3D_MODEL: true,
   SHOW_RESUME_BUTTON: false,
 
@@ -21,6 +22,7 @@ export const FEATURE_FLAGS = {
   SHOW_CERTIFICATIONS: true,
   SHOW_TRUST_INDICATORS: true,
   SHOW_CONTACT: true,
+  SHOW_FOOTER: true,
 
   // 3D Features
   SHOW_3D_AVATAR_SECTION: true,
@@ -35,5 +37,9 @@ export const FEATURE_FLAGS = {
   SHOW_MAGNETIC_HOVER: true,
   SHOW_DARK_MODE_TOGGLE: true,
   SHOW_WELCOME_POPUP: true,
+  SHOW_CUSTOM_CURSOR: true,
   SHOW_SCROLL_TO_TOP: true,
+
+  // Security
+  SHOW_CONTENT_PROTECTION: true,
 };
