@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Sphere, Cylinder, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import { AVATAR_COLORS } from '../../utils/3dConfig';
 
@@ -41,15 +40,14 @@ function FloatingParticles() {
   );
 }
 
-export default function Avatar3D({ scrollY = 0, mouseX = 0, mouseY = 0 }) {
+export default function Avatar3D({ mouseX = 0, mouseY = 0 }) {
   const groupRef = useRef();
   const bodyRef = useRef();
 
-  useFrame((_, delta) => {
+  useFrame((state) => {
     if (groupRef.current) {
       // Smooth auto-rotation + scroll influence
-      groupRef.current.rotation.y += delta * 0.5;
-      groupRef.current.rotation.y += scrollY * 0.001 * delta;
+      groupRef.current.rotation.y += 0.005;
       // Mouse tilt
       groupRef.current.rotation.x = THREE.MathUtils.lerp(
         groupRef.current.rotation.x,
@@ -63,7 +61,7 @@ export default function Avatar3D({ scrollY = 0, mouseX = 0, mouseY = 0 }) {
       );
     }
     if (bodyRef.current) {
-      bodyRef.current.position.y = Math.sin(Date.now() * 0.001) * 0.05;
+      bodyRef.current.position.y = Math.sin(state.clock.elapsedTime) * 0.05;
     }
   });
 

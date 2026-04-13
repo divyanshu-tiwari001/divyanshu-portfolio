@@ -368,7 +368,7 @@ export default function PremiumStudentPortfolio() {
         />
 
         {/* Hero Section */}
-        <HeroSection isDark={isDark} scrollTo={scrollTo} y1={y1} y2={y2} y3={y3} scrollY={scrollYProgress} />
+        <HeroSection isDark={isDark} scrollTo={scrollTo} y1={y1} y2={y2} y3={y3} />
 
         {/* 3D Avatar Section */}
         {FEATURE_FLAGS.SHOW_3D_AVATAR_SECTION && (

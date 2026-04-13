@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const PHASES = [
@@ -15,6 +15,20 @@ const PHASES = [
 export default function StartupAnimation({ children, isDark, enabled = true }) {
   const [phase, setPhase] = useState('idle');
   const [animDone, setAnimDone] = useState(!enabled);
+
+  const particles = useMemo(() =>
+    Array.from({ length: 30 }, (_, i) => ({
+      width: Math.random() * 6 + 2,
+      height: Math.random() * 6 + 2,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      color: i % 2 === 0 ? '#06b6d4' : '#f59e0b',
+      animX: (Math.random() - 0.5) * 200,
+      animY: (Math.random() - 0.5) * 200,
+      duration: 2 + Math.random(),
+      delay: Math.random() * 0.5,
+    })),
+  []);
 
   useEffect(() => {
     if (!enabled) return;
@@ -56,26 +70,26 @@ export default function StartupAnimation({ children, isDark, enabled = true }) {
           >
             {/* Animated background particles */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              {Array.from({ length: 30 }).map((_, i) => (
+              {particles.map((p, i) => (
                 <motion.div
                   key={i}
                   className="absolute rounded-full"
                   style={{
-                    width: Math.random() * 6 + 2,
-                    height: Math.random() * 6 + 2,
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                    background: i % 2 === 0 ? '#06b6d4' : '#f59e0b',
+                    width: p.width,
+                    height: p.height,
+                    left: `${p.left}%`,
+                    top: `${p.top}%`,
+                    background: p.color,
                   }}
                   animate={{
-                    x: [0, (Math.random() - 0.5) * 200, 0],
-                    y: [0, (Math.random() - 0.5) * 200, 0],
+                    x: [0, p.animX, 0],
+                    y: [0, p.animY, 0],
                     opacity: [0, 0.8, 0],
                     scale: [0, 1, 0],
                   }}
                   transition={{
-                    duration: 2 + Math.random() * 1,
-                    delay: Math.random() * 0.5,
+                    duration: p.duration,
+                    delay: p.delay,
                     repeat: Infinity,
                     ease: 'easeInOut',
                   }}

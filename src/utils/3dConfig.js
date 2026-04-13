@@ -37,17 +37,6 @@ export const INFO_POINTERS = [
   { label: 'Team Leader',            icon: '⭐', color: '#ec4899', angle: 340, radius: 2.9 },
 ];
 
-export const STARTUP_SEQUENCE = [
-  { phase: 'logo',      start: 0,   end: 0.3 },
-  { phase: 'particles', start: 0.3, end: 1.0 },
-  { phase: 'nav',       start: 0.5, end: 1.0 },
-  { phase: 'title',     start: 1.0, end: 1.3 },
-  { phase: 'avatar',    start: 1.2, end: 2.0 },
-  { phase: 'text',      start: 1.3, end: 1.8 },
-  { phase: 'pointers',  start: 1.5, end: 2.5 },
-  { phase: 'buttons',   start: 2.0, end: 2.5 },
-];
-
 export const WEBGL_AVAILABLE = (() => {
   try {
     const canvas = document.createElement('canvas');

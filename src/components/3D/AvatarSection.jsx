@@ -4,8 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Avatar3D from './Avatar3D';
 import InfoPointer from './InfoPointer';
 import { AVATAR_PRESETS, INFO_POINTERS, WEBGL_AVAILABLE } from '../../utils/3dConfig';
-
-function AvatarCanvas({ scrollY, mousePos }) {
+function AvatarCanvas({ mousePos }) {
   const preset = AVATAR_PRESETS.section;
   return (
     <Canvas
@@ -22,7 +21,7 @@ function AvatarCanvas({ scrollY, mousePos }) {
 
       <Suspense fallback={null}>
         <group scale={preset.scale} position={preset.position} rotation={preset.rotation}>
-          <Avatar3D scrollY={scrollY} mouseX={mousePos.x} mouseY={mousePos.y} />
+          <Avatar3D mouseX={mousePos.x} mouseY={mousePos.y} />
         </group>
       </Suspense>
     </Canvas>
@@ -32,15 +31,9 @@ function AvatarCanvas({ scrollY, mousePos }) {
 export default function AvatarSection({ isDark }) {
   const sectionRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [scrollVal, setScrollVal] = useState(0);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
-  const rawScrollY = useTransform(scrollYProgress, [0, 1], [0, 800]);
   const sectionY = useTransform(scrollYProgress, [0, 1], ['0%', '-8%']);
   const bgOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
-
-  useEffect(() => {
-    return rawScrollY.on('change', (v) => setScrollVal(v));
-  }, [rawScrollY]);
 
   useEffect(() => {
     const handleMouse = (e) => {
@@ -104,7 +97,7 @@ export default function AvatarSection({ isDark }) {
         {/* 3D Canvas */}
         <div className="flex-shrink-0 w-[280px] h-[380px] sm:w-[340px] sm:h-[440px] md:w-[380px] md:h-[500px]">
           {WEBGL_AVAILABLE ? (
-            <AvatarCanvas scrollY={scrollVal} mousePos={mousePos} />
+            <AvatarCanvas mousePos={mousePos} />
           ) : (
             /* Fallback when WebGL not available */
             <div className="w-full h-full flex items-center justify-center">

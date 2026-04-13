@@ -15,7 +15,7 @@ function FallbackAvatar() {
   );
 }
 
-export default function HeroAvatar({ scrollY = 0 }) {
+export default function HeroAvatar() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const preset = AVATAR_PRESETS.hero;
 
@@ -52,7 +52,7 @@ export default function HeroAvatar({ scrollY = 0 }) {
 
         <Suspense fallback={null}>
           <group scale={preset.scale} position={preset.position} rotation={preset.rotation}>
-            <Avatar3D scrollY={scrollY} mouseX={mousePos.x} mouseY={mousePos.y} />
+            <Avatar3D mouseX={mousePos.x} mouseY={mousePos.y} />
           </group>
         </Suspense>
       </Canvas>

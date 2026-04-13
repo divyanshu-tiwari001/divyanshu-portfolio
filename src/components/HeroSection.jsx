@@ -6,7 +6,7 @@ import { FEATURE_FLAGS } from '../utils/featureFlags';
 
 const HeroAvatar = lazy(() => import('./3D/HeroAvatar'));
 
-export default function HeroSection({ isDark, scrollTo, y1, y2, y3, scrollY = 0 }) {
+export default function HeroSection({ isDark, scrollTo, y1, y2, y3 }) {
   const particleAnchorRef = useRef(null);
   const show3D = FEATURE_FLAGS.SHOW_HERO_3D_MODEL;
 
@@ -96,7 +96,7 @@ export default function HeroSection({ isDark, scrollTo, y1, y2, y3, scrollY = 0 
         {show3D && (
           <div className="flex-shrink-0 w-full lg:w-[380px] h-[340px] lg:h-[480px]">
             <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><div className="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-400 to-orange-400 animate-pulse" /></div>}>
-              <HeroAvatar isDark={isDark} scrollY={scrollY} />
+              <HeroAvatar isDark={isDark} />
             </Suspense>
           </div>
         )}
