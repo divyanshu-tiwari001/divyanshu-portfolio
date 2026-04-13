@@ -4,9 +4,12 @@ import { Award, Trophy, BookOpen, ChevronRight, Download } from 'lucide-react';
 import SGAParticleText from './SGAParticleText';
 import { FEATURE_FLAGS } from '../utils/featureFlags';
 import { fadeInUp } from '../utils/animations';
+import { HeroAvatar3D } from './AvatarModel3D';
 
-export default function HeroSection({ isDark, scrollTo, y1, y2, y3 }) {
+export default function HeroSection({ isDark, scrollTo, y1, y2, y3, scrollYProgress }) {
   const particleAnchorRef = useRef(null);
+  const show3D = FEATURE_FLAGS.SHOW_3D_MODEL;
+
   return (
     <section id="home" className="relative pt-32 pb-20 px-6 overflow-hidden">
       <motion.div
@@ -22,66 +25,97 @@ export default function HeroSection({ isDark, scrollTo, y1, y2, y3 }) {
         style={{ y: y3 }}
       ></motion.div>
 
-      <div className="max-w-7xl mx-auto text-center relative z-10">
-        <div className="inline-block px-6 py-2 mb-6 rounded-full bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-500/30 animate-slide-bottom hover:scale-105 transition-transform duration-300">
-          <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text font-montserrat">
-            Available for Opportunities
-          </span>
-        </div>
+      <div className={`max-w-7xl mx-auto relative z-10 ${show3D ? 'grid grid-cols-1 lg:grid-cols-2 gap-12 items-center' : 'text-center'}`}>
+        {/* Text content */}
+        <div className={show3D ? 'text-left' : 'text-center'}>
+          <div className={`inline-block px-6 py-2 mb-6 rounded-full bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-500/30 animate-slide-bottom hover:scale-105 transition-transform duration-300 ${show3D ? '' : ''}`}>
+            <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text font-montserrat">
+              Available for Opportunities
+            </span>
+          </div>
 
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight font-playfair animate-scale-in">
-          I Build <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text animate-gradient">Digital Experiences</span> That Make an Impact
-        </h1>
+          <h1 className={`text-5xl ${show3D ? 'md:text-6xl' : 'md:text-7xl'} font-bold mb-6 leading-tight font-playfair animate-scale-in`}>
+            I Build <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text animate-gradient">Digital Experiences</span> That Make an Impact
+          </h1>
 
-        <div ref={particleAnchorRef} className="mb-4" style={{ minHeight: `${72}px` }}>
-          <SGAParticleText isDark={isDark} anchorRef={particleAnchorRef} />
-        </div>
+          <div ref={particleAnchorRef} className="mb-4" style={{ minHeight: `${72}px` }}>
+            <SGAParticleText isDark={isDark} anchorRef={particleAnchorRef} />
+          </div>
 
-        <p className={`text-lg md:text-xl mb-12 max-w-3xl mx-auto font-poppins animate-slide-bottom ${isDark ? 'text-slate-300' : 'text-slate-600'}`} style={{ animationDelay: '0.2s' }}>
-          Developer leveraging <strong>AI Prompting, Vibe Coding, HTML &amp; CSS, and Python</strong> to build real-world projects. Currently pursuing senior secondary education, applying hands-on technical and leadership skills across professional and creative domains.
-        </p>
+          <p className={`text-lg md:text-xl mb-12 font-poppins animate-slide-bottom ${show3D ? 'max-w-xl' : 'max-w-3xl mx-auto'} ${isDark ? 'text-slate-300' : 'text-slate-600'}`} style={{ animationDelay: '0.2s' }}>
+            Developer leveraging <strong>AI Prompting, Vibe Coding, HTML &amp; CSS, and Python</strong> to build real-world projects. Currently pursuing senior secondary education, applying hands-on technical and leadership skills across professional and creative domains.
+          </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-slide-bottom" style={{ animationDelay: '0.4s' }}>
-          <button onClick={() => scrollTo(FEATURE_FLAGS.SHOW_PROJECTS ? 'projects' : 'achievements')} className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-lg font-bold rounded-full hover:scale-105 hover:shadow-xl hover:shadow-orange-500/50 transition-all duration-300 font-poppins relative overflow-hidden flex items-center justify-center gap-2">
-            <span className="relative z-10">View My Projects</span>
-            <ChevronRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </button>
-          <button onClick={() => scrollTo('contact')} className={`px-8 py-4 text-lg font-bold rounded-full border-2 border-orange-500 transition-all duration-300 font-poppins hover:scale-105 hover:shadow-xl ${isDark ? 'text-orange-400 hover:bg-orange-500 hover:text-white' : 'text-orange-600 hover:bg-orange-600 hover:text-white'}`}>
-            Get in Touch
-          </button>
-          <a
-            href="#"
-            onClick={(e) => e.preventDefault()}
-            aria-label="Download Resume (coming soon)"
-            className={`inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-bold rounded-full border-2 border-dashed border-orange-500/60 transition-all duration-300 font-poppins hover:scale-105 hover:border-orange-500 hover:shadow-xl ${isDark ? 'text-orange-400/80 hover:text-orange-400' : 'text-orange-500/80 hover:text-orange-600'}`}
-          >
-            <Download className="w-5 h-5" />
-            Resume
-          </a>
-        </div>
+          <div className={`flex flex-col sm:flex-row gap-4 mb-16 animate-slide-bottom ${show3D ? '' : 'justify-center'}`} style={{ animationDelay: '0.4s' }}>
+            <button onClick={() => scrollTo(FEATURE_FLAGS.SHOW_PROJECTS ? 'projects' : 'achievements')} className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-lg font-bold rounded-full hover:scale-105 hover:shadow-xl hover:shadow-orange-500/50 transition-all duration-300 font-poppins relative overflow-hidden flex items-center justify-center gap-2">
+              <span className="relative z-10">View My Projects</span>
+              <ChevronRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </button>
+            <button onClick={() => scrollTo('contact')} className={`px-8 py-4 text-lg font-bold rounded-full border-2 border-orange-500 transition-all duration-300 font-poppins hover:scale-105 hover:shadow-xl ${isDark ? 'text-orange-400 hover:bg-orange-500 hover:text-white' : 'text-orange-600 hover:bg-orange-600 hover:text-white'}`}>
+              Get in Touch
+            </button>
+            {FEATURE_FLAGS.SHOW_RESUME_BUTTON && (
+              <a
+                href="#"
+                onClick={(e) => e.preventDefault()}
+                aria-label="Download Resume (coming soon)"
+                className={`inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-bold rounded-full border-2 border-dashed border-orange-500/60 transition-all duration-300 font-poppins hover:scale-105 hover:border-orange-500 hover:shadow-xl ${isDark ? 'text-orange-400/80 hover:text-orange-400' : 'text-orange-500/80 hover:text-orange-600'}`}
+              >
+                <Download className="w-5 h-5" />
+                Resume
+              </a>
+            )}
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {[
-            { icon: Award, value: '10+', label: 'Certificates Earned', delay: '0.1s' },
-            { icon: Trophy, value: '3+', label: 'Awards Won', delay: '0.2s' },
-            { icon: BookOpen, value: '200+', label: 'Hours of Learning', delay: '0.3s' }
-          ].map((stat, index) => (
-            <div
-              key={index}
-              className={`group p-8 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 animate-scale-in ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-              style={{ animationDelay: stat.delay }}
-            >
-              <stat.icon className="w-8 h-8 mx-auto mb-3 text-orange-500 group-hover:scale-110 transition-transform duration-300" />
-              <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text font-poppins">
-                {stat.value}
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${show3D ? 'max-w-xl' : 'max-w-4xl mx-auto'}`}>
+            {[
+              { icon: Award, value: '10+', label: 'Certificates Earned', delay: '0.1s' },
+              { icon: Trophy, value: '3+', label: 'Awards Won', delay: '0.2s' },
+              { icon: BookOpen, value: '200+', label: 'Hours of Learning', delay: '0.3s' }
+            ].map((stat, index) => (
+              <div
+                key={index}
+                className={`group p-8 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 animate-scale-in ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+                style={{ animationDelay: stat.delay }}
+              >
+                <stat.icon className="w-8 h-8 mx-auto mb-3 text-orange-500 group-hover:scale-110 transition-transform duration-300" />
+                <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text font-poppins">
+                  {stat.value}
+                </div>
+                <div className={`text-sm font-semibold uppercase tracking-wider font-montserrat ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  {stat.label}
+                </div>
               </div>
-              <div className={`text-sm font-semibold uppercase tracking-wider font-montserrat ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                {stat.label}
+            ))}
+          </div>
+        </div>
+
+        {/* 3D Avatar (hero) */}
+        {show3D && (
+          <motion.div
+            className="hidden lg:block"
+            initial={{ opacity: 0, x: 60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9, delay: 0.3, ease: 'backOut' }}
+          >
+            <div
+              className={`relative rounded-3xl overflow-hidden border shadow-2xl ${isDark ? 'border-slate-700/60 bg-slate-900/40' : 'border-slate-200 bg-white/40'}`}
+              style={{ height: '500px' }}
+            >
+              <HeroAvatar3D
+                isDark={isDark}
+                scrollYProgress={FEATURE_FLAGS.ENABLE_3D_SCROLL_ANIMATIONS ? scrollYProgress : null}
+              />
+              {/* Subtle label */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+                <span className={`text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full backdrop-blur-xl ${isDark ? 'bg-slate-800/80 text-cyan-400' : 'bg-white/80 text-cyan-600'}`}>
+                  Interactive · Scroll to rotate
+                </span>
               </div>
             </div>
-          ))}
-        </div>
+          </motion.div>
+        )}
       </div>
     </section>
   );
