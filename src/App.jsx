@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useScroll, useTransform } from 'framer-motion';
 import CustomCursor from './components/CustomCursor';
 import SGAParticles from './components/SGAParticles';
@@ -23,8 +23,9 @@ import CertificationsSection from './components/CertificationsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
-import Showcase3DSection from './components/Showcase3DSection';
 import StartupAnimation from './components/StartupAnimation';
+
+const AvatarSection = lazy(() => import('./components/3D/AvatarSection'));
 
 export default function PremiumStudentPortfolio() {
   const [isDark, setIsDark] = useState(true);
@@ -32,7 +33,6 @@ export default function PremiumStudentPortfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [magneticPositions, setMagneticPositions] = useState({});
-  const [startupDone, setStartupDone] = useState(false);
   const { scrollYProgress } = useScroll();
   const y1 = useTransform(scrollYProgress, [0, 1], [0, 300]);
   const y2 = useTransform(scrollYProgress, [0, 1], [0, 400]);
@@ -214,12 +214,9 @@ export default function PremiumStudentPortfolio() {
   };
 
   return (
-    <>
-      {/* Startup Animation */}
-      {!startupDone && <StartupAnimation onComplete={() => setStartupDone(true)} />}
-
+    <StartupAnimation isDark={isDark} enabled={FEATURE_FLAGS.SHOW_STARTUP_ANIMATION}>
       <SGAParticles enabled={FEATURE_FLAGS.SHOW_PARTICLES} />
-      {FEATURE_FLAGS.SHOW_CARD_PARTICLE_LEAK && <CardParticleLeak />}
+      {FEATURE_FLAGS.SHOW_CARD_LEAK && <CardParticleLeak />}
       {FEATURE_FLAGS.SHOW_CUSTOM_CURSOR && <CustomCursor />}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=swap');
@@ -373,18 +370,18 @@ export default function PremiumStudentPortfolio() {
 
         {/* Hero Section */}
         {FEATURE_FLAGS.SHOW_HERO_SECTION && (
-          <HeroSection isDark={isDark} scrollTo={scrollTo} y1={y1} y2={y2} y3={y3} scrollYProgress={scrollYProgress} />
+          <HeroSection isDark={isDark} scrollTo={scrollTo} y1={y1} y2={y2} y3={y3} />
+        )}
+
+        {/* 3D Avatar Section */}
+        {FEATURE_FLAGS.SHOW_3D_AVATAR_SECTION && (
+          <Suspense fallback={null}>
+            <AvatarSection isDark={isDark} />
+          </Suspense>
         )}
 
         {/* Trust Indicators */}
-        {FEATURE_FLAGS.SHOW_TRUST_INDICATORS && (
-          <TrustIndicators isDark={isDark} />
-        )}
-
-        {/* 3D Showcase Section */}
-        {FEATURE_FLAGS.SHOW_3D_MODEL && (
-          <Showcase3DSection isDark={isDark} scrollYProgress={scrollYProgress} />
-        )}
+        {FEATURE_FLAGS.SHOW_TRUST_INDICATORS && <TrustIndicators isDark={isDark} />}
 
         {/* Education Section */}
         {FEATURE_FLAGS.SHOW_EDUCATION && (
@@ -407,14 +404,10 @@ export default function PremiumStudentPortfolio() {
         )}
 
         {/* About Section */}
-        {FEATURE_FLAGS.SHOW_ABOUT && (
-          <AboutSection isDark={isDark} />
-        )}
+        {FEATURE_FLAGS.SHOW_ABOUT && <AboutSection isDark={isDark} />}
 
         {/* Tech Stack */}
-        {FEATURE_FLAGS.SHOW_TECH_STACK && (
-          <TechStackSection isDark={isDark} />
-        )}
+        {FEATURE_FLAGS.SHOW_TECH_STACK && <TechStackSection isDark={isDark} />}
 
         {/* Projects Section */}
         {FEATURE_FLAGS.SHOW_PROJECTS && (
@@ -462,9 +455,7 @@ export default function PremiumStudentPortfolio() {
         )}
 
         {/* Certifications Section */}
-        {FEATURE_FLAGS.SHOW_CERTIFICATIONS && (
-          <CertificationsSection isDark={isDark} />
-        )}
+        {FEATURE_FLAGS.SHOW_CERTIFICATIONS && <CertificationsSection isDark={isDark} />}
 
         {/* Contact Section */}
         {FEATURE_FLAGS.SHOW_CONTACT && (
@@ -479,15 +470,11 @@ export default function PremiumStudentPortfolio() {
         )}
 
         {/* Footer */}
-        {FEATURE_FLAGS.SHOW_FOOTER && (
-          <Footer isDark={isDark} />
-        )}
+        {FEATURE_FLAGS.SHOW_FOOTER && <Footer isDark={isDark} />}
       </div>
 
       {/* Scroll-to-Top Button */}
-      {FEATURE_FLAGS.SHOW_SCROLL_TO_TOP && (
-        <ScrollToTop showScrollTop={showScrollTop} />
-      )}
-    </>
+      {FEATURE_FLAGS.SHOW_SCROLL_TO_TOP && <ScrollToTop showScrollTop={showScrollTop} />}
+    </StartupAnimation>
   );
 }

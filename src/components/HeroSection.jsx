@@ -1,14 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Award, Trophy, BookOpen, ChevronRight, Download } from 'lucide-react';
 import SGAParticleText from './SGAParticleText';
 import { FEATURE_FLAGS } from '../utils/featureFlags';
-import { fadeInUp } from '../utils/animations';
-import { HeroAvatar3D } from './AvatarModel3D';
 
-export default function HeroSection({ isDark, scrollTo, y1, y2, y3, scrollYProgress }) {
+const HeroAvatar = lazy(() => import('./3D/HeroAvatar'));
+
+export default function HeroSection({ isDark, scrollTo, y1, y2, y3 }) {
   const particleAnchorRef = useRef(null);
-  const show3D = FEATURE_FLAGS.SHOW_3D_MODEL;
+  const show3D = FEATURE_FLAGS.SHOW_HERO_3D_MODEL;
 
   return (
     <section id="home" className="relative pt-32 pb-20 px-6 overflow-hidden">
@@ -25,16 +25,17 @@ export default function HeroSection({ isDark, scrollTo, y1, y2, y3, scrollYProgr
         style={{ y: y3 }}
       ></motion.div>
 
-      <div className={`max-w-7xl mx-auto relative z-10 ${show3D ? 'grid grid-cols-1 lg:grid-cols-2 gap-12 items-center' : 'text-center'}`}>
+      <div className={`max-w-7xl mx-auto relative z-10 ${show3D ? 'flex flex-col lg:flex-row items-center gap-8' : 'text-center'}`}>
+
         {/* Text content */}
-        <div className={show3D ? 'text-left' : 'text-center'}>
-          <div className={`inline-block px-6 py-2 mb-6 rounded-full bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-500/30 animate-slide-bottom hover:scale-105 transition-transform duration-300 ${show3D ? '' : ''}`}>
+        <div className={show3D ? 'flex-1 text-center lg:text-left' : ''}>
+          <div className="inline-block px-6 py-2 mb-6 rounded-full bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-500/30 animate-slide-bottom hover:scale-105 transition-transform duration-300">
             <span className="text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text font-montserrat">
               Available for Opportunities
             </span>
           </div>
 
-          <h1 className={`text-5xl ${show3D ? 'md:text-6xl' : 'md:text-7xl'} font-bold mb-6 leading-tight font-playfair animate-scale-in`}>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight font-playfair animate-scale-in">
             I Build <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text animate-gradient">Digital Experiences</span> That Make an Impact
           </h1>
 
@@ -42,11 +43,11 @@ export default function HeroSection({ isDark, scrollTo, y1, y2, y3, scrollYProgr
             <SGAParticleText isDark={isDark} anchorRef={particleAnchorRef} />
           </div>
 
-          <p className={`text-lg md:text-xl mb-12 font-poppins animate-slide-bottom ${show3D ? 'max-w-xl' : 'max-w-3xl mx-auto'} ${isDark ? 'text-slate-300' : 'text-slate-600'}`} style={{ animationDelay: '0.2s' }}>
+          <p className={`text-lg md:text-xl mb-12 ${show3D ? 'max-w-xl' : 'max-w-3xl mx-auto'} font-poppins animate-slide-bottom ${isDark ? 'text-slate-300' : 'text-slate-600'}`} style={{ animationDelay: '0.2s' }}>
             Developer leveraging <strong>AI Prompting, Vibe Coding, HTML &amp; CSS, and Python</strong> to build real-world projects. Currently pursuing senior secondary education, applying hands-on technical and leadership skills across professional and creative domains.
           </p>
 
-          <div className={`flex flex-col sm:flex-row gap-4 mb-16 animate-slide-bottom ${show3D ? '' : 'justify-center'}`} style={{ animationDelay: '0.4s' }}>
+          <div className={`flex flex-col sm:flex-row gap-4 ${show3D ? 'justify-start' : 'justify-center'} mb-16 animate-slide-bottom`} style={{ animationDelay: '0.4s' }}>
             <button onClick={() => scrollTo(FEATURE_FLAGS.SHOW_PROJECTS ? 'projects' : 'achievements')} className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-lg font-bold rounded-full hover:scale-105 hover:shadow-xl hover:shadow-orange-500/50 transition-all duration-300 font-poppins relative overflow-hidden flex items-center justify-center gap-2">
               <span className="relative z-10">View My Projects</span>
               <ChevronRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
@@ -68,7 +69,7 @@ export default function HeroSection({ isDark, scrollTo, y1, y2, y3, scrollYProgr
             )}
           </div>
 
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${show3D ? 'max-w-xl' : 'max-w-4xl mx-auto'}`}>
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${show3D ? '' : 'max-w-4xl mx-auto'}`}>
             {[
               { icon: Award, value: '10+', label: 'Certificates Earned', delay: '0.1s' },
               { icon: Trophy, value: '3+', label: 'Awards Won', delay: '0.2s' },
@@ -91,30 +92,13 @@ export default function HeroSection({ isDark, scrollTo, y1, y2, y3, scrollYProgr
           </div>
         </div>
 
-        {/* 3D Avatar (hero) */}
+        {/* 3D Avatar — right side */}
         {show3D && (
-          <motion.div
-            className="hidden lg:block"
-            initial={{ opacity: 0, x: 60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, delay: 0.3, ease: 'backOut' }}
-          >
-            <div
-              className={`relative rounded-3xl overflow-hidden border shadow-2xl ${isDark ? 'border-slate-700/60 bg-slate-900/40' : 'border-slate-200 bg-white/40'}`}
-              style={{ height: '500px' }}
-            >
-              <HeroAvatar3D
-                isDark={isDark}
-                scrollYProgress={FEATURE_FLAGS.ENABLE_3D_SCROLL_ANIMATIONS ? scrollYProgress : null}
-              />
-              {/* Subtle label */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-                <span className={`text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full backdrop-blur-xl ${isDark ? 'bg-slate-800/80 text-cyan-400' : 'bg-white/80 text-cyan-600'}`}>
-                  Interactive · Scroll to rotate
-                </span>
-              </div>
-            </div>
-          </motion.div>
+          <div className="flex-shrink-0 w-full lg:w-[380px] h-[340px] lg:h-[480px]">
+            <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><div className="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-400 to-orange-400 animate-pulse" /></div>}>
+              <HeroAvatar isDark={isDark} />
+            </Suspense>
+          </div>
         )}
       </div>
     </section>
