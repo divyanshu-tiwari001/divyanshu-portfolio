@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { AVATAR_COLORS } from '../../utils/3dConfig';
+import { createFPSTracker, tickFPS } from '../../utils/3dSystem';
 
 function FloatingParticles() {
   const groupRef = useRef();
@@ -43,8 +44,12 @@ function FloatingParticles() {
 export default function Avatar3D({ mouseX = 0, mouseY = 0 }) {
   const groupRef = useRef();
   const bodyRef = useRef();
+  const fpsTrackerRef = useRef(createFPSTracker());
 
   useFrame((state) => {
+    // FPS monitoring — auto-disables 3D if performance is consistently poor
+    tickFPS(fpsTrackerRef.current);
+
     if (groupRef.current) {
       // Smooth auto-rotation + scroll influence
       groupRef.current.rotation.y += 0.005;
