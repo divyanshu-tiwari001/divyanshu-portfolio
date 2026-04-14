@@ -1,10 +1,14 @@
-import React, { Suspense, useState, useEffect, useRef } from 'react';
+import React, { Suspense, useState, useEffect, useRef, useCallback } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Avatar3D from './Avatar3D';
 import InfoPointer from './InfoPointer';
 import { AVATAR_PRESETS, INFO_POINTERS, WEBGL_AVAILABLE } from '../../utils/3dConfig';
-function AvatarCanvas({ mousePos }) {
+import { FEATURE_FLAGS } from '../../utils/featureFlags';
+import { disable3D } from '../../utils/3dSystem';
+import ErrorBoundary3D from './ErrorBoundary3D';
+
+function AvatarCanvas({ mousePos, onReady }) {
   const preset = AVATAR_PRESETS.section;
   return (
     <Canvas
@@ -12,6 +16,17 @@ function AvatarCanvas({ mousePos }) {
       gl={{ antialias: true, alpha: true }}
       style={{ background: 'transparent' }}
       dpr={[1, 2]}
+      onCreated={({ gl }) => {
+        onReady?.();
+        // WebGL context-loss detection for the section canvas
+        gl.domElement.addEventListener('webglcontextlost', (e) => {
+          e.preventDefault();
+          console.error('3D System: Avatar section WebGL context lost');
+          if (FEATURE_FLAGS.AUTO_DISABLE_3D_ON_ERROR) {
+            disable3D('Avatar section WebGL context lost');
+          }
+        });
+      }}
     >
       <ambientLight intensity={0.7} />
       <directionalLight position={[5, 8, 5]} intensity={1.4} color="#ffffff" />
@@ -29,11 +44,28 @@ function AvatarCanvas({ mousePos }) {
 }
 
 export default function AvatarSection({ isDark }) {
+  // All hooks must be declared before any conditional returns (Rules of Hooks).
   const sectionRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [canvasReady, setCanvasReady] = useState(false);
+  const timerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
   const sectionY = useTransform(scrollYProgress, [0, 1], ['0%', '-8%']);
   const bgOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+
+  // Timeout detection for the section canvas
+  useEffect(() => {
+    if (!FEATURE_FLAGS.ENABLE_3D_SYSTEM || !FEATURE_FLAGS.AUTO_DISABLE_3D_ON_ERROR) return;
+
+    timerRef.current = setTimeout(() => {
+      if (!canvasReady) {
+        console.warn('3D System: Avatar section load timeout exceeded');
+        disable3D('Avatar section load timeout exceeded (>3 s)');
+      }
+    }, FEATURE_FLAGS.THREE_D_LOAD_TIMEOUT_MS);
+
+    return () => clearTimeout(timerRef.current);
+  }, [canvasReady]);
 
   useEffect(() => {
     const handleMouse = (e) => {
@@ -45,6 +77,12 @@ export default function AvatarSection({ isDark }) {
     window.addEventListener('mousemove', handleMouse);
     return () => window.removeEventListener('mousemove', handleMouse);
   }, []);
+
+  // Stable callback so AvatarCanvas doesn't re-render on every parent render
+  const handleCanvasReady = useCallback(() => setCanvasReady(true), []);
+
+  // ── Master 3D guard (placed after hooks so Rules of Hooks are satisfied) ──
+  if (!FEATURE_FLAGS.ENABLE_3D_SYSTEM) return null;
 
   const leftPointers = INFO_POINTERS.slice(0, 3);
   const rightPointers = INFO_POINTERS.slice(3);
@@ -97,7 +135,9 @@ export default function AvatarSection({ isDark }) {
         {/* 3D Canvas */}
         <div className="flex-shrink-0 w-[280px] h-[380px] sm:w-[340px] sm:h-[440px] md:w-[380px] md:h-[500px]">
           {WEBGL_AVAILABLE ? (
-            <AvatarCanvas mousePos={mousePos} />
+            <ErrorBoundary3D>
+              <AvatarCanvas mousePos={mousePos} onReady={handleCanvasReady} />
+            </ErrorBoundary3D>
           ) : (
             /* Fallback when WebGL not available */
             <div className="w-full h-full flex items-center justify-center">
