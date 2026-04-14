@@ -75,7 +75,7 @@
 
 ## 🎮 Live Demo
 
-> 🔗 **[divyanshu-portfolio.vercel.app](https://divyanshu-portfolio.vercel.app)** ← *(update with your live URL)*
+> 🔗 **[divyanshu-portfolio.vercel.app](https://divyanshu-portfolio-01.vercel.app)** ← *(update with your live URL)*
 
 ---
 
@@ -301,7 +301,7 @@ Contributions, issues and feature requests are welcome!
     <img alt="GitHub" src="https://img.shields.io/badge/GitHub-divyanshu--tiwari001-181717?style=for-the-badge&logo=github">
   </a>
   &nbsp;
-  <a href="https://linkedin.com/in/divyanshu-tiwari001">
+  <a href="https://linkedin.com/in/divyanshu-tiwarii">
     <img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-Divyanshu_Tiwari-0A66C2?style=for-the-badge&logo=linkedin">
   </a>
 </p>
