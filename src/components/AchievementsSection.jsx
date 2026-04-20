@@ -4,7 +4,7 @@ import Tilt from 'react-parallax-tilt';
 import { Trophy, Code, Lightbulb, Star } from 'lucide-react';
 import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
 
-export default function AchievementsSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
+function AchievementsSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
   return (
     <section id="achievements" className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
@@ -113,3 +113,17 @@ export default function AchievementsSection({ isDark, magneticPositions, handleM
     </section>
   );
 }
+
+const samePoint = (prevPositions, nextPositions, key) =>
+  (prevPositions[key]?.x ?? 0) === (nextPositions[key]?.x ?? 0) &&
+  (prevPositions[key]?.y ?? 0) === (nextPositions[key]?.y ?? 0);
+
+const areEqual = (prev, next) =>
+  prev.isDark === next.isDark &&
+  prev.handleMagneticMove === next.handleMagneticMove &&
+  prev.handleMagneticLeave === next.handleMagneticLeave &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'achievement-0') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'achievement-1') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'achievement-2');
+
+export default React.memo(AchievementsSection, areEqual);

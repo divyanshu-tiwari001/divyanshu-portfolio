@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, lazy, Suspense, useRef, useCallback } from 'react';
 import { useScroll, useTransform } from 'framer-motion';
 import CustomCursor from './components/CustomCursor';
 import SGAParticles from './components/SGAParticles';
@@ -7,7 +7,6 @@ import { initializeContentProtection, cleanupContentProtection } from './utils/c
 import { FEATURE_FLAGS } from './utils/featureFlags';
 
 import Navigation from './components/Navigation';
-import WelcomePopup from './components/WelcomePopup';
 import HeroSection from './components/HeroSection';
 import TrustIndicators from './components/TrustIndicators';
 import EducationSection from './components/EducationSection';
@@ -18,21 +17,37 @@ import ProjectsSection from './components/ProjectsSection';
 import LanguagesSection from './components/LanguagesSection';
 import WorkExperienceSection from './components/WorkExperienceSection';
 import AwardsSection from './components/AwardsSection';
-import TestimonialsSection from './components/TestimonialsSection';
-import CertificationsSection from './components/CertificationsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import StartupAnimation from './components/StartupAnimation';
 
 const AvatarSection = lazy(() => import('./components/3D/AvatarSection'));
+const WelcomePopup = lazy(() => import('./components/WelcomePopup'));
+const TestimonialsSection = lazy(() => import('./components/TestimonialsSection'));
+const CertificationsSection = lazy(() => import('./components/CertificationsSection'));
+
+const MAGNETIC_THROTTLE_MS = 250;
+const SCROLL_THROTTLE_MS = 120;
+const SCROLL_TOP_THRESHOLD = 300;
+
+function SectionSkeleton({ heightClass = 'h-64' }) {
+  return (
+    <div className={`mx-auto max-w-7xl px-6 py-10 ${heightClass}`}>
+      <div className="h-full w-full rounded-3xl border border-slate-700/40 bg-slate-900/30 animate-pulse" />
+    </div>
+  );
+}
 
 export default function PremiumStudentPortfolio() {
   const [isDark, setIsDark] = useState(true);
   const [showPopup, setShowPopup] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showDeferredSections, setShowDeferredSections] = useState(false);
   const [magneticPositions, setMagneticPositions] = useState({});
+  const magneticUpdateTimes = useRef({});
+  const scrollTimeoutRef = useRef(null);
   const { scrollYProgress } = useScroll();
   const y1 = useTransform(scrollYProgress, [0, 1], [0, 300]);
   const y2 = useTransform(scrollYProgress, [0, 1], [0, 400]);
@@ -41,19 +56,28 @@ export default function PremiumStudentPortfolio() {
   const [formStatus, setFormStatus] = useState('idle'); // idle, loading, success, error
   const [formErrors, setFormErrors] = useState({});
 
-  const handleMagneticMove = (e, key) => {
+  const handleMagneticMove = useCallback((e, key) => {
     // Abort if the user is on a touch device (phones/tablets)
     if (window.matchMedia("(pointer: coarse)").matches) return;
+    const now = performance.now();
+    const lastUpdate = magneticUpdateTimes.current[key] ?? 0;
+    if (now - lastUpdate < MAGNETIC_THROTTLE_MS) return;
+    magneticUpdateTimes.current[key] = now;
+
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
     const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
-    setMagneticPositions(prev => ({ ...prev, [key]: { x, y } }));
-  };
+    setMagneticPositions((prev) => {
+      const current = prev[key];
+      if (current && Math.abs(current.x - x) < 0.5 && Math.abs(current.y - y) < 0.5) return prev;
+      return { ...prev, [key]: { x, y } };
+    });
+  }, []);
 
-  const handleMagneticLeave = (key) => {
+  const handleMagneticLeave = useCallback((key) => {
     setMagneticPositions(prev => ({ ...prev, [key]: { x: 0, y: 0 } }));
-  };
+  }, []);
 
   const validateForm = () => {
     const errors = {};
@@ -107,7 +131,7 @@ export default function PremiumStudentPortfolio() {
       } else {
         setFormStatus('error');
       }
-    } catch (error) {
+    } catch {
       setFormStatus('error');
     }
   };
@@ -117,6 +141,27 @@ export default function PremiumStudentPortfolio() {
       setShowPopup(false);
     }, 6000);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const marker = document.getElementById('deferred-sections-marker');
+    if (!marker || typeof IntersectionObserver === 'undefined') {
+      setShowDeferredSections(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowDeferredSections(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '250px 0px' }
+    );
+    observer.observe(marker);
+
+    return () => observer.disconnect();
   }, []);
 
   // Initialize comprehensive content protection
@@ -139,9 +184,25 @@ export default function PremiumStudentPortfolio() {
 
   // Scroll-to-top visibility
   useEffect(() => {
-    const handleScroll = () => setShowScrollTop(window.scrollY > 300);
+    const updateScrollTopVisibility = () => {
+      setShowScrollTop(window.scrollY > SCROLL_TOP_THRESHOLD);
+      scrollTimeoutRef.current = null;
+    };
+
+    const handleScroll = () => {
+      if (scrollTimeoutRef.current) return;
+      scrollTimeoutRef.current = setTimeout(updateScrollTopVisibility, SCROLL_THROTTLE_MS);
+    };
+
+    updateScrollTopVisibility();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+        scrollTimeoutRef.current = null;
+      }
+    };
   }, []);
 
   // Prevent copying and text selection
@@ -164,48 +225,24 @@ export default function PremiumStudentPortfolio() {
              element.getAttribute('role') === 'textbox';
     };
 
-    // Prevent right-click context menu (except in contact section)
-    const handleContextMenu = (e) => {
-      if (!isFormInput(e.target)) {
-        e.preventDefault();
+    const restrictedEvents = ['contextmenu', 'copy', 'cut', 'keydown'];
+    const handleRestrictedInteraction = (e) => {
+      if (e.type === 'keydown' && !(e.code === 'KeyA' && (e.ctrlKey || e.metaKey))) {
+        return;
       }
+      if (isFormInput(e.target)) return;
+      e.preventDefault();
     };
 
-    // Prevent copy (except in contact section)
-    const handleCopy = (e) => {
-      if (!isFormInput(e.target)) {
-        e.preventDefault();
-      }
-    };
-
-    // Prevent cut (except in contact section)
-    const handleCut = (e) => {
-      if (!isFormInput(e.target)) {
-        e.preventDefault();
-      }
-    };
-
-    // Prevent select all (except in contact section)
-    const handleSelectAll = (e) => {
-      if (e.code === 'KeyA' && (e.ctrlKey || e.metaKey)) {
-        if (!isFormInput(e.target)) {
-          e.preventDefault();
-        }
-      }
-    };
-
-    // Add event listeners
-    document.addEventListener('contextmenu', handleContextMenu);
-    document.addEventListener('copy', handleCopy);
-    document.addEventListener('cut', handleCut);
-    document.addEventListener('keydown', handleSelectAll);
+    restrictedEvents.forEach((eventName) => {
+      document.addEventListener(eventName, handleRestrictedInteraction);
+    });
 
     // Cleanup
     return () => {
-      document.removeEventListener('contextmenu', handleContextMenu);
-      document.removeEventListener('copy', handleCopy);
-      document.removeEventListener('cut', handleCut);
-      document.removeEventListener('keydown', handleSelectAll);
+      restrictedEvents.forEach((eventName) => {
+        document.removeEventListener(eventName, handleRestrictedInteraction);
+      });
     };
   }, []);
 
@@ -335,6 +372,20 @@ export default function PremiumStudentPortfolio() {
         .font-roboto { font-family: 'Roboto', sans-serif; }
         .font-inter { font-family: 'Inter', sans-serif; }
         .font-montserrat { font-family: 'Montserrat', sans-serif; }
+
+        @media (prefers-reduced-motion: reduce) {
+          html:focus-within {
+            scroll-behavior: auto;
+          }
+          *,
+          *::before,
+          *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
         
         .bg-clip-text {
           -webkit-background-clip: text;
@@ -356,7 +407,9 @@ export default function PremiumStudentPortfolio() {
 
         {/* Enhanced Welcome Popup */}
         {FEATURE_FLAGS.SHOW_WELCOME_POPUP && showPopup && (
-          <WelcomePopup isDark={isDark} setShowPopup={setShowPopup} />
+          <Suspense fallback={null}>
+            <WelcomePopup isDark={isDark} setShowPopup={setShowPopup} />
+          </Suspense>
         )}
 
         {/* Navigation */}
@@ -375,7 +428,7 @@ export default function PremiumStudentPortfolio() {
 
         {/* 3D Avatar Section */}
         {FEATURE_FLAGS.SHOW_3D_AVATAR_SECTION && (
-          <Suspense fallback={null}>
+          <Suspense fallback={<SectionSkeleton heightClass="h-80" />}>
             <AvatarSection isDark={isDark} />
           </Suspense>
         )}
@@ -449,13 +502,21 @@ export default function PremiumStudentPortfolio() {
           />
         )}
 
+        <div id="deferred-sections-marker" className="h-px" aria-hidden />
+
         {/* Testimonials Section */}
-        {FEATURE_FLAGS.SHOW_TESTIMONIALS && (
-          <TestimonialsSection isDark={isDark} />
+        {FEATURE_FLAGS.SHOW_TESTIMONIALS && showDeferredSections && (
+          <Suspense fallback={<SectionSkeleton />}>
+            <TestimonialsSection isDark={isDark} />
+          </Suspense>
         )}
 
         {/* Certifications Section */}
-        {FEATURE_FLAGS.SHOW_CERTIFICATIONS && <CertificationsSection isDark={isDark} />}
+        {FEATURE_FLAGS.SHOW_CERTIFICATIONS && showDeferredSections && (
+          <Suspense fallback={<SectionSkeleton />}>
+            <CertificationsSection isDark={isDark} />
+          </Suspense>
+        )}
 
         {/* Contact Section */}
         {FEATURE_FLAGS.SHOW_CONTACT && (

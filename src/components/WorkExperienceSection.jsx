@@ -4,7 +4,7 @@ import Tilt from 'react-parallax-tilt';
 import { Users, Briefcase, Trophy, GraduationCap, MapPin, Calendar, ChevronRight, Sparkles } from 'lucide-react';
 import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
 
-export default function WorkExperienceSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
+function WorkExperienceSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
   return (
     <section id="experience" className="py-24 px-6 relative overflow-hidden">
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
@@ -346,3 +346,19 @@ export default function WorkExperienceSection({ isDark, magneticPositions, handl
     </section>
   );
 }
+
+const samePoint = (prevPositions, nextPositions, key) =>
+  (prevPositions[key]?.x ?? 0) === (nextPositions[key]?.x ?? 0) &&
+  (prevPositions[key]?.y ?? 0) === (nextPositions[key]?.y ?? 0);
+
+const areEqual = (prev, next) =>
+  prev.isDark === next.isDark &&
+  prev.handleMagneticMove === next.handleMagneticMove &&
+  prev.handleMagneticLeave === next.handleMagneticLeave &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-em-aur') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-nexstep') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-deputy-head-boy') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-muskurahat') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-scaler');
+
+export default React.memo(WorkExperienceSection, areEqual);

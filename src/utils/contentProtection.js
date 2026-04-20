@@ -5,7 +5,6 @@
 
 // Configuration constants
 const DEVTOOLS_SIZE_THRESHOLD = 160;
-const LOW_FPS_THRESHOLD = 20;
 const RAPID_CANVAS_ACCESS_THRESHOLD = 30;
 const CANVAS_PROTECTION_COLOR = '#ff6b00';
 const CANVAS_PROTECTION_FONT = '20px Arial';
@@ -294,48 +293,24 @@ export class ContentProtection {
    */
   detectRecording() {
     const self = this;
-    
-    // Method 1: Performance monitoring (recordings often affect performance)
-    let frameCount = 0;
-    let lastTime = performance.now();
-    
-    const checkFrameRate = () => {
-      frameCount++;
-      const currentTime = performance.now();
-      
-      if (currentTime - lastTime >= 1000) {
-        const fps = frameCount;
-        frameCount = 0;
-        lastTime = currentTime;
-        
-        // Suspiciously low FPS might indicate recording
-        if (fps < LOW_FPS_THRESHOLD) {
-          self.logAttempt(`Recording detection: Low FPS detected (${fps})`);
-        }
-      }
-      
-      requestAnimationFrame(checkFrameRate);
-    };
-    
-    requestAnimationFrame(checkFrameRate);
 
-    // Method 2: Monitor for MediaRecorder API
+    // Method 1: Monitor for MediaRecorder API
+    const originalMediaRecorder = window.MediaRecorder;
     if (window.MediaRecorder) {
-      const OriginalMediaRecorder = window.MediaRecorder;
       window.MediaRecorder = function(...args) {
         self.logAttempt('Recording detection: MediaRecorder instantiated');
         if (self.options.showWarnings) {
           self.showWarning('Screen recording detected and may be restricted.');
         }
-        return new OriginalMediaRecorder(...args);
+        return new originalMediaRecorder(...args);
       };
       
       // Copy static properties
-      Object.setPrototypeOf(window.MediaRecorder, OriginalMediaRecorder);
-      window.MediaRecorder.prototype = OriginalMediaRecorder.prototype;
+      Object.setPrototypeOf(window.MediaRecorder, originalMediaRecorder);
+      window.MediaRecorder.prototype = originalMediaRecorder.prototype;
     }
 
-    // Method 3: Detect rapid canvas/image extraction
+    // Method 2: Detect rapid canvas/image extraction
     let canvasAccessCount = 0;
     let canvasAccessTimer;
     
@@ -353,6 +328,16 @@ export class ContentProtection {
       
       return originalDrawImage.apply(this, args);
     };
+
+    this.detectionHandlers.push(() => {
+      if (canvasAccessTimer) {
+        clearTimeout(canvasAccessTimer);
+      }
+      CanvasRenderingContext2D.prototype.drawImage = originalDrawImage;
+      if (originalMediaRecorder) {
+        window.MediaRecorder = originalMediaRecorder;
+      }
+    });
   }
 
   /**
