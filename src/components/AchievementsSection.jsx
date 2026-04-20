@@ -4,7 +4,7 @@ import Tilt from 'react-parallax-tilt';
 import { Trophy, Code, Lightbulb, Star } from 'lucide-react';
 import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
 
-function AchievementsSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
+function AchievementsSection({ isDark }) {
   return (
     <section id="achievements" className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
@@ -80,15 +80,8 @@ function AchievementsSection({ isDark, magneticPositions, handleMagneticMove, ha
                     backdropFilter: 'blur(20px) saturate(180%)',
                     WebkitBackdropFilter: 'blur(20px) saturate(180%)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
-                    boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
-                    transform: `translate(${magneticPositions[`achievement-${index}`]?.x || 0}px, ${magneticPositions[`achievement-${index}`]?.y || 0}px)`,
-                    transition: 'transform 0.3s ease-out'
-                  } : {
-                    transform: `translate(${magneticPositions[`achievement-${index}`]?.x || 0}px, ${magneticPositions[`achievement-${index}`]?.y || 0}px)`,
-                    transition: 'transform 0.3s ease-out'
-                  }}
-                  onMouseMove={(e) => handleMagneticMove(e, `achievement-${index}`)}
-                  onMouseLeave={() => handleMagneticLeave(`achievement-${index}`)}
+                    boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
+                  } : undefined}
                 >
                   <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold ${isDark ? 'bg-slate-800 text-amber-400' : 'bg-slate-100 text-orange-600'}`}>
                     {achievement.year}
@@ -114,16 +107,7 @@ function AchievementsSection({ isDark, magneticPositions, handleMagneticMove, ha
   );
 }
 
-const samePoint = (prevPositions, nextPositions, key) =>
-  (prevPositions[key]?.x ?? 0) === (nextPositions[key]?.x ?? 0) &&
-  (prevPositions[key]?.y ?? 0) === (nextPositions[key]?.y ?? 0);
-
 const areEqual = (prev, next) =>
-  prev.isDark === next.isDark &&
-  prev.handleMagneticMove === next.handleMagneticMove &&
-  prev.handleMagneticLeave === next.handleMagneticLeave &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'achievement-0') &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'achievement-1') &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'achievement-2');
+  prev.isDark === next.isDark;
 
 export default React.memo(AchievementsSection, areEqual);

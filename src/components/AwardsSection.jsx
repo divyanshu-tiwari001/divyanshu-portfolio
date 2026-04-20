@@ -5,7 +5,7 @@ import { Trophy, Award, Star } from 'lucide-react';
 import scalerOnboardingKit from '../assets/scaler_onboarding_kit.jpg';
 import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
 
-function AwardsSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
+function AwardsSection({ isDark }) {
   return (
     <section id="awards" className={`py-24 px-6 ${isDark ? 'bg-slate-900/30' : 'bg-white/30'}`}>
       <div className="max-w-7xl mx-auto">
@@ -48,9 +48,6 @@ function AwardsSection({ isDark, magneticPositions, handleMagneticMove, handleMa
             >
               <div
                 className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-amber-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-amber-500/50' : 'bg-white/50 border-slate-200 hover:border-amber-500/50'}`}
-                onMouseMove={(e) => handleMagneticMove(e, 'award-essay')}
-                onMouseLeave={() => handleMagneticLeave('award-essay')}
-                style={{ transform: `translate(${magneticPositions['award-essay']?.x || 0}px, ${magneticPositions['award-essay']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
               >
                 <div className="w-20 h-20 mb-6 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-lg">
                   <Trophy className="w-10 h-10 text-white" />
@@ -88,9 +85,6 @@ function AwardsSection({ isDark, magneticPositions, handleMagneticMove, handleMa
             >
               <div
                 className={`group p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                onMouseMove={(e) => handleMagneticMove(e, 'award-scaler')}
-                onMouseLeave={() => handleMagneticLeave('award-scaler')}
-                style={{ transform: `translate(${magneticPositions['award-scaler']?.x || 0}px, ${magneticPositions['award-scaler']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
               >
                 <div className="w-20 h-20 mb-6 rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-lg">
                   <Award className="w-10 h-10 text-white" />
@@ -122,15 +116,7 @@ function AwardsSection({ isDark, magneticPositions, handleMagneticMove, handleMa
   );
 }
 
-const samePoint = (prevPositions, nextPositions, key) =>
-  (prevPositions[key]?.x ?? 0) === (nextPositions[key]?.x ?? 0) &&
-  (prevPositions[key]?.y ?? 0) === (nextPositions[key]?.y ?? 0);
-
 const areEqual = (prev, next) =>
-  prev.isDark === next.isDark &&
-  prev.handleMagneticMove === next.handleMagneticMove &&
-  prev.handleMagneticLeave === next.handleMagneticLeave &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'award-essay') &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'award-scaler');
+  prev.isDark === next.isDark;
 
 export default React.memo(AwardsSection, areEqual);

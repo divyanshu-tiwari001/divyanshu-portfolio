@@ -4,7 +4,7 @@ import Tilt from 'react-parallax-tilt';
 import { Code, Github, Sparkles, ExternalLink } from 'lucide-react';
 import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
 
-function ProjectsSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
+function ProjectsSection({ isDark }) {
   return (
     <section id="projects" className="py-24 px-6 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
@@ -49,9 +49,6 @@ function ProjectsSection({ isDark, magneticPositions, handleMagneticMove, handle
             >
               <div
                 className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-blue-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-blue-500/50' : 'bg-white/50 border-slate-200 hover:border-blue-500/50'}`}
-                onMouseMove={(e) => handleMagneticMove(e, 'proj-class11')}
-                onMouseLeave={() => handleMagneticLeave('proj-class11')}
-                style={{ transform: `translate(${magneticPositions['proj-class11']?.x || 0}px, ${magneticPositions['proj-class11']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
               >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg flex-shrink-0">
@@ -125,9 +122,6 @@ function ProjectsSection({ isDark, magneticPositions, handleMagneticMove, handle
             >
               <div
                 className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-purple-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-purple-500/50' : 'bg-white/50 border-slate-200 hover:border-purple-500/50'}`}
-                onMouseMove={(e) => handleMagneticMove(e, 'proj-portfolio')}
-                onMouseLeave={() => handleMagneticLeave('proj-portfolio')}
-                style={{ transform: `translate(${magneticPositions['proj-portfolio']?.x || 0}px, ${magneticPositions['proj-portfolio']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
               >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg flex-shrink-0">
@@ -145,7 +139,7 @@ function ProjectsSection({ isDark, magneticPositions, handleMagneticMove, handle
                       React · Tailwind CSS · Framer Motion · Vercel
                     </p>
                     <p className={`mb-6 font-roboto leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                      This very portfolio — a meta-showcase of front-end craftsmanship. Built with React and Framer Motion for buttery-smooth animations, styled with Tailwind CSS for a premium look, and featuring performance-optimised SGAParticles (mobile-first with 30 fps cap &amp; gradient caching). Ships with magnetic hover effects, blur-glass cards, adaptive dark/light mode, and is deployed on Vercel with zero-config CI/CD.
+                      This very portfolio — a meta-showcase of front-end craftsmanship. Built with React and Framer Motion for buttery-smooth animations, styled with Tailwind CSS for a premium look, and featuring performance-optimised SGAParticles (mobile-first with 30 fps cap &amp; gradient caching). Ships with tilt-enhanced blur-glass cards, adaptive dark/light mode, and is deployed on Vercel with zero-config CI/CD.
                     </p>
 
                     {/* Tech Tags */}
@@ -227,15 +221,7 @@ function ProjectsSection({ isDark, magneticPositions, handleMagneticMove, handle
   );
 }
 
-const samePoint = (prevPositions, nextPositions, key) =>
-  (prevPositions[key]?.x ?? 0) === (nextPositions[key]?.x ?? 0) &&
-  (prevPositions[key]?.y ?? 0) === (nextPositions[key]?.y ?? 0);
-
 const areEqual = (prev, next) =>
-  prev.isDark === next.isDark &&
-  prev.handleMagneticMove === next.handleMagneticMove &&
-  prev.handleMagneticLeave === next.handleMagneticLeave &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'proj-class11') &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'proj-portfolio');
+  prev.isDark === next.isDark;
 
 export default React.memo(ProjectsSection, areEqual);

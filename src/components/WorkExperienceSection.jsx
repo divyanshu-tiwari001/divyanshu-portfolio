@@ -4,7 +4,7 @@ import Tilt from 'react-parallax-tilt';
 import { Users, Briefcase, Trophy, GraduationCap, MapPin, Calendar, ChevronRight, Sparkles } from 'lucide-react';
 import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
 
-function WorkExperienceSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
+function WorkExperienceSection({ isDark }) {
   return (
     <section id="experience" className="py-24 px-6 relative overflow-hidden">
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
@@ -49,9 +49,6 @@ function WorkExperienceSection({ isDark, magneticPositions, handleMagneticMove, 
             >
               <div
                 className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                onMouseMove={(e) => handleMagneticMove(e, 'exp-em-aur')}
-                onMouseLeave={() => handleMagneticLeave('exp-em-aur')}
-                style={{ transform: `translate(${magneticPositions['exp-em-aur']?.x || 0}px, ${magneticPositions['exp-em-aur']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
               >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -118,9 +115,6 @@ function WorkExperienceSection({ isDark, magneticPositions, handleMagneticMove, 
             >
               <div
                 className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                onMouseMove={(e) => handleMagneticMove(e, 'exp-nexstep')}
-                onMouseLeave={() => handleMagneticLeave('exp-nexstep')}
-                style={{ transform: `translate(${magneticPositions['exp-nexstep']?.x || 0}px, ${magneticPositions['exp-nexstep']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
               >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -168,9 +162,6 @@ function WorkExperienceSection({ isDark, magneticPositions, handleMagneticMove, 
             >
               <div
                 className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                onMouseMove={(e) => handleMagneticMove(e, 'exp-deputy-head-boy')}
-                onMouseLeave={() => handleMagneticLeave('exp-deputy-head-boy')}
-                style={{ transform: `translate(${magneticPositions['exp-deputy-head-boy']?.x || 0}px, ${magneticPositions['exp-deputy-head-boy']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
               >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-yellow-500 to-amber-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -218,9 +209,6 @@ function WorkExperienceSection({ isDark, magneticPositions, handleMagneticMove, 
             >
               <div
                 className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                onMouseMove={(e) => handleMagneticMove(e, 'exp-muskurahat')}
-                onMouseLeave={() => handleMagneticLeave('exp-muskurahat')}
-                style={{ transform: `translate(${magneticPositions['exp-muskurahat']?.x || 0}px, ${magneticPositions['exp-muskurahat']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
               >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -268,9 +256,6 @@ function WorkExperienceSection({ isDark, magneticPositions, handleMagneticMove, 
             >
               <div
                 className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                onMouseMove={(e) => handleMagneticMove(e, 'exp-scaler')}
-                onMouseLeave={() => handleMagneticLeave('exp-scaler')}
-                style={{ transform: `translate(${magneticPositions['exp-scaler']?.x || 0}px, ${magneticPositions['exp-scaler']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
               >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -347,18 +332,7 @@ function WorkExperienceSection({ isDark, magneticPositions, handleMagneticMove, 
   );
 }
 
-const samePoint = (prevPositions, nextPositions, key) =>
-  (prevPositions[key]?.x ?? 0) === (nextPositions[key]?.x ?? 0) &&
-  (prevPositions[key]?.y ?? 0) === (nextPositions[key]?.y ?? 0);
-
 const areEqual = (prev, next) =>
-  prev.isDark === next.isDark &&
-  prev.handleMagneticMove === next.handleMagneticMove &&
-  prev.handleMagneticLeave === next.handleMagneticLeave &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-em-aur') &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-nexstep') &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-deputy-head-boy') &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-muskurahat') &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-scaler');
+  prev.isDark === next.isDark;
 
 export default React.memo(WorkExperienceSection, areEqual);

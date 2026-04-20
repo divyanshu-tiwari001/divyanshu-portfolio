@@ -4,7 +4,7 @@ import Tilt from 'react-parallax-tilt';
 import { GraduationCap, MapPin, Calendar, Award, BookOpen } from 'lucide-react';
 import { fadeInUp } from '../utils/animations';
 
-function EducationSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
+function EducationSection({ isDark }) {
   return (
     <section id="education" className="py-24 px-6 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
@@ -47,9 +47,6 @@ function EducationSection({ isDark, magneticPositions, handleMagneticMove, handl
           >
             <div
               className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-              onMouseMove={(e) => handleMagneticMove(e, 'education')}
-              onMouseLeave={() => handleMagneticLeave('education')}
-              style={{ transform: `translate(${magneticPositions['education']?.x || 0}px, ${magneticPositions['education']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
             >
 
               {/* Timeline Line */}
@@ -142,14 +139,7 @@ function EducationSection({ isDark, magneticPositions, handleMagneticMove, handl
   );
 }
 
-const samePoint = (prevPositions, nextPositions, key) =>
-  (prevPositions[key]?.x ?? 0) === (nextPositions[key]?.x ?? 0) &&
-  (prevPositions[key]?.y ?? 0) === (nextPositions[key]?.y ?? 0);
-
 const areEqual = (prev, next) =>
-  prev.isDark === next.isDark &&
-  prev.handleMagneticMove === next.handleMagneticMove &&
-  prev.handleMagneticLeave === next.handleMagneticLeave &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'education');
+  prev.isDark === next.isDark;
 
 export default React.memo(EducationSection, areEqual);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense, useRef, useCallback } from 'react';
+import React, { useState, useEffect, lazy, Suspense, useRef } from 'react';
 import { useScroll, useTransform } from 'framer-motion';
 import CustomCursor from './components/CustomCursor';
 import SGAParticles from './components/SGAParticles';
@@ -27,7 +27,6 @@ const WelcomePopup = lazy(() => import('./components/WelcomePopup'));
 const TestimonialsSection = lazy(() => import('./components/TestimonialsSection'));
 const CertificationsSection = lazy(() => import('./components/CertificationsSection'));
 
-const MAGNETIC_THROTTLE_MS = 250;
 const SCROLL_THROTTLE_MS = 120;
 const SCROLL_TOP_THRESHOLD = 300;
 
@@ -45,8 +44,6 @@ export default function PremiumStudentPortfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showDeferredSections, setShowDeferredSections] = useState(false);
-  const [magneticPositions, setMagneticPositions] = useState({});
-  const magneticUpdateTimes = useRef({});
   const scrollTimeoutRef = useRef(null);
   const { scrollYProgress } = useScroll();
   const y1 = useTransform(scrollYProgress, [0, 1], [0, 300]);
@@ -55,29 +52,6 @@ export default function PremiumStudentPortfolio() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
   const [formStatus, setFormStatus] = useState('idle'); // idle, loading, success, error
   const [formErrors, setFormErrors] = useState({});
-
-  const handleMagneticMove = useCallback((e, key) => {
-    // Abort if the user is on a touch device (phones/tablets)
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-    const now = performance.now();
-    const lastUpdate = magneticUpdateTimes.current[key] ?? 0;
-    if (now - lastUpdate < MAGNETIC_THROTTLE_MS) return;
-    magneticUpdateTimes.current[key] = now;
-
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
-    setMagneticPositions((prev) => {
-      const current = prev[key];
-      if (current && Math.abs(current.x - x) < 0.5 && Math.abs(current.y - y) < 0.5) return prev;
-      return { ...prev, [key]: { x, y } };
-    });
-  }, []);
-
-  const handleMagneticLeave = useCallback((key) => {
-    setMagneticPositions(prev => ({ ...prev, [key]: { x: 0, y: 0 } }));
-  }, []);
 
   const validateForm = () => {
     const errors = {};
@@ -440,9 +414,6 @@ export default function PremiumStudentPortfolio() {
         {FEATURE_FLAGS.SHOW_EDUCATION && (
           <EducationSection
             isDark={isDark}
-            magneticPositions={magneticPositions}
-            handleMagneticMove={handleMagneticMove}
-            handleMagneticLeave={handleMagneticLeave}
           />
         )}
 
@@ -450,9 +421,6 @@ export default function PremiumStudentPortfolio() {
         {FEATURE_FLAGS.SHOW_ACHIEVEMENTS && (
           <AchievementsSection
             isDark={isDark}
-            magneticPositions={magneticPositions}
-            handleMagneticMove={handleMagneticMove}
-            handleMagneticLeave={handleMagneticLeave}
           />
         )}
 
@@ -466,9 +434,6 @@ export default function PremiumStudentPortfolio() {
         {FEATURE_FLAGS.SHOW_PROJECTS && (
           <ProjectsSection
             isDark={isDark}
-            magneticPositions={magneticPositions}
-            handleMagneticMove={handleMagneticMove}
-            handleMagneticLeave={handleMagneticLeave}
           />
         )}
 
@@ -476,9 +441,6 @@ export default function PremiumStudentPortfolio() {
         {FEATURE_FLAGS.SHOW_LANGUAGES && (
           <LanguagesSection
             isDark={isDark}
-            magneticPositions={magneticPositions}
-            handleMagneticMove={handleMagneticMove}
-            handleMagneticLeave={handleMagneticLeave}
           />
         )}
 
@@ -486,9 +448,6 @@ export default function PremiumStudentPortfolio() {
         {FEATURE_FLAGS.SHOW_WORK_EXPERIENCE && (
           <WorkExperienceSection
             isDark={isDark}
-            magneticPositions={magneticPositions}
-            handleMagneticMove={handleMagneticMove}
-            handleMagneticLeave={handleMagneticLeave}
           />
         )}
 
@@ -496,9 +455,6 @@ export default function PremiumStudentPortfolio() {
         {FEATURE_FLAGS.SHOW_AWARDS && (
           <AwardsSection
             isDark={isDark}
-            magneticPositions={magneticPositions}
-            handleMagneticMove={handleMagneticMove}
-            handleMagneticLeave={handleMagneticLeave}
           />
         )}
 
