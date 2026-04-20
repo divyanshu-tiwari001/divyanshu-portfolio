@@ -49,17 +49,19 @@ function getTargetParticleCount() {
   const dpi = window.devicePixelRatio || 1;
   const isMobile = width < 768;
   // High DPR or small screen signals a low-end / constrained device
-  const isLowEnd = dpi > 2 || area < 1_000_000;
+  const isLowEnd = dpi > 2 || area < 1_000_000 || (navigator.hardwareConcurrency || 8) <= 4;
 
   let count;
   if (isMobile) {
     count = isLowEnd
-      ? Math.round(8 + (area / 1_000_000) * 4)   // scales ~8–12 across typical mobile areas
-      : Math.round(12 + (area / 1_000_000) * 6);  // scales ~12–18 across typical mobile areas
+      ? Math.round(6 + (area / 1_000_000) * 3)   // scales ~6–9 across typical mobile areas
+      : Math.round(10 + (area / 1_000_000) * 4);  // scales ~10–14 across typical mobile areas
   } else {
-    count = Math.round(30 + (area / (1280 * 800)) * 20); // 30–50
+    count = isLowEnd
+      ? Math.round(18 + (area / (1280 * 800)) * 10) // 18–28
+      : Math.round(24 + (area / (1280 * 800)) * 14); // 24–38
   }
-  return Math.max(6, Math.min(count, isMobile ? 20 : 50));
+  return Math.max(6, Math.min(count, isMobile ? 14 : 38));
 }
 
 // Frame rate target: 30 fps on mobile/high-DPI to avoid battery drain
@@ -67,6 +69,14 @@ function getTargetFps() {
   const isMobile = window.innerWidth < 768;
   const dpi = window.devicePixelRatio || 1;
   return isMobile || dpi > 2 ? 30 : 60;
+}
+
+function isLikelyLowEndDevice() {
+  const width = window.innerWidth;
+  const area = width * window.innerHeight;
+  const dpi = window.devicePixelRatio || 1;
+  const cores = navigator.hardwareConcurrency || 8;
+  return width < 768 || dpi > 2 || area < 1_000_000 || cores <= 4;
 }
 
 function SGAParticlesCanvas() {
@@ -85,7 +95,7 @@ function SGAParticlesCanvas() {
   const frameIntervalMs = useRef(1000 / targetFps.current);
   // Performance monitoring: track slow frames to detect low-end devices
   const slowFrameCount = useRef(0);
-  const isLowEndDevice = useRef(false);
+  const isLowEndDevice = useRef(isLikelyLowEndDevice());
 
   function setCanvasSize() {
     // Cap DPR at 2 to limit memory/rendering cost on high-DPI screens
@@ -190,8 +200,8 @@ function SGAParticlesCanvas() {
 
     function tryFormWord() {
       if (formingWord.current || !isVisible.current) return;
-      // Skip word formation on confirmed low-end devices to reduce rendering load
-      if (isLowEndDevice.current) return;
+      // Skip word formation on low-end devices to reduce rendering load
+      if (isLowEndDevice.current || isLikelyLowEndDevice()) return;
       formingWord.current = true;
       const word = ENGLISH_WORDS[Math.floor(Math.random() * ENGLISH_WORDS.length)];
       const { width, height } = dimensions.current;

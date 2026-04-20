@@ -5,7 +5,7 @@ import { Trophy, Award, Star } from 'lucide-react';
 import scalerOnboardingKit from '../assets/scaler_onboarding_kit.jpg';
 import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
 
-export default function AwardsSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
+function AwardsSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
   return (
     <section id="awards" className={`py-24 px-6 ${isDark ? 'bg-slate-900/30' : 'bg-white/30'}`}>
       <div className="max-w-7xl mx-auto">
@@ -121,3 +121,5 @@ export default function AwardsSection({ isDark, magneticPositions, handleMagneti
     </section>
   );
 }
+
+export default React.memo(AwardsSection);

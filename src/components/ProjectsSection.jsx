@@ -4,7 +4,7 @@ import Tilt from 'react-parallax-tilt';
 import { Code, Github, Sparkles, ExternalLink } from 'lucide-react';
 import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
 
-export default function ProjectsSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
+function ProjectsSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
   return (
     <section id="projects" className="py-24 px-6 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
@@ -226,3 +226,5 @@ export default function ProjectsSection({ isDark, magneticPositions, handleMagne
     </section>
   );
 }
+
+export default React.memo(ProjectsSection);

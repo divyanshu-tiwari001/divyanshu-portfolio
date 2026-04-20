@@ -70,5 +70,5 @@ export const FEATURE_FLAGS = {
   SHOW_SCROLL_TO_TOP: true,
 
   // Security
-  SHOW_CONTENT_PROTECTION: true,
+  SHOW_CONTENT_PROTECTION: false,
 };

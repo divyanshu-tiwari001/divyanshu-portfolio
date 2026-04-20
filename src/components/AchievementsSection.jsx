@@ -4,7 +4,7 @@ import Tilt from 'react-parallax-tilt';
 import { Trophy, Code, Lightbulb, Star } from 'lucide-react';
 import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
 
-export default function AchievementsSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
+function AchievementsSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
   return (
     <section id="achievements" className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
@@ -113,3 +113,5 @@ export default function AchievementsSection({ isDark, magneticPositions, handleM
     </section>
   );
 }
+
+export default React.memo(AchievementsSection);

@@ -4,7 +4,7 @@ import Tilt from 'react-parallax-tilt';
 import { GraduationCap, MapPin, Calendar, Award, BookOpen } from 'lucide-react';
 import { fadeInUp } from '../utils/animations';
 
-export default function EducationSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
+function EducationSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
   return (
     <section id="education" className="py-24 px-6 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
@@ -141,3 +141,5 @@ export default function EducationSection({ isDark, magneticPositions, handleMagn
     </section>
   );
 }
+
+export default React.memo(EducationSection);
