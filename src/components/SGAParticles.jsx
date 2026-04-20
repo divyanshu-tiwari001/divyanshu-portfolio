@@ -201,7 +201,7 @@ function SGAParticlesCanvas() {
     function tryFormWord() {
       if (formingWord.current || !isVisible.current) return;
       // Skip word formation on low-end devices to reduce rendering load
-      if (isLowEndDevice.current || isLikelyLowEndDevice()) return;
+      if (isLowEndDevice.current) return;
       formingWord.current = true;
       const word = ENGLISH_WORDS[Math.floor(Math.random() * ENGLISH_WORDS.length)];
       const { width, height } = dimensions.current;

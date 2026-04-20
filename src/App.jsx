@@ -29,6 +29,7 @@ const CertificationsSection = lazy(() => import('./components/CertificationsSect
 
 const MAGNETIC_THROTTLE_MS = 250;
 const SCROLL_THROTTLE_MS = 120;
+const SCROLL_TOP_THRESHOLD = 300;
 
 function SectionSkeleton({ heightClass = 'h-64' }) {
   return (
@@ -69,7 +70,7 @@ export default function PremiumStudentPortfolio() {
     const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
     setMagneticPositions((prev) => {
       const current = prev[key];
-      if (current?.x === x && current?.y === y) return prev;
+      if (current && Math.abs(current.x - x) < 0.5 && Math.abs(current.y - y) < 0.5) return prev;
       return { ...prev, [key]: { x, y } };
     });
   }, []);
@@ -184,7 +185,7 @@ export default function PremiumStudentPortfolio() {
   // Scroll-to-top visibility
   useEffect(() => {
     const updateScrollTopVisibility = () => {
-      setShowScrollTop(window.scrollY > 300);
+      setShowScrollTop(window.scrollY > SCROLL_TOP_THRESHOLD);
       scrollTimeoutRef.current = null;
     };
 

@@ -347,4 +347,18 @@ function WorkExperienceSection({ isDark, magneticPositions, handleMagneticMove, 
   );
 }
 
-export default React.memo(WorkExperienceSection);
+const samePoint = (prevPositions, nextPositions, key) =>
+  (prevPositions[key]?.x ?? 0) === (nextPositions[key]?.x ?? 0) &&
+  (prevPositions[key]?.y ?? 0) === (nextPositions[key]?.y ?? 0);
+
+const areEqual = (prev, next) =>
+  prev.isDark === next.isDark &&
+  prev.handleMagneticMove === next.handleMagneticMove &&
+  prev.handleMagneticLeave === next.handleMagneticLeave &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-em-aur') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-nexstep') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-deputy-head-boy') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-muskurahat') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'exp-scaler');
+
+export default React.memo(WorkExperienceSection, areEqual);

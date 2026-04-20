@@ -122,4 +122,15 @@ function AwardsSection({ isDark, magneticPositions, handleMagneticMove, handleMa
   );
 }
 
-export default React.memo(AwardsSection);
+const samePoint = (prevPositions, nextPositions, key) =>
+  (prevPositions[key]?.x ?? 0) === (nextPositions[key]?.x ?? 0) &&
+  (prevPositions[key]?.y ?? 0) === (nextPositions[key]?.y ?? 0);
+
+const areEqual = (prev, next) =>
+  prev.isDark === next.isDark &&
+  prev.handleMagneticMove === next.handleMagneticMove &&
+  prev.handleMagneticLeave === next.handleMagneticLeave &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'award-essay') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'award-scaler');
+
+export default React.memo(AwardsSection, areEqual);

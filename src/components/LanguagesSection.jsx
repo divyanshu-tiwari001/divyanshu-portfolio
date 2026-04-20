@@ -112,4 +112,15 @@ function LanguagesSection({ isDark, magneticPositions, handleMagneticMove, handl
   );
 }
 
-export default React.memo(LanguagesSection);
+const samePoint = (prevPositions, nextPositions, key) =>
+  (prevPositions[key]?.x ?? 0) === (nextPositions[key]?.x ?? 0) &&
+  (prevPositions[key]?.y ?? 0) === (nextPositions[key]?.y ?? 0);
+
+const areEqual = (prev, next) =>
+  prev.isDark === next.isDark &&
+  prev.handleMagneticMove === next.handleMagneticMove &&
+  prev.handleMagneticLeave === next.handleMagneticLeave &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'language-hindi') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'language-english');
+
+export default React.memo(LanguagesSection, areEqual);

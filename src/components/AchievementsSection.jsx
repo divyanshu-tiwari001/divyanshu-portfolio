@@ -114,4 +114,16 @@ function AchievementsSection({ isDark, magneticPositions, handleMagneticMove, ha
   );
 }
 
-export default React.memo(AchievementsSection);
+const samePoint = (prevPositions, nextPositions, key) =>
+  (prevPositions[key]?.x ?? 0) === (nextPositions[key]?.x ?? 0) &&
+  (prevPositions[key]?.y ?? 0) === (nextPositions[key]?.y ?? 0);
+
+const areEqual = (prev, next) =>
+  prev.isDark === next.isDark &&
+  prev.handleMagneticMove === next.handleMagneticMove &&
+  prev.handleMagneticLeave === next.handleMagneticLeave &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'achievement-0') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'achievement-1') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'achievement-2');
+
+export default React.memo(AchievementsSection, areEqual);

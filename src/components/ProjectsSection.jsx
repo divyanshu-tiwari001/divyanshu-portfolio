@@ -227,4 +227,15 @@ function ProjectsSection({ isDark, magneticPositions, handleMagneticMove, handle
   );
 }
 
-export default React.memo(ProjectsSection);
+const samePoint = (prevPositions, nextPositions, key) =>
+  (prevPositions[key]?.x ?? 0) === (nextPositions[key]?.x ?? 0) &&
+  (prevPositions[key]?.y ?? 0) === (nextPositions[key]?.y ?? 0);
+
+const areEqual = (prev, next) =>
+  prev.isDark === next.isDark &&
+  prev.handleMagneticMove === next.handleMagneticMove &&
+  prev.handleMagneticLeave === next.handleMagneticLeave &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'proj-class11') &&
+  samePoint(prev.magneticPositions, next.magneticPositions, 'proj-portfolio');
+
+export default React.memo(ProjectsSection, areEqual);
