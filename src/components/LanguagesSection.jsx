@@ -4,7 +4,7 @@ import Tilt from 'react-parallax-tilt';
 import { Languages } from 'lucide-react';
 import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
 
-function LanguagesSection({ isDark, magneticPositions, handleMagneticMove, handleMagneticLeave }) {
+function LanguagesSection({ isDark }) {
   return (
     <section id="languages" className="py-24 px-6 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500 rounded-full blur-3xl opacity-10 animate-float-slow"></div>
@@ -49,9 +49,6 @@ function LanguagesSection({ isDark, magneticPositions, handleMagneticMove, handl
             >
               <div
                 className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                onMouseMove={(e) => handleMagneticMove(e, 'language-hindi')}
-                onMouseLeave={() => handleMagneticLeave('language-hindi')}
-                style={{ transform: `translate(${magneticPositions['language-hindi']?.x || 0}px, ${magneticPositions['language-hindi']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
               >
                 <div className="flex items-start gap-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -85,9 +82,6 @@ function LanguagesSection({ isDark, magneticPositions, handleMagneticMove, handl
             >
               <div
                 className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
-                onMouseMove={(e) => handleMagneticMove(e, 'language-english')}
-                onMouseLeave={() => handleMagneticLeave('language-english')}
-                style={{ transform: `translate(${magneticPositions['language-english']?.x || 0}px, ${magneticPositions['language-english']?.y || 0}px)`, transition: 'transform 0.3s ease-out' }}
               >
                 <div className="flex items-start gap-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -112,15 +106,7 @@ function LanguagesSection({ isDark, magneticPositions, handleMagneticMove, handl
   );
 }
 
-const samePoint = (prevPositions, nextPositions, key) =>
-  (prevPositions[key]?.x ?? 0) === (nextPositions[key]?.x ?? 0) &&
-  (prevPositions[key]?.y ?? 0) === (nextPositions[key]?.y ?? 0);
-
 const areEqual = (prev, next) =>
-  prev.isDark === next.isDark &&
-  prev.handleMagneticMove === next.handleMagneticMove &&
-  prev.handleMagneticLeave === next.handleMagneticLeave &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'language-hindi') &&
-  samePoint(prev.magneticPositions, next.magneticPositions, 'language-english');
+  prev.isDark === next.isDark;
 
 export default React.memo(LanguagesSection, areEqual);
