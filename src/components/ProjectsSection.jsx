@@ -139,7 +139,7 @@ function ProjectsSection({ isDark }) {
                       React · Tailwind CSS · Framer Motion · Vercel
                     </p>
                     <p className={`mb-6 font-roboto leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                      This very portfolio — a meta-showcase of front-end craftsmanship. Built with React and Framer Motion for buttery-smooth animations, styled with Tailwind CSS for a premium look, and featuring performance-optimised SGAParticles (mobile-first with 30 fps cap &amp; gradient caching). Ships with tilt-enhanced blur-glass cards, adaptive dark/light mode, and is deployed on Vercel with zero-config CI/CD.
+                      This flagship portfolio is a premium front-end showcase built with React, Tailwind CSS, and Framer Motion—crafted for smooth animations, optimized performance, and polished visual storytelling. It features immersive 3D graphics, adaptive dark mode, and fully responsive layouts that stay fluid across devices, while shipping as an actively maintained MIT-licensed project (24.7 KB) on Vercel.
                     </p>
 
                     {/* Tech Tags */}
@@ -154,9 +154,9 @@ function ProjectsSection({ isDark }) {
                     {/* Stats Row */}
                     <div className={`flex flex-wrap gap-6 mb-6 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       {[
-                        { value: '98.4%', label: 'JavaScript' },
-                        { value: '1.3%', label: 'CSS' },
-                        { value: '0.3%', label: 'HTML' },
+                        { value: '98.8%', label: 'JavaScript' },
+                        { value: '0.9%', label: 'CSS' },
+                        { value: '0.1%', label: 'HTML' },
                       ].map((stat) => (
                         <div key={stat.label} className="text-center">
                           <div className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text font-poppins">{stat.value}</div>
@@ -177,7 +177,7 @@ function ProjectsSection({ isDark }) {
                         View on GitHub
                       </a>
                       <a
-                        href="https://divyanshu-portfolio.vercel.app"
+                        href="https://divyanshu-portfolio-01.vercel.app"
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`inline-flex items-center gap-2 px-6 py-3 rounded-full border font-bold font-poppins hover:scale-105 transition-all duration-300 ${isDark ? 'border-purple-500/50 text-purple-400 hover:bg-purple-500/10' : 'border-purple-500/50 text-purple-600 hover:bg-purple-500/10'}`}
