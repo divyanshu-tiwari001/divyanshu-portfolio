@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, BookOpen, Code, ChevronRight, Zap, Target, Lightbulb, Sparkles } from 'lucide-react';
-import { fadeInUp } from '../utils/animations';
+import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
 
 export default function AboutSection({ isDark }) {
   return (
@@ -25,30 +25,44 @@ export default function AboutSection({ isDark }) {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20"
+        >
           {[
             { icon: Users, title: 'Leadership', gradient: 'from-amber-500 to-orange-500', skills: ['Team Leadership', 'Project Coordination', 'Problem Solving', 'Strategic Planning'] },
             { icon: BookOpen, title: 'Creative', gradient: 'from-orange-500 to-red-500', skills: ['Creative Writing', 'AI Prompting'] },
             { icon: Code, title: 'Technical', gradient: 'from-yellow-500 to-amber-600', skills: ['HTML & CSS', 'Prompt Engineering', 'Python', 'AI Development'] }
           ].map((category, index) => (
-            <div key={index} className={`group p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
-              <div className={`w-16 h-16 mb-6 rounded-2xl bg-gradient-to-r ${category.gradient} flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
-                <category.icon className="w-8 h-8 text-white" />
+            <motion.div key={index} variants={staggerItem}>
+              <div className={`group p-10 rounded-3xl backdrop-blur-xl border hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}>
+                <div className={`w-16 h-16 mb-6 rounded-2xl bg-gradient-to-r ${category.gradient} flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
+                  <category.icon className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 font-poppins">{category.title}</h3>
+                <ul className={`space-y-2 font-roboto ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                  {category.skills.map((skill, i) => (
+                    <li key={i} className="flex items-center group-hover:translate-x-2 transition-transform duration-300">
+                      <ChevronRight className="w-4 h-4 mr-2 text-orange-500" />
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <h3 className="text-2xl font-bold mb-4 font-poppins">{category.title}</h3>
-              <ul className={`space-y-2 font-roboto ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                {category.skills.map((skill, i) => (
-                  <li key={i} className="flex items-center group-hover:translate-x-2 transition-transform duration-300">
-                    <ChevronRight className="w-4 h-4 mr-2 text-orange-500" />
-                    {skill}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <div className={`p-10 rounded-3xl backdrop-blur-xl border ${isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-white/50 border-slate-200'}`}>
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className={`p-10 rounded-3xl backdrop-blur-xl border ${isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-white/50 border-slate-200'}`}
+        >
           <h3 className="text-3xl font-bold mb-8 text-center font-poppins">Learning Journey</h3>
           <div className="space-y-8">
             {[
@@ -96,7 +110,7 @@ export default function AboutSection({ isDark }) {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
