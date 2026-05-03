@@ -58,7 +58,7 @@ function WorkExperienceSection({ isDark }) {
 
                   <div className="flex-1">
                     <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'}`}>
-                      Currently Working
+                      Completed • 4 months
                     </div>
                     <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text">
                       EM AUR
@@ -124,7 +124,7 @@ function WorkExperienceSection({ isDark }) {
 
                   <div className="flex-1">
                     <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'}`}>
-                      Currently Working • 6 months
+                      Completed • 5 months
                     </div>
                     <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text">
                       Project Intern
@@ -135,7 +135,7 @@ function WorkExperienceSection({ isDark }) {
                     <div className={`flex items-center gap-4 mb-4 flex-wrap ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4" />
-                        <span className="text-sm font-roboto">October 2025 - Present</span>
+                        <span className="text-sm font-roboto">October 2025 - February 2026</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
