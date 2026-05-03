@@ -66,7 +66,7 @@ function WorkExperienceSection({ isDark }) {
                     <div className={`flex items-center gap-4 mb-4 flex-wrap ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4" />
-                        <span className="text-sm font-roboto">December 2025 - Present</span>
+                        <span className="text-sm font-roboto">December 2025 - April 2026</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
@@ -80,19 +80,19 @@ function WorkExperienceSection({ isDark }) {
                         <div className={`px-3 py-1 rounded-lg text-sm font-semibold ${isDark ? 'bg-orange-500/20 text-orange-400' : 'bg-orange-500/20 text-orange-600'}`}>
                           Social Media Manager
                         </div>
-                        <span className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>December 2025 - Present</span>
+                        <span className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>December 2025 - April 2026</span>
                       </div>
                       <div className={`flex items-center gap-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                         <div className={`px-3 py-1 rounded-lg text-sm font-semibold ${isDark ? 'bg-orange-500/20 text-orange-400' : 'bg-orange-500/20 text-orange-600'}`}>
                           Social Media Coordinator
                         </div>
-                        <span className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>December 2025 - Present</span>
+                        <span className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>December 2025 - April 2026</span>
                       </div>
                       <div className={`flex items-center gap-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                         <div className={`px-3 py-1 rounded-lg text-sm font-semibold ${isDark ? 'bg-orange-500/20 text-orange-400' : 'bg-orange-500/20 text-orange-600'}`}>
                           Technical Team Member
                         </div>
-                        <span className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>December 2025 - Present</span>
+                        <span className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>December 2025 - April 2026</span>
                       </div>
                     </div>
                   </div>
