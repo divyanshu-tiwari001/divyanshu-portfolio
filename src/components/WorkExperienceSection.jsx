@@ -70,7 +70,7 @@ function WorkExperienceSection({ isDark }) {
                       </div>
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
-                        <span className="text-sm font-roboto">India</span>
+                        <span className="text-sm font-roboto">Remote</span>
                       </div>
                     </div>
 
@@ -139,7 +139,7 @@ function WorkExperienceSection({ isDark }) {
                       </div>
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
-                        <span className="text-sm font-roboto">India</span>
+                        <span className="text-sm font-roboto">Remote</span>
                       </div>
                     </div>
                   </div>
@@ -186,7 +186,7 @@ function WorkExperienceSection({ isDark }) {
                       </div>
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
-                        <span className="text-sm font-roboto">Motihari, Bihar, India</span>
+                        <span className="text-sm font-roboto">On-site</span>
                       </div>
                     </div>
                   </div>
@@ -233,7 +233,7 @@ function WorkExperienceSection({ isDark }) {
                       </div>
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
-                        <span className="text-sm font-roboto">Motihari, Bihar, India</span>
+                        <span className="text-sm font-roboto">Remote</span>
                       </div>
                     </div>
                   </div>
@@ -280,7 +280,7 @@ function WorkExperienceSection({ isDark }) {
                       </div>
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
-                        <span className="text-sm font-roboto">Bihar, India</span>
+                        <span className="text-sm font-roboto">Remote</span>
                       </div>
                     </div>
 
