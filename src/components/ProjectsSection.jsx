@@ -35,80 +35,7 @@ function ProjectsSection({ isDark }) {
           variants={staggerContainer}
           className="max-w-5xl mx-auto space-y-8"
         >
-          {/* Project Card: Class 11th IP Practicals */}
-          <motion.div variants={staggerItem}>
-            <Tilt
-              tiltMaxAngleX={10}
-              tiltMaxAngleY={10}
-              scale={1.02}
-              transitionSpeed={400}
-              glareEnable={true}
-              glareMaxOpacity={0.2}
-              glareColor="#3b82f6"
-              glarePosition="all"
-            >
-              <div
-                className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-blue-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-blue-500/50' : 'bg-white/50 border-slate-200 hover:border-blue-500/50'}`}
-              >
-                <div className="flex flex-col md:flex-row items-start gap-6">
-                  <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg flex-shrink-0">
-                    <Code className="w-10 h-10 text-white" />
-                    <div className={`absolute -top-2 -right-2 px-2 py-0.5 rounded-full text-xs font-bold ${isDark ? 'bg-slate-800 text-blue-400' : 'bg-white text-blue-600'} border border-blue-500/30`}>
-                      2026
-                    </div>
-                  </div>
-
-                  <div className="flex-1">
-                    <h3 className="text-3xl font-bold mb-1 font-poppins bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text">
-                      Class 11th IP Practicals
-                    </h3>
-                    <p className={`text-sm font-semibold mb-4 font-roboto ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                      Informatics Practices — Python &amp; MySQL
-                    </p>
-                    <p className={`mb-6 font-roboto leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                      A comprehensive collection of 16 Python programs and 9 MySQL queries covering core IP syllabus — from grade calculators and financial math to dictionary operations and full CRUD database management.
-                    </p>
-
-                    {/* Tech Tags */}
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {['Python', 'MySQL', 'Data Structures', 'CRUD'].map((tag) => (
-                        <span key={tag} className={`px-3 py-1 rounded-full text-xs font-bold ${isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-500/20 text-blue-600'}`}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Stats Row */}
-                    <div className={`flex flex-wrap gap-6 mb-6 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                      {[
-                        { value: '16', label: 'Python Programs' },
-                        { value: '9', label: 'MySQL Queries' },
-                        { value: '25', label: 'Total Programs' },
-                      ].map((stat) => (
-                        <div key={stat.label} className="text-center">
-                          <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text font-poppins">{stat.value}</div>
-                          <div className={`text-xs font-roboto ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{stat.label}</div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* GitHub Link */}
-                    <a
-                      href="https://github.com/divyanshu-tiwari001/class11th-practical"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold font-poppins hover:scale-105 hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-300"
-                    >
-                      <Github className="w-4 h-4" />
-                      View on GitHub
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </Tilt>
-          </motion.div>
-
-          {/* Project Card: Premium Student Portfolio */}
+          {/* Project Card 1: Premium Student Portfolio (NOW FIRST) */}
           <motion.div variants={staggerItem}>
             <Tilt
               tiltMaxAngleX={10}
@@ -192,6 +119,79 @@ function ProjectsSection({ isDark }) {
             </Tilt>
           </motion.div>
 
+          {/* Project Card 2: Class 11th IP Practicals (NOW SECOND) */}
+          <motion.div variants={staggerItem}>
+            <Tilt
+              tiltMaxAngleX={10}
+              tiltMaxAngleY={10}
+              scale={1.02}
+              transitionSpeed={400}
+              glareEnable={true}
+              glareMaxOpacity={0.2}
+              glareColor="#3b82f6"
+              glarePosition="all"
+            >
+              <div
+                className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-blue-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-blue-500/50' : 'bg-white/50 border-slate-200 hover:border-blue-500/50'}`}
+              >
+                <div className="flex flex-col md:flex-row items-start gap-6">
+                  <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg flex-shrink-0">
+                    <Code className="w-10 h-10 text-white" />
+                    <div className={`absolute -top-2 -right-2 px-2 py-0.5 rounded-full text-xs font-bold ${isDark ? 'bg-slate-800 text-blue-400' : 'bg-white text-blue-600'} border border-blue-500/30`}>
+                      2026
+                    </div>
+                  </div>
+
+                  <div className="flex-1">
+                    <h3 className="text-3xl font-bold mb-1 font-poppins bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text">
+                      Class 11th IP Practicals
+                    </h3>
+                    <p className={`text-sm font-semibold mb-4 font-roboto ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                      Informatics Practices — Python &amp; MySQL
+                    </p>
+                    <p className={`mb-6 font-roboto leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                      A comprehensive collection of 16 Python programs and 9 MySQL queries covering core IP syllabus — from grade calculators and financial math to dictionary operations and full CRUD database management.
+                    </p>
+
+                    {/* Tech Tags */}
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {['Python', 'MySQL', 'Data Structures', 'CRUD'].map((tag) => (
+                        <span key={tag} className={`px-3 py-1 rounded-full text-xs font-bold ${isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-500/20 text-blue-600'}`}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Stats Row */}
+                    <div className={`flex flex-wrap gap-6 mb-6 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                      {[
+                        { value: '16', label: 'Python Programs' },
+                        { value: '9', label: 'MySQL Queries' },
+                        { value: '25', label: 'Total Programs' },
+                      ].map((stat) => (
+                        <div key={stat.label} className="text-center">
+                          <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text font-poppins">{stat.value}</div>
+                          <div className={`text-xs font-roboto ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{stat.label}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* GitHub Link */}
+                    <a
+                      href="https://github.com/divyanshu-tiwari001/class11th-practical"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold font-poppins hover:scale-105 hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-300"
+                    >
+                      <Github className="w-4 h-4" />
+                      View on GitHub
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </Tilt>
+          </motion.div>
+
           {/* Building in Progress */}
           <motion.div variants={staggerItem}>
             <div className={`p-10 rounded-3xl border-2 border-dashed backdrop-blur-xl transition-all duration-500 hover:border-solid ${isDark ? 'border-blue-700/60 bg-slate-800/30 hover:border-blue-500/60' : 'border-blue-300 bg-blue-50/50 hover:border-blue-400'}`}>
@@ -221,7 +221,5 @@ function ProjectsSection({ isDark }) {
   );
 }
 
-const areEqual = (prev, next) =>
-  prev.isDark === next.isDark;
-
+const areEqual = (prev, next) => prev.isDark === next.isDark;
 export default React.memo(ProjectsSection, areEqual);
