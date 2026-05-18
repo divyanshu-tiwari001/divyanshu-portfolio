@@ -32,6 +32,7 @@ export const FEATURE_FLAGS = {
   SHOW_EDUCATION: true,
   SHOW_ACHIEVEMENTS: true,
   SHOW_ABOUT: true,
+  SHOW_LEARNING_JOURNEY: false,
   SHOW_TECH_STACK: true,
   SHOW_LANGUAGES: true,
   SHOW_WORK_EXPERIENCE: true,
