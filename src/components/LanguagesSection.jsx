@@ -89,8 +89,9 @@ function LanguagesSection({ isDark }) {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-3xl font-bold mb-2 font-poppins">English</h3>
+                    {/* UPDATED FIELD */}
                     <div className={`inline-block px-4 py-1 rounded-full text-sm font-bold mb-4 ${isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-500/20 text-blue-600'}`}>
-                      Limited Working
+                      Professional Working Proficiency
                     </div>
                     <p className={`text-sm font-roboto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       Proficient in technical communication and writing
@@ -106,7 +107,5 @@ function LanguagesSection({ isDark }) {
   );
 }
 
-const areEqual = (prev, next) =>
-  prev.isDark === next.isDark;
-
+const areEqual = (prev, next) => prev.isDark === next.isDark;
 export default React.memo(LanguagesSection, areEqual);
