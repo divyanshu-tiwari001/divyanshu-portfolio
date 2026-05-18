@@ -43,8 +43,9 @@ export default function HeroSection({ isDark, scrollTo, y1, y2, y3 }) {
             <SGAParticleText isDark={isDark} anchorRef={particleAnchorRef} />
           </div>
 
+          {/* Authentic, High-Impact Bio Paragraph */}
           <p className={`text-lg md:text-xl mb-12 ${show3D ? 'max-w-xl' : 'max-w-3xl mx-auto'} font-poppins animate-slide-bottom ${isDark ? 'text-slate-300' : 'text-slate-600'}`} style={{ animationDelay: '0.2s' }}>
-            Developer leveraging <strong>AI Prompting, Vibe Coding, HTML &amp; CSS, and Python</strong> to build real-world projects. Currently pursuing senior secondary education, applying hands-on technical and leadership skills across professional and creative domains.
+            A <strong>17-year-old, AI-First Developer</strong> bridging the gap between student ambition and production-ready web design. I leverage next-gen AI prompting, modern HTML &amp; CSS, and Python to build responsive, high-impact digital experiences at a fraction of traditional development time.
           </p>
 
           <div className={`flex flex-col sm:flex-row gap-4 ${show3D ? 'justify-start' : 'justify-center'} mb-16 animate-slide-bottom`} style={{ animationDelay: '0.4s' }}>
