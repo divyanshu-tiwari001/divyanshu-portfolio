@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, BookOpen, Code, ChevronRight, Zap, Target, Lightbulb, Sparkles } from 'lucide-react';
 import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
+import { FEATURE_FLAGS } from '../utils/featureFlags'; // Imported feature flags
 
 export default function AboutSection({ isDark }) {
   return (
@@ -56,61 +57,64 @@ export default function AboutSection({ isDark }) {
           ))}
         </motion.div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          className={`p-10 rounded-3xl backdrop-blur-xl border ${isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-white/50 border-slate-200'}`}
-        >
-          <h3 className="text-3xl font-bold mb-8 text-center font-poppins">Learning Journey</h3>
-          <div className="space-y-8">
-            {[
-              {
-                category: 'Frontend',
-                skills: [
-                  { name: 'HTML & CSS', icon: Code, percent: 65 },
-                  { name: 'Frontend Development using AI', icon: Zap, percent: 70 }
-                ]
-              },
-              {
-                category: 'Backend',
-                skills: [
-                  { name: 'Python', icon: Target, percent: 25 }
-                ]
-              },
-              {
-                category: 'Tools & AI',
-                skills: [
-                  { name: 'Vibe Coding', icon: Lightbulb, percent: 75 },
-                  { name: 'AI Prompting/Prompt Engineering', icon: Sparkles, percent: 85 }
-                ]
-              }
-            ].map((category, catIndex) => (
-              <div key={catIndex}>
-                <h4 className="text-xl font-bold mb-4 font-poppins bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">{category.category}</h4>
-                <div className="space-y-4">
-                  {category.skills.map((skill, index) => (
-                    <div key={index} className="space-y-2 group hover:scale-105 transition-transform duration-300">
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-3">
-                          <skill.icon className="w-5 h-5 text-orange-500 group-hover:rotate-12 transition-transform duration-300" />
-                          <span className="font-poppins">{skill.name}</span>
+        {/* Gated the entire progress bar element behind the feature flag */}
+        {FEATURE_FLAGS.SHOW_LEARNING_JOURNEY && (
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            className={`p-10 rounded-3xl backdrop-blur-xl border ${isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-white/50 border-slate-200'}`}
+          >
+            <h3 className="text-3xl font-bold mb-8 text-center font-poppins">Learning Journey</h3>
+            <div className="space-y-8">
+              {[
+                {
+                  category: 'Frontend',
+                  skills: [
+                    { name: 'HTML & CSS', icon: Code, percent: 65 },
+                    { name: 'Frontend Development using AI', icon: Zap, percent: 70 }
+                  ]
+                },
+                {
+                  category: 'Backend',
+                  skills: [
+                    { name: 'Python', icon: Target, percent: 25 }
+                  ]
+                },
+                {
+                  category: 'Tools & AI',
+                  skills: [
+                    { name: 'Vibe Coding', icon: Lightbulb, percent: 75 },
+                    { name: 'AI Prompting/Prompt Engineering', icon: Sparkles, percent: 85 }
+                  ]
+                }
+              ].map((category, catIndex) => (
+                <div key={catIndex}>
+                  <h4 className="text-xl font-bold mb-4 font-poppins bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">{category.category}</h4>
+                  <div className="space-y-4">
+                    {category.skills.map((skill, index) => (
+                      <div key={index} className="space-y-2 group hover:scale-105 transition-transform duration-300">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-3">
+                            <skill.icon className="w-5 h-5 text-orange-500 group-hover:rotate-12 transition-transform duration-300" />
+                            <span className="font-poppins">{skill.name}</span>
+                          </div>
+                          <span className="text-sm font-bold text-orange-500 font-poppins">{skill.percent}%</span>
                         </div>
-                        <span className="text-sm font-bold text-orange-500 font-poppins">{skill.percent}%</span>
-                      </div>
-                      <div className={`h-3 rounded-full overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
-                        <div className="h-full bg-gradient-to-r from-amber-500 to-orange-600 rounded-full relative overflow-hidden" style={{ width: `${skill.percent}%`, transition: 'width 1s ease-out' }}>
-                          <div className="absolute inset-0 shimmer"></div>
+                        <div className={`h-3 rounded-full overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
+                          <div className="h-full bg-gradient-to-r from-amber-500 to-orange-600 rounded-full relative overflow-hidden" style={{ width: `${skill.percent}%`, transition: 'width 1s ease-out' }}>
+                            <div className="absolute inset-0 shimmer"></div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
       </div>
     </section>
   );
