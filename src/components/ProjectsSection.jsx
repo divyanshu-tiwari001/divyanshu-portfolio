@@ -35,7 +35,7 @@ function ProjectsSection({ isDark }) {
           variants={staggerContainer}
           className="max-w-5xl mx-auto space-y-8"
         >
-          {/* Project Card 1: Premium Student Portfolio (NOW FIRST) */}
+          {/* Project Card 1: Premium Student Portfolio */}
           <motion.div variants={staggerItem}>
             <Tilt
               tiltMaxAngleX={10}
