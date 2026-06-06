@@ -332,7 +332,7 @@ function SGAParticleTextCanvas({ isDark, anchorRef }) {
       if (raf) cancelAnimationFrame(raf);
       window.removeEventListener('resize', resize);
     };
-  }, [anchorRef]); // run once – isDark changes handled via refs
+  }, [anchorRef]); // isDark changes handled via refs; re-inits only if anchorRef identity changes
 
   return (
     <canvas
