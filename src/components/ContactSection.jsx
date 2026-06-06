@@ -10,7 +10,7 @@ const CodecademyIcon = ({ className }) => (
   </svg>
 );
 
-export default function ContactSection({ isDark, formData, formStatus, formErrors, handleInputChange, handleSubmit }) {
+export default function ContactSection({ formData, formStatus, formErrors, handleInputChange, handleSubmit }) {
   return (
     <section id="contact" className="relative py-24 px-6 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 opacity-90 animate-gradient"></div>
