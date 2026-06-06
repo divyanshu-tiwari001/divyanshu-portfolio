@@ -51,7 +51,7 @@ function WorkExperienceSection({ isDark }) {
                 className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-emerald-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-emerald-500/50' : 'bg-white/50 border-slate-200 hover:border-emerald-500/50'}`}
               >
                 <div className="flex flex-col md:flex-row items-start gap-6">
-                  <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
+                  <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <HeartHandshake className="w-10 h-10 text-white" />
                     <div className="absolute -top-2 -right-2 w-6 h-6 bg-emerald-500 rounded-full border-4 border-white dark:border-slate-900 animate-pulse"></div>
                   </div>
