@@ -35,7 +35,87 @@ function WorkExperienceSection({ isDark }) {
           variants={staggerContainer}
           className="max-w-5xl mx-auto space-y-8"
         >
-          {/* Experience 1: EM AUR - Consolidated */}
+          {/* Experience 1: Pehchaan The Street School (Trust) - Social Media Coordinator */}
+          <motion.div variants={staggerItem}>
+            <Tilt
+              tiltMaxAngleX={10}
+              tiltMaxAngleY={10}
+              scale={1.02}
+              transitionSpeed={400}
+              glareEnable={true}
+              glareMaxOpacity={0.2}
+              glareColor="#ff6b00"
+              glarePosition="all"
+            >
+              <div
+                className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+              >
+                <div className="flex flex-col md:flex-row items-start gap-6">
+                  <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
+                    <Users className="w-10 h-10 text-white" />
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white dark:border-slate-900 animate-pulse"></div>
+                  </div>
+
+                  <div className="flex-1">
+                    <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'}`}>
+                      Present • 2 months
+                    </div>
+                    <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text">
+                      Social Media Coordinator
+                    </h3>
+                    <div className={`text-lg font-semibold mb-2 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
+                      Pehchaan The Street School (Trust) • Internship
+                    </div>
+                    <div className={`flex items-center gap-4 mb-4 flex-wrap ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        <span className="text-sm font-roboto">May 2026 - Present</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4" />
+                        <span className="text-sm font-roboto">Remote</span>
+                      </div>
+                    </div>
+
+                    <div className={`p-6 rounded-2xl ${isDark ? 'bg-slate-800/50' : 'bg-slate-100/50'}`}>
+                      <ul className={`space-y-3 font-roboto ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-orange-500 flex-shrink-0" />
+                          <span>Coordinated social media promotion and outreach activities across multiple digital platforms.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-orange-500 flex-shrink-0" />
+                          <span>Amplified nonprofit campaigns by sharing and distributing content through Facebook, Instagram, WhatsApp, YouTube, and other channels.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-orange-500 flex-shrink-0" />
+                          <span>Supported audience growth and engagement through strategic content dissemination.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-orange-500 flex-shrink-0" />
+                          <span>Collaborated with volunteers and team members to increase awareness of educational and community initiatives.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-orange-500 flex-shrink-0" />
+                          <span>Assisted in promoting campaigns, announcements, fundraising efforts, and awareness programs.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-orange-500 flex-shrink-0" />
+                          <span>Contributed to digital marketing efforts aimed at expanding the organization&apos;s online presence and impact.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-orange-500 flex-shrink-0" />
+                          <span>Ensured consistent messaging and brand representation across social media platforms.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Tilt>
+          </motion.div>
+
+          {/* Experience 2: EM AUR - Consolidated */}
           <motion.div variants={staggerItem}>
             <Tilt
               tiltMaxAngleX={10}
