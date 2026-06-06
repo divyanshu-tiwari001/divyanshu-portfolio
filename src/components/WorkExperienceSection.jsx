@@ -48,7 +48,7 @@ function WorkExperienceSection({ isDark }) {
               glarePosition="all"
             >
               <div
-                className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-emerald-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-emerald-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+                className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-emerald-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-emerald-500/50' : 'bg-white/50 border-slate-200 hover:border-emerald-500/50'}`}
               >
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -57,7 +57,7 @@ function WorkExperienceSection({ isDark }) {
                   </div>
 
                   <div className="flex-1">
-                    <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'}`}>
+                    <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-cyan-500/20 text-cyan-400' : 'bg-green-500/20 text-green-600'}`}>
                       Present • 2 months
                     </div>
                     <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-emerald-500 to-cyan-600 bg-clip-text">
