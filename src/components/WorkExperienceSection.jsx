@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
-import { Users, Briefcase, Trophy, GraduationCap, MapPin, Calendar, ChevronRight, Sparkles } from 'lucide-react';
+import { Users, Briefcase, Rocket, Trophy, GraduationCap, MapPin, Calendar, ChevronRight, Sparkles } from 'lucide-react';
 import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
 
 function WorkExperienceSection({ isDark }) {
@@ -101,7 +101,71 @@ function WorkExperienceSection({ isDark }) {
             </Tilt>
           </motion.div>
 
-          {/* Experience 2: Nexstep Network - Project Intern */}
+          {/* Experience 2: Novaa Speed - Co-Founder */}
+          <motion.div variants={staggerItem}>
+            <Tilt
+              tiltMaxAngleX={10}
+              tiltMaxAngleY={10}
+              scale={1.02}
+              transitionSpeed={400}
+              glareEnable={true}
+              glareMaxOpacity={0.2}
+              glareColor="#ff6b00"
+              glarePosition="all"
+            >
+              <div
+                className={`group relative p-10 rounded-3xl backdrop-blur-xl border hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-orange-500/30 ${isDark ? 'bg-slate-900/50 border-slate-800 hover:border-orange-500/50' : 'bg-white/50 border-slate-200 hover:border-orange-500/50'}`}
+              >
+                <div className="flex flex-col md:flex-row items-start gap-6">
+                  <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
+                    <Rocket className="w-10 h-10 text-white" />
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white dark:border-slate-900"></div>
+                  </div>
+
+                  <div className="flex-1">
+                    <div className={`inline-block px-4 py-1 rounded-full text-xs font-bold mb-3 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'}`}>
+                      Completed • 7 months
+                    </div>
+                    <h3 className="text-3xl font-bold mb-2 font-poppins bg-gradient-to-r from-violet-500 to-fuchsia-600 bg-clip-text">
+                      Co-Founder
+                    </h3>
+                    <div className={`text-lg font-semibold mb-2 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
+                      Novaa Speed • A Digital Agency
+                    </div>
+                    <div className={`flex items-center gap-4 mb-4 flex-wrap ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        <span className="text-sm font-roboto">September 2025 - April 2026</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4" />
+                        <span className="text-sm font-roboto">Remote</span>
+                      </div>
+                    </div>
+
+                    <div className={`p-6 rounded-2xl ${isDark ? 'bg-slate-800/50' : 'bg-slate-100/50'}`}>
+                      <ul className={`space-y-3 font-roboto ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-orange-500 flex-shrink-0" />
+                          <span>Website development for business and startup clients</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-orange-500 flex-shrink-0" />
+                          <span>Ad campaign planning, management, and performance optimization</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-orange-500 flex-shrink-0" />
+                          <span>Social media management and related digital growth services</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Tilt>
+          </motion.div>
+
+          {/* Experience 3: Nexstep Network - Project Intern */}
           <motion.div variants={staggerItem}>
             <Tilt
               tiltMaxAngleX={10}
@@ -148,7 +212,7 @@ function WorkExperienceSection({ isDark }) {
             </Tilt>
           </motion.div>
 
-          {/* Experience 3: C.S. DAV Public School - Deputy Head Boy */}
+          {/* Experience 4: C.S. DAV Public School - Deputy Head Boy */}
           <motion.div variants={staggerItem}>
             <Tilt
               tiltMaxAngleX={10}
@@ -195,7 +259,7 @@ function WorkExperienceSection({ isDark }) {
             </Tilt>
           </motion.div>
 
-          {/* Experience 4: Muskurahat Foundation - Fundraising Intern */}
+          {/* Experience 5: Muskurahat Foundation - Fundraising Intern */}
           <motion.div variants={staggerItem}>
             <Tilt
               tiltMaxAngleX={10}
@@ -242,7 +306,7 @@ function WorkExperienceSection({ isDark }) {
             </Tilt>
           </motion.div>
 
-          {/* Experience 5: Scaler School of Technology - Student Intern */}
+          {/* Experience 6: Scaler School of Technology - Student Intern */}
           <motion.div variants={staggerItem}>
             <Tilt
               tiltMaxAngleX={10}
