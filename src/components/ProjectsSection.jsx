@@ -66,7 +66,7 @@ function ProjectsSection({ isDark }) {
                       React · Tailwind CSS · Framer Motion · Vercel
                     </p>
                     <p className={`mb-6 font-roboto leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                      This flagship portfolio is a premium front-end showcase built with React, Tailwind CSS, and Framer Motion—crafted for smooth animations, optimized performance, and polished visual storytelling. It features immersive 3D graphics, adaptive dark mode, and fully responsive layouts that stay fluid across devices, while shipping as an actively maintained MIT-licensed project (24.7 KB) on Vercel.
+                      This flagship portfolio is a premium front-end showcase built with React, Tailwind CSS, and Framer Motion—crafted for smooth animations, optimized performance, and polished visual storytelling. It features immersive 3D graphics, adaptive dark mode, and fully responsive layouts that stay fluid across devices, while shipping as an actively maintained MIT-licensed project on Vercel.
                     </p>
 
                     {/* Tech Tags */}
