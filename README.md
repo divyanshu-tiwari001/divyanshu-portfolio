@@ -75,7 +75,7 @@
 
 ## 🎮 Live Demo
 
-> 🔗 **[divyanshu-portfolio-01.vercel.app](https://divyanshu-portfolio-01.vercel.app)**
+> 🔗 **[Click me](https://divyanshu.is-a.dev)**
 
 ---
 
