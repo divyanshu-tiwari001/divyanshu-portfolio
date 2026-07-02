@@ -5,7 +5,7 @@ const _is3dDisabled =
   typeof window !== 'undefined' && localStorage.getItem('disable_3d') === 'true';
 
 // ← Set this to false to turn off ALL 3D features at build time
-const _base3dEnabled = true;
+const _base3dEnabled = false;
 
 const _3dEnabled = _base3dEnabled && !_is3dDisabled;
 
