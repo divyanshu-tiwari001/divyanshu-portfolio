@@ -340,4 +340,5 @@ function ProjectsSection({ isDark }) {
   );
 }
 
-const areEqual = (prev, next) => prev.isDark === next](#)
+const areEqual = (prev, next) => prev.isDark === next.isDark;
+export default React.memo(ProjectsSection, areEqual);
