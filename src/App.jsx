@@ -26,6 +26,7 @@ const AvatarSection = lazy(() => import('./components/3D/AvatarSection'));
 const WelcomePopup = lazy(() => import('./components/WelcomePopup'));
 const TestimonialsSection = lazy(() => import('./components/TestimonialsSection'));
 const CertificationsSection = lazy(() => import('./components/CertificationsSection'));
+const ProjectsSection = React.lazy(() => import('./components/ProjectsSection'));
 
 const SCROLL_THROTTLE_MS = 120;
 const SCROLL_TOP_THRESHOLD = 300;
@@ -138,6 +139,7 @@ export default function PremiumStudentPortfolio() {
     return () => observer.disconnect();
   }, []);
 
+  
   // Initialize comprehensive content protection
   useEffect(() => {
     if (!FEATURE_FLAGS.SHOW_CONTENT_PROTECTION) return;
@@ -432,10 +434,10 @@ export default function PremiumStudentPortfolio() {
 
         {/* Projects Section */}
         {FEATURE_FLAGS.SHOW_PROJECTS && (
-          <ProjectsSection
-            isDark={isDark}
-          />
-        )}
+  <Suspense fallback={<SectionSkeleton />}>
+    <ProjectsSection isDark={isDark} />
+  </Suspense>
+)}
 
         {/* Languages Section */}
         {FEATURE_FLAGS.SHOW_LANGUAGES && (
