@@ -13,7 +13,7 @@ import EducationSection from './components/EducationSection';
 import AchievementsSection from './components/AchievementsSection';
 import AboutSection from './components/AboutSection';
 import TechStackSection from './components/TechStackSection';
-import ProjectsSection from './components/ProjectsSection';
+
 import LanguagesSection from './components/LanguagesSection';
 import WorkExperienceSection from './components/WorkExperienceSection';
 import AwardsSection from './components/AwardsSection';
